@@ -196,6 +196,7 @@ export default function Home() {
           <a href="#paths">Arsenal</a>
           <a href="#guides">Bosses</a>
           <a href="#route">World</a>
+          <a href="/guides">All Guides</a>
         </nav>
         <a className="launch-status" href="#intel">
           <span /> Launch build 1.0

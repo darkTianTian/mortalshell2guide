@@ -50,6 +50,7 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /Everything that can kill you/);
   assert.match(html, /Confirmed game intel/);
   assert.match(html, /Search Shells, weapons, bosses/);
+  assert.match(html, /<a href="\/guides">All Guides<\/a>/);
   assert.match(html, /<link rel="canonical" href="https:\/\/mortalshell2guide\.org\/?"/i);
   assert.match(
     html,
