@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { guideArticleMap, guideArticles } from "../articles";
 import { articleWordCount } from "../types";
@@ -70,17 +71,17 @@ export default async function GuidePage({ params }: PageProps) {
       />
 
       <header className={styles.header}>
-        <a className={styles.brand} href="/">
+        <Link className={styles.brand} href="/">
           <span aria-hidden="true">S</span>
           <div><strong>Shellbound</strong><small>Mortal Shell II codex</small></div>
-        </a>
+        </Link>
         <nav aria-label="Guide navigation">
-          <a href="/guides">All guides</a>
-          <a href="/guides/shell-locations">Shells</a>
-          <a href="/guides/weapon-tier-list">Weapons</a>
-          <a href="/guides/bosses">Bosses</a>
+          <Link href="/guides">All guides</Link>
+          <Link href="/map">Map</Link>
+          <Link href="/guides/shell-locations">Shells</Link>
+          <Link href="/guides/weapon-tier-list">Weapons</Link>
         </nav>
-        <a className={styles.homeLink} href="/">Return home ↗</a>
+        <Link className={styles.homeLink} href="/">Return home ↗</Link>
       </header>
 
       <section className={styles.hero}>
@@ -88,7 +89,7 @@ export default async function GuidePage({ params }: PageProps) {
         <div className={styles.heroShade} />
         <div className={styles.heroContent}>
           <div className={styles.breadcrumbs}>
-            <a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>{article.category}</span>
+            <Link href="/">Home</Link><span>/</span><Link href="/guides">Guides</Link><span>/</span><span>{article.category}</span>
           </div>
           <p className={styles.eyebrow}>{article.eyebrow}</p>
           <h1>{article.heading}</h1>
@@ -166,7 +167,7 @@ export default async function GuidePage({ params }: PageProps) {
 
       <footer className={styles.footer}>
         <p>Independent fan guide. Game names and official imagery belong to Cold Symmetry and Playstack.</p>
-        <a href="/">Shellbound home ↑</a>
+        <Link href="/">Shellbound home ↑</Link>
       </footer>
     </main>
   );

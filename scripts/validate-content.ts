@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import { guideArticleMap, guideArticles } from "../app/guides/articles";
 import { articleWordCount } from "../app/guides/types";
+import {
+  mapCategories,
+  mapEditorialWordCount,
+  mapMarkers,
+  mapPageMeta,
+  mapSources,
+} from "../app/map/map-data";
 
 assert.equal(guideArticles.length, 14, "expected fourteen launch guide pages");
 assert.equal(guideArticleMap.size, guideArticles.length, "guide slugs must be unique");
@@ -19,4 +26,22 @@ for (const article of guideArticles) {
   }
 }
 
-console.log(`Validated ${guideArticles.length} guides: 600+ words, SEO metadata, sources, and internal links.`);
+assert.ok(mapEditorialWordCount() >= 600, `map page has only ${mapEditorialWordCount()} editorial words`);
+assert.ok(mapPageMeta.title.length >= 50 && mapPageMeta.title.length <= 60, `map title length is ${mapPageMeta.title.length}`);
+assert.ok(mapPageMeta.description.length >= 140 && mapPageMeta.description.length <= 160, `map description length is ${mapPageMeta.description.length}`);
+assert.equal(mapMarkers.length, 59, "expected 59 curated launch map markers");
+assert.equal(new Set(mapMarkers.map((marker) => marker.id)).size, mapMarkers.length, "map marker ids must be unique");
+assert.deepEqual(
+  Object.fromEntries(mapCategories.map((category) => [category.id, mapMarkers.filter((marker) => marker.category === category.id).length])),
+  { hub: 7, shell: 8, weapon: 8, tarstone: 7, fragment: 11, key: 2, gate: 6, boss: 10 },
+  "map category counts changed unexpectedly",
+);
+for (const marker of mapMarkers) {
+  assert.ok(marker.x >= 1 && marker.x <= 99 && marker.y >= 1 && marker.y <= 99, `${marker.id} is outside map bounds`);
+  assert.ok(marker.sourceIds.length >= 2, `${marker.id} needs at least two sources`);
+  for (const sourceId of marker.sourceIds) {
+    assert.ok(mapSources[sourceId], `${marker.id} references missing source ${sourceId}`);
+  }
+}
+
+console.log(`Validated ${guideArticles.length} guides and ${mapMarkers.length} map markers: long-form copy, SEO metadata, sources, and internal links.`);

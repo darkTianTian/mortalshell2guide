@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guideArticles } from "./guides/articles";
 import { latestGuideUpdate } from "./llms-content";
+import { MAP_UPDATED_AT } from "./map/map-data";
 
 const siteUrl = "https://mortalshell2guide.org";
 
@@ -19,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: asDate(latestGuideUpdate),
       changeFrequency: "daily",
       priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/map`,
+      lastModified: asDate(MAP_UPDATED_AT),
+      changeFrequency: "weekly",
+      priority: 0.95,
     },
     ...guideArticles.map((article) => ({
       url: `${siteUrl}/guides/${article.slug}`,

@@ -1,6 +1,6 @@
 # Shellbound
 
-An independent, spoiler-aware field guide for **Mortal Shell II**. The launch edition includes an opening route, confirmed game-system intel, searchable strategy notes, and category filters for combat, exploration, Shells, weapons, and boss preparation.
+An independent, spoiler-aware field guide for **Mortal Shell II**. The launch edition includes an opening route, confirmed game-system intel, searchable strategy notes, and a zoomable interactive map for Shells, weapons, Tarstones, fragments, keys, gates, and bosses.
 
 ## Local development
 
@@ -103,6 +103,15 @@ Guide content is stored in `app/guides/articles/`. The following outputs are gen
 - `/llms.txt` — concise LLM-friendly Markdown index
 - `/llms-full.txt` — full Markdown guide corpus
 - related-guide internal links
+
+Interactive map content is stored in `app/map/map-data.ts`. Its shared metadata, marker list, editorial copy, source log, and update date automatically feed:
+
+- `/map` — zoomable, searchable, filterable world map with device-local found progress
+- `/sitemap.xml` — canonical map URL and map-data `lastmod`
+- `/llms.txt` — concise map discovery entry
+- `/llms-full.txt` — map methodology and the complete curated marker list
+
+When adding or moving a marker, update its source IDs and `MAP_UPDATED_AT`, run `npm test`, and deploy. Do not maintain separate copies of the marker list in sitemap or LLM files.
 
 When adding or updating a guide, set its ISO `updatedAt` value and deploy. The sitemap and both LLM files will update automatically; they should not be maintained by hand.
 

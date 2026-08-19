@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Guide = {
@@ -126,11 +127,11 @@ const paths = [
   {
     index: "04",
     label: "World",
-    title: "Map the Undermether",
-    copy: "Routes, landmarks, dungeons, hidden paths.",
+    title: "Chart the Undermether",
+    copy: "Zoom, filter, search, and track 59 verified essentials.",
     image: "/ms2-combat.webp",
     alt: "A ruined stone fortress under a gray sky in Mortal Shell II",
-    href: "/guides/walkthrough",
+    href: "/map",
   },
 ];
 
@@ -192,11 +193,11 @@ export default function Home() {
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="#paths">Shells</a>
-          <a href="#paths">Arsenal</a>
-          <a href="#guides">Bosses</a>
-          <a href="#route">World</a>
-          <a href="/guides">All Guides</a>
+          <Link href="/guides/shell-locations">Shells</Link>
+          <Link href="/guides/weapon-tier-list">Arsenal</Link>
+          <Link href="/guides/bosses">Bosses</Link>
+          <Link href="/map">Map</Link>
+          <Link href="/guides">All Guides</Link>
         </nav>
         <a className="launch-status" href="#intel">
           <span /> Launch build 1.0
@@ -225,9 +226,9 @@ export default function Home() {
             <a className="button button-primary" href="#route">
               Begin the first route <span aria-hidden="true">→</span>
             </a>
-            <a className="button button-ghost" href="/guides">
+            <Link className="button button-ghost" href="/guides">
               Open the codex
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -237,7 +238,7 @@ export default function Home() {
             <span>Featured field note</span>
             <strong>What to do before the first false god</strong>
           </div>
-          <a href="/guides/bosses" aria-label="Read the featured field note">↗</a>
+          <Link href="/guides/bosses" aria-label="Read the featured field note">↗</Link>
         </div>
 
         <div className="hero-rail" aria-hidden="true">
@@ -301,7 +302,7 @@ export default function Home() {
             Freedom from a stamina gauge changes the question. You are no longer
             asking whether you can swing—you are asking whether the enemy can answer.
           </p>
-          <a href="/guides/tarstones">Study the combat system <span>→</span></a>
+          <Link href="/guides/tarstones">Study the combat system <span>→</span></Link>
         </div>
         <ol className="doctrine-list">
           <li><span>01</span><strong>Close distance</strong><small>Make them commit first.</small></li>

@@ -1,10 +1,17 @@
 import { guideArticleMap, guideArticles } from "./guides/articles";
 import type { GuideArticle } from "./guides/types";
+import {
+  MAP_UPDATED_AT,
+  mapCategories,
+  mapEditorialSections,
+  mapMarkers,
+  mapPageMeta,
+  mapSources,
+} from "./map/map-data";
 
 const siteUrl = "https://mortalshell2guide.org";
 
-export const latestGuideUpdate = guideArticles
-  .map((article) => article.updatedAt)
+export const latestGuideUpdate = [...guideArticles.map((article) => article.updatedAt), MAP_UPDATED_AT]
   .toSorted()
   .at(-1) ?? "2026-08-20";
 
@@ -36,12 +43,13 @@ export function buildLlmsIndex() {
 
 Use the linked guides for focused answers. Each article identifies its spoiler level, update date, verification standard, and research sources. Details that have not been independently reproduced are labeled provisional instead of presented as confirmed facts.
 
-Latest content update: ${latestGuideUpdate}. The interactive map is intentionally excluded until its marker data is verified.
+Latest content update: ${latestGuideUpdate}. The interactive map uses the same versioned source data as the sitemap and full text export.
 
 ## Core site
 
 - [Shellbound homepage](${siteUrl}): Main navigation, confirmed game facts, featured guides, and launch resources.
 - [All Mortal Shell II guides](${siteUrl}/guides): Human-readable index of every published long-form guide.
+- [Mortal Shell 2 interactive map](${mapPageMeta.canonical}): ${mapPageMeta.description}
 
 ${sections}
 
@@ -52,6 +60,44 @@ ${sections}
 - [Robots policy](${siteUrl}/robots.txt): Current crawler access and sitemap declaration.
 - [Official Mortal Shell II website](https://mortalshell.com/): Primary source for official game features, media, and release information.
 `;
+}
+
+function mapToMarkdown() {
+  const categoryLabels = new Map(mapCategories.map((category) => [category.id, category.label]));
+  const markers = mapCategories
+    .map((category) => {
+      const entries = mapMarkers
+        .filter((marker) => marker.category === category.id)
+        .map((marker) =>
+          `- **${marker.title}** — ${marker.region}. ${marker.summary} Route note: ${marker.routeHint}`,
+        )
+        .join("\n");
+      return `## ${categoryLabels.get(category.id)}\n\n${entries}`;
+    })
+    .join("\n\n");
+  const editorial = mapEditorialSections
+    .map((section) => `## ${section.heading}\n\n${section.paragraphs.join("\n\n")}`)
+    .join("\n\n");
+  const sources = Object.values(mapSources)
+    .map((source) => `- [${source.label}](${source.url}) — ${source.type}. ${source.note}`)
+    .join("\n");
+
+  return `# ${mapPageMeta.title}
+
+Canonical URL: ${mapPageMeta.canonical}
+Marker dataset updated: ${MAP_UPDATED_AT}
+Marker count: ${mapMarkers.length} curated launch-build essentials
+Default spoiler policy: major boss and Corrupted Gate pins hidden until revealed
+
+${mapPageMeta.description}
+
+${editorial}
+
+${markers}
+
+## Map sources checked
+
+${sources}`;
 }
 
 function articleToMarkdown(article: GuideArticle) {
@@ -111,6 +157,10 @@ export function buildLlmsFull() {
 Generated automatically from the same structured article data used by the website, sitemap, metadata, and internal-link system. Latest content update: ${latestGuideUpdate}. Human-readable guide index: ${siteUrl}/guides. Concise LLM index: ${siteUrl}/llms.txt.
 
 Verification policy: official sources and current launch-build reporting take priority. Community findings are labeled by source type, and details without independent reproduction remain explicitly provisional.
+
+---
+
+${mapToMarkdown()}
 
 ---
 
