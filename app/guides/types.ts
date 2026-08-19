@@ -20,6 +20,7 @@ export type GuideArticle = {
   keyword: string;
   spoiler: "Spoiler-light" | "Gameplay spoilers" | "Major spoilers";
   updated: string;
+  updatedAt: string;
   image: string;
   imageAlt: string;
   quickAnswer: string;

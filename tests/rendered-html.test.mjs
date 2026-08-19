@@ -57,6 +57,7 @@ test("server-renders the Shellbound field guide", async () => {
   );
   assert.match(html, /<link rel="icon" href="\/icon\.png\?[^\"]+" sizes="512x512" type="image\/png"\/>/i);
   assert.match(html, /<link rel="apple-touch-icon" href="\/apple-icon\.png\?[^\"]+" sizes="180x180" type="image\/png"\/>/i);
+  assert.match(html, /<link rel="describedby" href="\/llms\.txt"\/>/i);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
@@ -66,6 +67,7 @@ test("publishes sitemap and robots discovery files", async () => {
   assert.equal(sitemapResponse.status, 200);
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\//);
+  assert.match(sitemap, /<lastmod>2026-08-20T00:00:00\.000Z<\/lastmod>/);
   assert.equal((sitemap.match(/<url>/g) ?? []).length, 16);
   for (const slug of guideSlugs) {
     assert.match(sitemap, new RegExp(`https://mortalshell2guide\\.org/guides/${slug}`));
@@ -76,6 +78,29 @@ test("publishes sitemap and robots discovery files", async () => {
   const robots = await robotsResponse.text();
   assert.match(robots, /Allow: \//);
   assert.match(robots, /Sitemap: https:\/\/mortalshell2guide\.org\/sitemap\.xml/);
+});
+
+test("publishes automatic LLM indexes from the guide corpus", async () => {
+  const indexResponse = await render("/llms.txt", "text/plain");
+  assert.equal(indexResponse.status, 200);
+  assert.match(indexResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
+  const index = await indexResponse.text();
+  assert.match(index, /^# Shellbound — Mortal Shell II Field Guide/m);
+  assert.match(index, /Latest content update: 2026-08-20/);
+  assert.match(index, /https:\/\/mortalshell2guide\.org\/llms-full\.txt/);
+  for (const slug of guideSlugs) {
+    assert.match(index, new RegExp(`https://mortalshell2guide\\.org/guides/${slug}`));
+  }
+
+  const fullResponse = await render("/llms-full.txt", "text/plain");
+  assert.equal(fullResponse.status, 200);
+  assert.match(fullResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
+  const full = await fullResponse.text();
+  assert.match(full, /^# Shellbound — Complete Mortal Shell II Guide Corpus/m);
+  assert.ok(full.trim().split(/\s+/).length > 10_000, "full corpus should include all long-form guide text");
+  for (const slug of guideSlugs) {
+    assert.match(full, new RegExp(`Canonical URL: https://mortalshell2guide\\.org/guides/${slug}`));
+  }
 });
 
 test("renders every guide with compliant metadata and internal navigation", async () => {
