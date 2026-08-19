@@ -13,82 +13,81 @@ type Guide = {
 
 const guides: Guide[] = [
   {
-    id: "first-route",
-    category: "Routes",
-    title: "The first 90 minutes",
-    excerpt:
-      "A spoiler-light path from the prologue into your first open region, with only the detours that matter.",
-    readTime: "6 min",
-    difficulty: "Essential",
-  },
-  {
-    id: "harden",
-    category: "Combat",
-    title: "Harden is an attack",
-    excerpt:
-      "Bait the swing, hold through impact, and steal the tempo back. The defensive tool is your best pressure starter.",
-    readTime: "4 min",
-    difficulty: "Essential",
-  },
-  {
-    id: "shell-role",
+    id: "shell-locations",
     category: "Shells",
-    title: "Choose a Shell by role",
+    title: "Find all eight Shells",
     excerpt:
-      "Match a warrior's innate strengths to your preferred range, pace, and margin for error—not a day-one tier list.",
-    readTime: "5 min",
-    difficulty: "Field note",
+      "The verified launch roster, built-in location reveals, Glimpse costs, and a safe unlock order.",
+    readTime: "8 min",
+    difficulty: "Essential",
   },
   {
-    id: "posture",
+    id: "tarstones",
     category: "Arsenal",
-    title: "Break posture with intent",
+    title: "Build with Tarstones",
     excerpt:
-      "Build a repeatable pressure loop by pairing melee commitment with the right sidearm timing.",
-    readTime: "4 min",
-    difficulty: "Deep dive",
+      "All four categories, slot limits, the strongest verified launch picks, and retail locations.",
+    readTime: "8 min",
+    difficulty: "Essential",
   },
   {
-    id: "dungeons",
-    category: "World",
-    title: "Read the compact open world",
+    id: "shell-tier-list",
+    category: "Shells",
+    title: "Shell tier list",
     excerpt:
-      "Landmarks, silhouettes, and side paths tell you where the next dungeon or meaningful reward is hiding.",
+      "Tiel, Eredrim, Proxima, Genessa, and the complete roster ranked by verified launch roles.",
     readTime: "7 min",
     difficulty: "Field note",
   },
   {
-    id: "no-stamina",
-    category: "Combat",
-    title: "No stamina. Still a rhythm.",
+    id: "weapon-tier-list",
+    category: "Arsenal",
+    title: "Weapon tier list",
     excerpt:
-      "Your real limits are recovery frames, spacing, posture, and retaliation—not a green bar.",
-    readTime: "3 min",
-    difficulty: "Essential",
-  },
-  {
-    id: "false-god",
-    category: "Bosses",
-    title: "Before you face a false god",
-    excerpt:
-      "A spoiler-shielded readiness check for upgrades, sidearm utility, and a clean first attempt.",
-    readTime: "5 min",
+      "Axe and Dagger, Axatana, heavy control weapons, and sidearms ranked by practical value.",
+    readTime: "7 min",
     difficulty: "Deep dive",
   },
   {
-    id: "death-loop",
-    category: "Combat",
-    title: "Fix the death, not the build",
+    id: "baghead",
+    category: "World",
+    title: "Baghead ending explained",
     excerpt:
-      "Separate a routing problem from a timing, range, or loadout problem before you spend resources.",
-    readTime: "4 min",
+      "Where the returning NPC appears, what the surprise credits mean, and what progress you keep.",
+    readTime: "6 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "duality-stone",
+    category: "Arsenal",
+    title: "Duality Stone tested",
+    excerpt:
+      "What the reported double-strike effect changes, how to test it, and what remains unverified.",
+    readTime: "7 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "bosses",
+    category: "Bosses",
+    title: "All major bosses",
+    excerpt:
+      "Six Corrupted Gates, three Unfound Path guardians, rewards, summons, and final preparation.",
+    readTime: "8 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "walkthrough",
+    category: "Routes",
+    title: "Main story walkthrough",
+    excerpt:
+      "The verified campaign spine from the prologue through six gates, Unfound Path, and Zmey.",
+    readTime: "9 min",
     difficulty: "Field note",
   },
 ];
 
 const categories = [
   "All",
-  "Combat",
   "Shells",
   "Arsenal",
   "Bosses",
@@ -104,7 +103,7 @@ const paths = [
     copy: "Eight warriors. Eight ways to survive.",
     image: "/ms2-shot-03.webp",
     alt: "An armored Mortal Shell II warrior wielding a hooked polearm against a towering creature",
-    href: "#guides",
+    href: "/guides/shell-locations",
   },
   {
     index: "02",
@@ -113,7 +112,7 @@ const paths = [
     copy: "Weapons, sidearms, posture breaks, upgrades.",
     image: "/ms2-shot-12.webp",
     alt: "A heavily armored Mortal Shell II warrior swinging a broad axe through a group of enemies",
-    href: "#guides",
+    href: "/guides/weapon-tier-list",
   },
   {
     index: "03",
@@ -122,7 +121,7 @@ const paths = [
     copy: "Enemy reads and spoiler-shielded boss prep.",
     image: "/ms2-shot-04.webp",
     alt: "A mysterious Mortal Shell II figure playing an accordion in a firelit cavern",
-    href: "#guides",
+    href: "/guides/bosses",
   },
   {
     index: "04",
@@ -131,7 +130,7 @@ const paths = [
     copy: "Routes, landmarks, dungeons, hidden paths.",
     image: "/ms2-combat.webp",
     alt: "A ruined stone fortress under a gray sky in Mortal Shell II",
-    href: "#route",
+    href: "/guides/walkthrough",
   },
 ];
 
@@ -225,7 +224,7 @@ export default function Home() {
             <a className="button button-primary" href="#route">
               Begin the first route <span aria-hidden="true">→</span>
             </a>
-            <a className="button button-ghost" href="#guides">
+            <a className="button button-ghost" href="/guides">
               Open the codex
             </a>
           </div>
@@ -237,7 +236,7 @@ export default function Home() {
             <span>Featured field note</span>
             <strong>What to do before the first false god</strong>
           </div>
-          <a href="#false-god" aria-label="Read the featured field note">↗</a>
+          <a href="/guides/bosses" aria-label="Read the featured field note">↗</a>
         </div>
 
         <div className="hero-rail" aria-hidden="true">
@@ -301,7 +300,7 @@ export default function Home() {
             Freedom from a stamina gauge changes the question. You are no longer
             asking whether you can swing—you are asking whether the enemy can answer.
           </p>
-          <a href="#no-stamina">Study the combat system <span>→</span></a>
+          <a href="/guides/tarstones">Study the combat system <span>→</span></a>
         </div>
         <ol className="doctrine-list">
           <li><span>01</span><strong>Close distance</strong><small>Make them commit first.</small></li>
@@ -365,7 +364,7 @@ export default function Home() {
                 </div>
                 <div className="guide-bottom">
                   <span>{guide.readTime} read</span>
-                  <a href={`#${guide.id}`} aria-label={`Read ${guide.title}`}>Open note ↗</a>
+                  <a href={`/guides/${guide.id}`} aria-label={`Read ${guide.title}`}>Open note ↗</a>
                 </div>
               </article>
             ))}

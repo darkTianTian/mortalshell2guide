@@ -1,0 +1,32 @@
+import type { Metadata } from "next";
+import { guideArticles } from "./articles";
+import styles from "./guides.module.css";
+
+export const metadata: Metadata = {
+  title: "Mortal Shell 2 Guides, Builds, Bosses, and Locations",
+  description: "Browse verified Mortal Shell 2 guides for Shell locations, Tarstones, weapons, bosses, progression, key items, builds, and the full story route.",
+  alternates: { canonical: "https://mortalshell2guide.org/guides" },
+};
+
+export default function GuidesIndex() {
+  return (
+    <main className={styles.page}>
+      <header><a href="/">Shellbound</a><a href="/">Home ↗</a></header>
+      <section className={styles.hero}>
+        <p>Verified launch-build coverage</p>
+        <h1>Mortal Shell II<br /><em>Field Notes.</em></h1>
+        <span>{guideArticles.length} independent guides // Map in development</span>
+      </section>
+      <section className={styles.grid}>
+        {guideArticles.map((article, index) => (
+          <a href={`/guides/${article.slug}`} key={article.slug}>
+            <span>{String(index + 1).padStart(2, "0")} / {article.category}</span>
+            <h2>{article.heading}</h2>
+            <p>{article.quickAnswer}</p>
+            <i>Read guide ↗</i>
+          </a>
+        ))}
+      </section>
+    </main>
+  );
+}
