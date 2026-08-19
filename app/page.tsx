@@ -103,6 +103,7 @@ const paths = [
     title: "Possess the fallen",
     copy: "Eight warriors. Eight ways to survive.",
     image: "/ms2-shot-03.webp",
+    alt: "An armored Mortal Shell II warrior wielding a hooked polearm against a towering creature",
     href: "#guides",
   },
   {
@@ -111,6 +112,7 @@ const paths = [
     title: "Choose your violence",
     copy: "Weapons, sidearms, posture breaks, upgrades.",
     image: "/ms2-shot-12.webp",
+    alt: "A heavily armored Mortal Shell II warrior swinging a broad axe through a group of enemies",
     href: "#guides",
   },
   {
@@ -119,6 +121,7 @@ const paths = [
     title: "Know what hunts you",
     copy: "Enemy reads and spoiler-shielded boss prep.",
     image: "/ms2-shot-04.webp",
+    alt: "A mysterious Mortal Shell II figure playing an accordion in a firelit cavern",
     href: "#guides",
   },
   {
@@ -127,6 +130,7 @@ const paths = [
     title: "Map the Undermether",
     copy: "Routes, landmarks, dungeons, hidden paths.",
     image: "/ms2-combat.webp",
+    alt: "A ruined stone fortress under a gray sky in Mortal Shell II",
     href: "#route",
   },
 ];
@@ -270,7 +274,7 @@ export default function Home() {
         <div className="path-grid">
           {paths.map((path) => (
             <a className="path-card" href={path.href} key={path.label}>
-              <img src={path.image} alt="" />
+              <img src={path.image} alt={path.alt} />
               <span className="path-shade" />
               <div className="path-index">/{path.index}</div>
               <div className="path-content">
@@ -404,7 +408,10 @@ export default function Home() {
       </section>
 
       <section className="closing-section">
-        <img src="/ms2-shot-03.webp" alt="" />
+        <img
+          src="/ms2-shot-03.webp"
+          alt="An armored warrior confronting a skeletal beast in a frozen Mortal Shell II landscape"
+        />
         <div className="closing-shade" />
         <div className="closing-copy">
           <p className="eyebrow">The archive lives</p>

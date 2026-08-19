@@ -1,14 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-async function render() {
+async function render(path = "/", accept = "text/html") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
-      headers: { accept: "text/html" },
+    new Request(`http://localhost${path}`, {
+      headers: { accept },
     }),
     {
       ASSETS: {
@@ -33,5 +33,23 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /Everything that can kill you/);
   assert.match(html, /Confirmed game intel/);
   assert.match(html, /Search Shells, weapons, bosses/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/mortalshell2guide\.org\/?"/i);
+  assert.match(
+    html,
+    /Master Mortal Shell II with spoiler-aware routes, Shell builds, weapon tactics, boss preparation, dungeon guidance, and launch-week field notes\./,
+  );
+  assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+});
+
+test("publishes sitemap and robots discovery files", async () => {
+  const sitemapResponse = await render("/sitemap.xml", "application/xml");
+  assert.equal(sitemapResponse.status, 200);
+  assert.match(await sitemapResponse.text(), /https:\/\/mortalshell2guide\.org\//);
+
+  const robotsResponse = await render("/robots.txt", "text/plain");
+  assert.equal(robotsResponse.status, 200);
+  const robots = await robotsResponse.text();
+  assert.match(robots, /Allow: \//);
+  assert.match(robots, /Sitemap: https:\/\/mortalshell2guide\.org\/sitemap\.xml/);
 });

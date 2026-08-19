@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,33 +12,39 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
-  const title = "Shellbound — Mortal Shell II Field Guide";
-  const description =
-    "Spoiler-aware routes, Shell builds, weapon doctrine, and boss preparation for Mortal Shell II.";
+const title = "Shellbound — Mortal Shell II Field Guide";
+const description =
+  "Master Mortal Shell II with spoiler-aware routes, Shell builds, weapon tactics, boss preparation, dungeon guidance, and launch-week field notes.";
 
-  return {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://mortalshell2guide.org"),
+  title,
+  description,
+  alternates: {
+    canonical: "https://mortalshell2guide.org/",
+  },
+  openGraph: {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      siteName: "Shellbound",
-      images: [{ url: `${origin}/og.png`, width: 1672, height: 941, alt: title }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${origin}/og.png`],
-    },
-  };
-}
+    type: "website",
+    siteName: "Shellbound",
+    url: "https://mortalshell2guide.org/",
+    images: [
+      {
+        url: "/og.png",
+        width: 1672,
+        height: 941,
+        alt: "Shellbound Mortal Shell II Field Guide social preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og.png"],
+  },
+};
 
 export default function RootLayout({
   children,
