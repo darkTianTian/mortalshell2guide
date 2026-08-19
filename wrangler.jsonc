@@ -6,6 +6,16 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "mortalshell2guide.org",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.mortalshell2guide.org",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "dist/client",
     "binding": "ASSETS"
