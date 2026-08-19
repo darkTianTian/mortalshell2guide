@@ -29,9 +29,9 @@ test("server-renders the Shellbound field guide", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Shellbound — Mortal Shell II Field Guide<\/title>/i);
-  assert.match(html, /Enter the Undermether/);
-  assert.match(html, /The first 90 minutes/);
-  assert.match(html, /Confirmed launch intel/);
-  assert.match(html, /Search tactics, routes, systems/);
+  assert.match(html, /Survive the/);
+  assert.match(html, /Everything that can kill you/);
+  assert.match(html, /Confirmed game intel/);
+  assert.match(html, /Search Shells, weapons, bosses/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
