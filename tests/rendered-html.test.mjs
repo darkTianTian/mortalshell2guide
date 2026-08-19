@@ -55,6 +55,8 @@ test("server-renders the Shellbound field guide", async () => {
     html,
     /Master Mortal Shell II with spoiler-aware routes, Shell builds, weapon tactics, boss preparation, dungeon guidance, and launch-week field notes\./,
   );
+  assert.match(html, /<link rel="icon" href="\/icon\.png\?[^\"]+" sizes="512x512" type="image\/png"\/>/i);
+  assert.match(html, /<link rel="apple-touch-icon" href="\/apple-icon\.png\?[^\"]+" sizes="180x180" type="image\/png"\/>/i);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
