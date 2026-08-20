@@ -9,7 +9,7 @@ import {
   mapSources,
 } from "../app/map/map-data";
 
-assert.equal(guideArticles.length, 19, "expected nineteen launch guide pages");
+assert.equal(guideArticles.length, 24, "expected twenty-four launch guide pages");
 assert.equal(guideArticleMap.size, guideArticles.length, "guide slugs must be unique");
 
 for (const article of guideArticles) {

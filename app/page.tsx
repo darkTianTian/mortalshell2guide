@@ -13,6 +13,51 @@ type Guide = {
 
 const guides: Guide[] = [
   {
+    id: "blackmarrow-key",
+    category: "Items",
+    title: "Use Blackmarrow Keys",
+    excerpt:
+      "Verified key sources, Marrow Keep Shade chests, Night Mode routes, and similar-key warnings.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "smert",
+    category: "Shells",
+    title: "Unlock and build Smert",
+    excerpt:
+      "Prophet's Rest, three blood pools, The Convert memory, Miracle, Chaos, and safe Overtime use.",
+    readTime: "8 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "ps5",
+    category: "Platform",
+    title: "PS5 and PS5 Pro guide",
+    excerpt:
+      "Performance and quality modes, install size, current fixes, editions, and trophy protection.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "sidearms",
+    category: "Arsenal",
+    title: "Find all eight Sidearms",
+    excerpt:
+      "Every location and combat role, plus Obsidian Lathe upgrades and the best first investments.",
+    readTime: "9 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "hall-of-murmurs",
+    category: "World",
+    title: "Hall of Murmurs and Egon",
+    excerpt:
+      "The Castigator's Keep dungeon, all rewards, Egon's location, and the Feed Me trophy route.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
     id: "genessa",
     category: "Shells",
     title: "Unlock and build Genessa",
@@ -140,6 +185,8 @@ const categories = [
   "Routes",
   "Progression",
   "Updates",
+  "Items",
+  "Platform",
 ];
 
 const paths = [
