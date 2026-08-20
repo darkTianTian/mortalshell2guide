@@ -94,7 +94,7 @@ export default function MapPage() {
             <span>{mapMarkers.length} essential markers</span>
             <span>Boss spoiler shield</span>
             <span>Progress saved on this device</span>
-            <span>Updated August 20, 2026</span>
+            <span>Updated August 21, 2026</span>
           </div>
         </div>
       </section>
