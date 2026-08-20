@@ -35,6 +35,11 @@ const eslintConfig = defineConfig([
         version: "detect",
       },
     },
+    rules: {
+      // Vinext's current client Link runtime fails on production RSC navigation.
+      // Plain anchors intentionally provide reliable full-page navigation.
+      "@next/next/no-html-link-for-pages": "off",
+    },
   },
 ]);
 

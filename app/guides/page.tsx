@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { guideArticles } from "./articles";
 import styles from "./guides.module.css";
 
@@ -12,11 +11,11 @@ export const metadata: Metadata = {
 export default function GuidesIndex() {
   return (
     <main className={styles.page}>
-      <header><Link href="/">Shellbound</Link><span><Link href="/map">Interactive map</Link> · <Link href="/">Home ↗</Link></span></header>
+      <header><a href="/">Shellbound</a><span><a href="/map">Interactive map</a> · <a href="/">Home ↗</a></span></header>
       <section className={styles.hero}>
         <p>Verified launch-build coverage</p>
         <h1>Mortal Shell II<br /><em>Field Notes.</em></h1>
-        <span>{guideArticles.length} independent guides // <Link href="/map">Interactive map live ↗</Link></span>
+        <span>{guideArticles.length} independent guides // <a href="/map">Interactive map live ↗</a></span>
       </section>
       <section className={styles.grid}>
         {guideArticles.map((article, index) => (

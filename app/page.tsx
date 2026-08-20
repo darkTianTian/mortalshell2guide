@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Guide = {
@@ -193,11 +192,11 @@ export default function Home() {
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <Link href="/guides/shell-locations">Shells</Link>
-          <Link href="/guides/weapon-tier-list">Arsenal</Link>
-          <Link href="/guides/bosses">Bosses</Link>
-          <Link href="/map">Map</Link>
-          <Link href="/guides">All Guides</Link>
+          <a href="/guides/shell-locations">Shells</a>
+          <a href="/guides/weapon-tier-list">Arsenal</a>
+          <a href="/guides/bosses">Bosses</a>
+          <a href="/map">Map</a>
+          <a href="/guides">All Guides</a>
         </nav>
         <a className="launch-status" href="#intel">
           <span /> Launch build 1.0
@@ -226,9 +225,9 @@ export default function Home() {
             <a className="button button-primary" href="#route">
               Begin the first route <span aria-hidden="true">→</span>
             </a>
-            <Link className="button button-ghost" href="/guides">
+            <a className="button button-ghost" href="/guides">
               Open the codex
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -238,7 +237,7 @@ export default function Home() {
             <span>Featured field note</span>
             <strong>What to do before the first false god</strong>
           </div>
-          <Link href="/guides/bosses" aria-label="Read the featured field note">↗</Link>
+          <a href="/guides/bosses" aria-label="Read the featured field note">↗</a>
         </div>
 
         <div className="hero-rail" aria-hidden="true">
@@ -302,7 +301,7 @@ export default function Home() {
             Freedom from a stamina gauge changes the question. You are no longer
             asking whether you can swing—you are asking whether the enemy can answer.
           </p>
-          <Link href="/guides/tarstones">Study the combat system <span>→</span></Link>
+          <a href="/guides/tarstones">Study the combat system <span>→</span></a>
         </div>
         <ol className="doctrine-list">
           <li><span>01</span><strong>Close distance</strong><small>Make them commit first.</small></li>

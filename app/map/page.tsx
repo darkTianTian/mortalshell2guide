@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import InteractiveMap from "./InteractiveMap";
 import {
   MAP_UPDATED_AT,
@@ -60,17 +59,17 @@ export default function MapPage() {
       />
 
       <header className={styles.header}>
-        <Link className={styles.brand} href="/">
+        <a className={styles.brand} href="/">
           <span aria-hidden="true">S</span>
           <div><strong>Shellbound</strong><small>Mortal Shell II codex</small></div>
-        </Link>
+        </a>
         <nav aria-label="Map navigation">
-          <Link href="/guides">All guides</Link>
-          <Link href="/guides/shell-locations">Shells</Link>
-          <Link href="/guides/weapon-tier-list">Weapons</Link>
-          <Link href="/guides/bosses">Bosses</Link>
+          <a href="/guides">All guides</a>
+          <a href="/guides/shell-locations">Shells</a>
+          <a href="/guides/weapon-tier-list">Weapons</a>
+          <a href="/guides/bosses">Bosses</a>
         </nav>
-        <Link className={styles.homeLink} href="/">Return home ↗</Link>
+        <a className={styles.homeLink} href="/">Return home ↗</a>
       </header>
 
       <section className={styles.hero}>
@@ -83,7 +82,7 @@ export default function MapPage() {
         <div className={styles.heroGrid} aria-hidden="true" />
         <div className={styles.heroContent}>
           <div className={styles.breadcrumbs}>
-            <Link href="/">Home</Link><span>/</span><span>Interactive map</span>
+            <a href="/">Home</a><span>/</span><span>Interactive map</span>
           </div>
           <p className={styles.kicker}>World record // Launch build 1.0</p>
           <h1>{mapPageMeta.heading}</h1>
@@ -143,7 +142,7 @@ export default function MapPage() {
           Independent fan guide. Base map art © Cold Symmetry and Playstack; used for
           editorial identification. Marker text and interface © Shellbound.
         </span>
-        <Link href="/">Shellbound home ↑</Link>
+        <a href="/">Shellbound home ↑</a>
       </footer>
     </main>
   );
