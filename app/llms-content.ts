@@ -1,5 +1,6 @@
 import { guideArticleMap, guideArticles } from "./guides/articles";
 import type { GuideArticle } from "./guides/types";
+import { CURRENT_VERIFICATION, getGuideEnhancement } from "./guides/enhancements";
 import {
   MAP_UPDATED_AT,
   mapCategories,
@@ -101,6 +102,7 @@ ${sources}`;
 }
 
 function articleToMarkdown(article: GuideArticle) {
+  const enhancement = getGuideEnhancement(article);
   const sections = article.sections
     .map((section) => {
       const bullets = section.bullets?.length
@@ -117,6 +119,9 @@ function articleToMarkdown(article: GuideArticle) {
     .filter((item): item is GuideArticle => Boolean(item))
     .map((item) => `- [${item.title}](${articleUrl(item)})`)
     .join("\n");
+  const faqs = enhancement.faqs
+    .map((faq) => `### ${faq.question}\n\n${faq.answer}`)
+    .join("\n\n");
 
   return `# ${article.title}
 
@@ -125,6 +130,15 @@ Primary keyword: ${article.keyword}
 Category: ${article.category}  
 Spoiler level: ${article.spoiler}  
 Last updated: ${article.updatedAt}
+Verification: ${CURRENT_VERIFICATION}
+
+## At a glance
+
+- Start: ${enhancement.start}
+- Objective: ${enhancement.goal}
+- Result: ${enhancement.result}
+- Watch for: ${enhancement.risk}
+- Map: ${siteUrl}${enhancement.mapUrl}
 
 ## Quick answer
 
@@ -135,6 +149,10 @@ ${article.quickAnswer}
 ${article.intro.join("\n\n")}
 
 ${sections}
+
+## Frequently asked questions
+
+${faqs}
 
 ## Sources checked
 

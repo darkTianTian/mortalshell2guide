@@ -8,9 +8,11 @@ import {
   mapPageMeta,
   mapSources,
 } from "../app/map/map-data";
+import { guideExtras, getGuideEnhancement } from "../app/guides/enhancements";
 
-assert.equal(guideArticles.length, 24, "expected twenty-four launch guide pages");
+assert.equal(guideArticles.length, 33, "expected thirty-three launch guide pages");
 assert.equal(guideArticleMap.size, guideArticles.length, "guide slugs must be unique");
+assert.equal(Object.keys(guideExtras).length, guideArticles.length, "every guide needs a structured enhancement");
 
 for (const article of guideArticles) {
   const words = articleWordCount(article);
@@ -24,16 +26,19 @@ for (const article of guideArticles) {
   for (const relatedSlug of article.related) {
     assert.ok(guideArticleMap.has(relatedSlug), `${article.slug} links to missing ${relatedSlug}`);
   }
+  const enhancement = getGuideEnhancement(article);
+  assert.ok(enhancement.start && enhancement.goal && enhancement.result && enhancement.risk, `${article.slug} needs complete at-a-glance data`);
+  assert.ok(enhancement.faqs.length >= 3, `${article.slug} needs at least three FAQs`);
 }
 
 assert.ok(mapEditorialWordCount() >= 600, `map page has only ${mapEditorialWordCount()} editorial words`);
 assert.ok(mapPageMeta.title.length >= 50 && mapPageMeta.title.length <= 60, `map title length is ${mapPageMeta.title.length}`);
 assert.ok(mapPageMeta.description.length >= 140 && mapPageMeta.description.length <= 160, `map description length is ${mapPageMeta.description.length}`);
-assert.equal(mapMarkers.length, 59, "expected 59 curated launch map markers");
+assert.equal(mapMarkers.length, 88, "expected 88 curated launch map markers");
 assert.equal(new Set(mapMarkers.map((marker) => marker.id)).size, mapMarkers.length, "map marker ids must be unique");
 assert.deepEqual(
   Object.fromEntries(mapCategories.map((category) => [category.id, mapMarkers.filter((marker) => marker.category === category.id).length])),
-  { hub: 7, shell: 8, weapon: 8, tarstone: 7, fragment: 11, key: 2, gate: 6, boss: 10 },
+  { hub: 7, shell: 8, weapon: 8, sidearm: 8, tarstone: 7, fragment: 11, key: 5, npc: 8, dungeon: 3, night: 2, upgrade: 5, gate: 6, boss: 10 },
   "map category counts changed unexpectedly",
 );
 for (const marker of mapMarkers) {

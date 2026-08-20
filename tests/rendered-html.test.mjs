@@ -26,6 +26,15 @@ const guideSlugs = [
   "ps5",
   "sidearms",
   "hall-of-murmurs",
+  "npc-questlines",
+  "night-mode",
+  "tarforge",
+  "trophies",
+  "new-game-plus",
+  "tiel",
+  "proxima",
+  "lazlo",
+  "sariel",
 ];
 
 async function render(path = "/", accept = "text/html") {
@@ -62,7 +71,7 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /Search Shells, weapons, bosses/);
   assert.match(html, /<a href="\/guides">All Guides<\/a>/);
   assert.match(html, /<a href="\/map">Map<\/a>/);
-  for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu", "blackmarrow-key", "smert", "ps5", "sidearms", "hall-of-murmurs"]) {
+  for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu", "blackmarrow-key", "smert", "ps5", "sidearms", "hall-of-murmurs", "npc-questlines", "night-mode", "tarforge", "trophies", "new-game-plus", "tiel", "proxima", "lazlo", "sariel"]) {
     assert.match(html, new RegExp(`href="/guides/${slug}"`));
   }
   assert.match(html, /<link rel="canonical" href="https:\/\/mortalshell2guide\.org\/?"/i);
@@ -82,8 +91,8 @@ test("publishes sitemap and robots discovery files", async () => {
   assert.equal(sitemapResponse.status, 200);
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\//);
-  assert.match(sitemap, /<lastmod>2026-08-20T00:00:00\.000Z<\/lastmod>/);
-  assert.equal((sitemap.match(/<url>/g) ?? []).length, 27);
+  assert.match(sitemap, /<lastmod>2026-08-21T00:00:00\.000Z<\/lastmod>/);
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 36);
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\/map/);
   for (const slug of guideSlugs) {
     assert.match(sitemap, new RegExp(`https://mortalshell2guide\\.org/guides/${slug}`));
@@ -102,7 +111,7 @@ test("publishes automatic LLM indexes from the guide corpus", async () => {
   assert.match(indexResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
   const index = await indexResponse.text();
   assert.match(index, /^# Shellbound — Mortal Shell II Field Guide/m);
-  assert.match(index, /Latest content update: 2026-08-20/);
+  assert.match(index, /Latest content update: 2026-08-21/);
   assert.match(index, /https:\/\/mortalshell2guide\.org\/llms-full\.txt/);
   assert.match(index, /https:\/\/mortalshell2guide\.org\/map/);
   for (const slug of guideSlugs) {
@@ -131,7 +140,7 @@ test("renders the verified interactive map with SEO metadata and discovery conte
   assert.ok(description.length >= 140 && description.length <= 160, `map description length ${description.length}`);
   assert.match(html, /<link rel="canonical" href="https:\/\/mortalshell2guide\.org\/map"/i);
   assert.match(html, /Find the next thing that changes your run/);
-  assert.match(html, /59(?:<!-- -->)? essential markers/);
+  assert.match(html, /88(?:<!-- -->)? essential markers/);
   assert.match(html, /Marrow Keep/);
   assert.match(html, /Map sources checked/);
   assert.match(html, /ms2-interactive-world-map\.webp/);
@@ -149,6 +158,8 @@ test("renders every guide with compliant metadata and internal navigation", asyn
     assert.ok(description.length >= 140 && description.length <= 160, `${slug} description length ${description.length}`);
     assert.match(html, new RegExp(`<link rel="canonical" href="https://mortalshell2guide\\.org/guides/${slug}`));
     assert.match(html, /Sources checked/);
+    assert.match(html, /Guide at a glance|Retail build/);
+    assert.match(html, /Frequently asked questions/);
     assert.match(html, /Related field notes/);
     assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   }

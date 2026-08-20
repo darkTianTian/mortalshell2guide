@@ -64,6 +64,29 @@ export default function InteractiveMap() {
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
+  useEffect(() => {
+    const markerId = new URLSearchParams(window.location.search).get("marker");
+    const linkedMarker = markerId ? markerById.get(markerId) : undefined;
+    if (!linkedMarker) return;
+    const frame = window.requestAnimationFrame(() => {
+      setSelectedId(linkedMarker.id);
+      if (linkedMarker.spoiler === "major") setShowSpoilers(true);
+      const viewport = viewportRef.current;
+      if (viewport) {
+        const { width, height } = viewport.getBoundingClientRect();
+        const scale = 1.7;
+        const rawX = width / 2 - (linkedMarker.x / 100) * width * scale;
+        const rawY = height / 2 - (linkedMarker.y / 100) * height * scale;
+        setView({
+          scale,
+          x: Math.min(0, Math.max(-(scale - 1) * width, rawX)),
+          y: Math.min(0, Math.max(-(scale - 1) * height, rawY)),
+        });
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   const visibleMarkers = useMemo(
     () =>
       mapMarkers.filter((item) => {

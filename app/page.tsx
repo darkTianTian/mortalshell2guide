@@ -13,6 +13,87 @@ type Guide = {
 
 const guides: Guide[] = [
   {
+    id: "npc-questlines",
+    category: "NPCs",
+    title: "Complete NPC questlines",
+    excerpt:
+      "Verified routes for Gorf, Hilga, Baghead, Egon, Gragu, Vlas, hub characters, and reset steps.",
+    readTime: "9 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "night-mode",
+    category: "World",
+    title: "Unlock Night Mode",
+    excerpt:
+      "Gloombound Flame, Thestus, difficulty changes, night merchants, hidden dungeons, and daylight return.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "tarforge",
+    category: "Progression",
+    title: "Restore the Tarforge",
+    excerpt:
+      "All five components for weapons, Sidearms, Tarstones, smelting refunds, and the final upgrade cap.",
+    readTime: "9 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "trophies",
+    category: "Completion",
+    title: "Trophies and 100% checklist",
+    excerpt:
+      "Platform counts, hidden objectives, missable NPC steps, Slayer Seal warning, and a safe cleanup route.",
+    readTime: "10 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "new-game-plus",
+    category: "Completion",
+    title: "Prepare for New Game Plus",
+    excerpt:
+      "Send Ova, every confirmed carryover and reset, Ovum survival, and the complete pre-NG+ checklist.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "tiel",
+    category: "Shells",
+    title: "Build Tiel for Shadow",
+    excerpt:
+      "The torch-lit grave, Rash Memory flask, Shadow Dash timing, fast weapons, and boss pressure.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "proxima",
+    category: "Shells",
+    title: "Control fights with Proxima",
+    excerpt:
+      "Shattered Beacon, Biosampler memory, Lightning pulls, mitigation, weapons, and safe positioning.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "lazlo",
+    category: "Shells",
+    title: "Build Lazlo as a tank",
+    excerpt:
+      "Royal Crypt, Vellen, Heat and Overheat cycles, Retribution, Burn pressure, and armor recovery.",
+    readTime: "8 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "sariel",
+    category: "Shells",
+    title: "End Sariel's revivals",
+    excerpt:
+      "Silent Steps, Chamber of Becoming, four tablets, Scythe, Caged Hystrix, and Pain recovery.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
     id: "blackmarrow-key",
     category: "Items",
     title: "Use Blackmarrow Keys",
@@ -187,6 +268,8 @@ const categories = [
   "Updates",
   "Items",
   "Platform",
+  "NPCs",
+  "Completion",
 ];
 
 const paths = [
@@ -221,7 +304,7 @@ const paths = [
     index: "04",
     label: "World",
     title: "Chart the Undermether",
-    copy: "Zoom, filter, search, and track 59 verified essentials.",
+    copy: "Zoom, filter, search, and track 88 verified essentials.",
     image: "/ms2-combat.webp",
     alt: "A ruined stone fortress under a gray sky in Mortal Shell II",
     href: "/map",

@@ -59,9 +59,14 @@
 .pin[data-category="hub"] { --pin:#ffae61; }
 .pin[data-category="shell"] { --pin:#70c9c1; }
 .pin[data-category="weapon"] { --pin:#d9d1bd; }
+.pin[data-category="sidearm"] { --pin:#72b8a7; }
 .pin[data-category="tarstone"] { --pin:#b9984b; }
 .pin[data-category="fragment"] { --pin:#85a9c8; }
 .pin[data-category="key"] { --pin:#9cb86d; }
+.pin[data-category="npc"] { --pin:#c79acb; }
+.pin[data-category="dungeon"] { --pin:#7996b8; }
+.pin[data-category="night"] { --pin:#6f75c8; }
+.pin[data-category="upgrade"] { --pin:#b8a66f; }
 .pin[data-category="gate"] { --pin:#9e7fc5; }
 .pin[data-category="boss"] { --pin:#d8573f; }
 .mapControls { position:absolute; right:14px; bottom:14px; z-index:8; display:flex; border:1px solid rgba(255,255,255,.22); background:#090a08e8; box-shadow:0 8px 25px #0008; }

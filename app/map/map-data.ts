@@ -1,9 +1,9 @@
-export const MAP_UPDATED_AT = "2026-08-20";
+export const MAP_UPDATED_AT = "2026-08-21";
 
 export const mapPageMeta = {
   title: "Mortal Shell 2 Interactive Map: Shells, Gear & Bosses",
   description:
-    "Use our Mortal Shell 2 interactive map to find all eight permanent Shells, all primary weapons, Corrupted Gates, major bosses, map fragments, keys, and hubs.",
+    "Use our Mortal Shell 2 interactive map to find all Shells, primary weapons, Sidearms, Corrupted Gates, bosses, fragments, keys, NPCs, and useful hubs.",
   heading: "The Undermether, charted",
   canonical: "https://mortalshell2guide.org/map",
 };
@@ -12,9 +12,14 @@ export type MapCategory =
   | "hub"
   | "shell"
   | "weapon"
+  | "sidearm"
   | "tarstone"
   | "fragment"
   | "key"
+  | "npc"
+  | "dungeon"
+  | "night"
+  | "upgrade"
   | "gate"
   | "boss";
 
@@ -28,7 +33,13 @@ export type MapSourceId =
   | "tarstones"
   | "bosses"
   | "keys"
-  | "fragments";
+  | "fragments"
+  | "sidearm-routes"
+  | "npc-routes"
+  | "dungeon-routes"
+  | "night-routes"
+  | "upgrade-routes"
+  | "blackmarrow";
 
 export type MapMarker = {
   id: string;
@@ -54,9 +65,14 @@ export const mapCategories: Array<{
   { id: "hub", label: "Hubs & services", shortLabel: "Hubs", symbol: "H" },
   { id: "shell", label: "Permanent Shells", shortLabel: "Shells", symbol: "S" },
   { id: "weapon", label: "Primary weapons", shortLabel: "Weapons", symbol: "W" },
+  { id: "sidearm", label: "Sidearms", shortLabel: "Sidearms", symbol: "R" },
   { id: "tarstone", label: "Key Tarstones", shortLabel: "Stones", symbol: "T" },
   { id: "fragment", label: "Map fragments", shortLabel: "Fragments", symbol: "F" },
   { id: "key", label: "Progression keys", shortLabel: "Keys", symbol: "K" },
+  { id: "npc", label: "NPC routes", shortLabel: "NPCs", symbol: "N" },
+  { id: "dungeon", label: "Optional dungeons", shortLabel: "Dungeons", symbol: "D" },
+  { id: "night", label: "Night Mode", shortLabel: "Night", symbol: "M" },
+  { id: "upgrade", label: "Tarforge upgrades", shortLabel: "Upgrades", symbol: "U" },
   { id: "gate", label: "Corrupted Gates", shortLabel: "Gates", symbol: "G" },
   { id: "boss", label: "Major bosses", shortLabel: "Bosses", symbol: "B" },
 ];
@@ -125,6 +141,42 @@ export const mapSources: Record<
     type: "Editorial",
     note: "Five Fainweald and six Mammon fragment routes, checked against the current map count.",
   },
+  "sidearm-routes": {
+    label: "Current eight-Sidearm locations and roles",
+    url: "https://nerdschalk.com/all-mortal-shell-2-sidearms-and-how-they-work/",
+    type: "Editorial",
+    note: "Retail eight-item roster, combat roles, and location cross-checks.",
+  },
+  "npc-routes": {
+    label: "Current NPC and quest-character database",
+    url: "https://nerdschalk.com/all-mortal-shell-2-npcs-and-quest-characters/",
+    type: "Editorial",
+    note: "Retail NPC names and verified encounter states; incomplete quests remain labeled as route anchors.",
+  },
+  "dungeon-routes": {
+    label: "Retail dungeon and hidden-area index",
+    url: "https://nerdschalk.com/all-mortal-shell-2-dungeons-and-hidden-areas/",
+    type: "Editorial",
+    note: "Named dungeon regions and current entrance or reward guidance.",
+  },
+  "night-routes": {
+    label: "Night Mode secrets and merchant routes",
+    url: "https://allthings.how/mortal-shell-2-how-to-turn-on-night-mode-with-the-gloombound-flame/",
+    type: "Editorial",
+    note: "Launch Night Mode activation, exclusive areas, and key sources.",
+  },
+  "upgrade-routes": {
+    label: "All five Tarforge components",
+    url: "https://nerdschalk.com/mortal-shell-2-tarforge-upgrade-items-locations/",
+    type: "Editorial",
+    note: "Retail component functions and route landmarks, cross-checked August 21, 2026.",
+  },
+  blackmarrow: {
+    label: "Blackmarrow Key and Shade-chest reports",
+    url: "https://www.reddit.com/r/MortalShell/comments/1vqxyai/secret_area/",
+    type: "Community",
+    note: "Current Marrow Keep cosmetic-chest use and hidden-route reports; similar key names remain separate.",
+  },
 };
 
 const MAP_MIN = 6800;
@@ -148,6 +200,12 @@ const common = {
   bosses: ["official", "gamer-guides", "bosses"] as MapSourceId[],
   keys: ["official", "gamer-guides", "keys"] as MapSourceId[],
   fragments: ["gamer-guides", "fragments", "map-community"] as MapSourceId[],
+  sidearms: ["official", "gamer-guides", "sidearm-routes"] as MapSourceId[],
+  npcs: ["official", "gamer-guides", "npc-routes"] as MapSourceId[],
+  dungeons: ["official", "gamer-guides", "dungeon-routes"] as MapSourceId[],
+  night: ["official", "night-routes", "map-community"] as MapSourceId[],
+  upgrades: ["official", "gamer-guides", "upgrade-routes"] as MapSourceId[],
+  blackmarrow: ["gamer-guides", "blackmarrow", "night-routes"] as MapSourceId[],
 };
 
 export const mapMarkers: MapMarker[] = [
@@ -159,14 +217,14 @@ export const mapMarkers: MapMarker[] = [
   marker({ id: "outskirts-mammon", title: "Outskirts of Mammon", category: "hub", region: "Mammon", summary: "The main staging point for Mammon routes and the six regional map fragments.", routeHint: "Treat this as the reset point before choosing the Road to Absolution or the southwest bridge network.", point: [9935, 10593], sourceIds: common.world, relatedGuide: "walkthrough" }),
   marker({ id: "sesters-gate", title: "Sester's Gate", category: "hub", region: "Mammon", summary: "A late-region landmark close to Shell, weapon, and Conquered Temple objectives.", routeHint: "Use this gate to separate the temple approach from the deeper surrounding routes.", point: [11185, 11525], sourceIds: common.world, relatedGuide: "beacons" }),
 
-  marker({ id: "shell-tiel", title: "Tiel, the Acolyte", category: "shell", region: "Mushroom Village", summary: "A fast permanent Shell whose Shadow tools reward clean dodges and quick re-entry.", routeHint: "Search the Mushroom Village area after securing its gate; this is normally the first permanent Shell route players pursue.", point: [10366, 9132], sourceIds: common.shells, relatedGuide: "shell-locations" }),
+  marker({ id: "shell-tiel", title: "Tiel, the Acolyte", category: "shell", region: "Mushroom Village", summary: "A fast permanent Shell whose Shadow tools reward clean dodges and quick re-entry.", routeHint: "Search the Mushroom Village area after securing its gate; this is normally the first permanent Shell route players pursue.", point: [10366, 9132], sourceIds: common.shells, relatedGuide: "tiel" }),
   marker({ id: "shell-eredrim", title: "Eredrim, the Venerable", category: "shell", region: "Nochte", summary: "The high-durability permanent Shell and a strong option for learning unfamiliar bosses.", routeHint: "The body is near the Warden route in northwestern Nochte, not at Marrow Keep itself.", point: [9071, 8443], sourceIds: common.shells, relatedGuide: "eredrim" }),
-  marker({ id: "shell-proxima", title: "Proxima, the Broodseeker", category: "shell", region: "Northern Fainweald", summary: "A control-focused permanent Shell with strong mitigation and grouping utility.", routeHint: "Approach the northern route beyond the central Fainweald landmarks and watch for a side path rather than a dungeon entrance.", point: [10153, 8213], sourceIds: common.shells, relatedGuide: "shell-locations" }),
+  marker({ id: "shell-proxima", title: "Proxima, the Broodseeker", category: "shell", region: "Northern Fainweald", summary: "A control-focused permanent Shell with strong mitigation and grouping utility.", routeHint: "Approach the northern route beyond the central Fainweald landmarks and watch for a side path rather than a dungeon entrance.", point: [10153, 8213], sourceIds: common.shells, relatedGuide: "proxima" }),
   marker({ id: "shell-genessa", title: "Genessa, the Wayward", category: "shell", region: "Marrow Keep", summary: "A summon-oriented permanent Shell found in the central hub area.", routeHint: "Search the Sester Genessa side of Marrow Keep; the Shell marker and the service NPC are close but distinct.", point: [9576, 9835], sourceIds: common.shells, relatedGuide: "shell-tier-list" }),
   marker({ id: "shell-smert", title: "Smert, the Apostate", category: "shell", region: "Western Fainweald", summary: "A risk-heavy permanent Shell whose time-control ability supports aggressive setups.", routeHint: "Use the western landmark chain from Marrow Keep and check the side route before committing to nearby dungeons.", point: [8828, 9405], sourceIds: common.shells, relatedGuide: "smert" }),
-  marker({ id: "shell-lazlo", title: "Lazlo, the Justiciar", category: "shell", region: "Western Mammon", summary: "A defensive permanent Shell found on the western side of Mammon.", routeHint: "Search around the High Lord route; the Shell is not a reward from the adjacent major boss.", point: [8589, 11239], sourceIds: common.shells, relatedGuide: "shell-locations" }),
+  marker({ id: "shell-lazlo", title: "Lazlo, the Justiciar", category: "shell", region: "Western Mammon", summary: "A defensive permanent Shell found on the western side of Mammon.", routeHint: "Search around the High Lord route; the Shell is not a reward from the adjacent major boss.", point: [8589, 11239], sourceIds: common.shells, relatedGuide: "lazlo" }),
   marker({ id: "shell-gragu", title: "Gragu, the Insatiable", category: "shell", region: "Mushroom Village", summary: "A burst-oriented permanent Shell positioned in the eastern Fainweald network.", routeHint: "Start from Mushroom Village and check the nearby branch rather than entering Glutted Mire immediately.", point: [11152, 8864], sourceIds: common.shells, relatedGuide: "shell-tier-list" }),
-  marker({ id: "shell-sariel", title: "Sariel, the Endless", category: "shell", region: "Vestige of Infinity", summary: "A late permanent Shell found with the Clockwork Scythe route.", routeHint: "Follow the Silent Steps toward the Vestige of Infinity; expect this to be a late-game retrieval rather than an early detour.", point: [10801, 12735], sourceIds: common.shells, relatedGuide: "shell-locations", pinType: "Dungeon anchor" }),
+  marker({ id: "shell-sariel", title: "Sariel, the Endless", category: "shell", region: "Vestige of Infinity", summary: "A late permanent Shell found with the Clockwork Scythe route.", routeHint: "Follow the Silent Steps toward the Vestige of Infinity; expect this to be a late-game retrieval rather than an early detour.", point: [10801, 12735], sourceIds: common.shells, relatedGuide: "sariel", pinType: "Dungeon anchor" }),
 
   marker({ id: "weapon-iconoclast", title: "The Iconoclast (Prologue)", category: "weapon", region: "Prologue", summary: "The temporary prologue primary weapon; included so the complete eight-weapon roster is represented.", routeHint: "This belongs to the linear opening and does not remain the normal permanent route choice after the prologue.", point: [7427, 10173], sourceIds: ["official", "gamer-guides"], relatedGuide: "weapon-tier-list" }),
   marker({ id: "weapon-axe-dagger", title: "Axe & Dagger", category: "weapon", region: "Shrine of Trials", summary: "A flexible dual-form weapon and a strong early target for mobile builds.", routeHint: "Open the Shrine of Trials with the Chapel Key, then complete the weapon route inside.", point: [10235, 8788], sourceIds: common.weapons, relatedGuide: "weapon-tier-list", pinType: "Dungeon anchor" }),
@@ -200,6 +258,41 @@ export const mapMarkers: MapMarker[] = [
   marker({ id: "chapel-key", title: "Chapel Key", category: "key", region: "Mushroom Village", summary: "The progression key used to open the Shrine of Trials and reach Axe & Dagger.", routeHint: "Search south of the Mushroom Village route before returning to the Shrine of Trials.", point: [10500, 9110], sourceIds: common.keys, relatedGuide: "crypt-key" }),
   marker({ id: "crypt-key", title: "Crypt Key", category: "key", region: "Illusionist's Cache", summary: "The progression key needed for the Hall of Echoes route.", routeHint: "Recover it from the Illusionist's Cache in western Fainweald, then carry it to the Hall of Echoes.", point: [8845, 8875], sourceIds: common.keys, relatedGuide: "crypt-key" }),
 
+  marker({ id: "sidearm-naylshotte", title: "Naylshotte", category: "sidearm", region: "Prologue", summary: "The explosive shotgun-style starting Sidearm and the baseline for close-range Resolve burst.", routeHint: "Claim it during the linear prologue and learn its firing rhythm before replacing it.", point: [7427, 10183], sourceIds: common.sidearms, relatedGuide: "sidearms" }),
+  marker({ id: "sidearm-forgotten-crossbow", title: "Forgotten Crossbow", category: "sidearm", region: "Flooded Village", summary: "A precise long-range Sidearm suited to pulling isolated enemies and safe opening damage.", routeHint: "Use Blackridge Pass as the anchor, enter Flooded Village, collect Damp Key, and open the central locked room.", point: [9936, 8457], sourceIds: common.sidearms, relatedGuide: "sidearms", pinType: "Dungeon anchor" }),
+  marker({ id: "sidearm-troubadours-lute", title: "Troubadour's Lute", category: "sidearm", region: "One-Legged Wolf Tavern", summary: "A non-damaging instrument Sidearm that applies Confusion to disrupt nearby enemies.", routeHint: "Enter the tavern after the eastern route opens and inspect the wall behind the performer.", point: [11188, 8832], sourceIds: common.sidearms, relatedGuide: "sidearms" }),
+  marker({ id: "sidearm-salvaged-trebuchaxe", title: "Salvaged Trebuchaxe", category: "sidearm", region: "Ravaged Hideout", summary: "A slow charged Sidearm with strong early single-target burst.", routeHint: "Travel south of Gloomshade Grove, defeat Bloodcursed Lithopod, and clear the hideout interior.", point: [9518, 8547], sourceIds: common.sidearms, relatedGuide: "sidearms", pinType: "Dungeon anchor" }),
+  marker({ id: "sidearm-ballistazooka", title: "Ballistazooka", category: "sidearm", region: "Sentry's Grave", summary: "A heavy ballista Sidearm awarded through the Subjugated Guardian route.", routeHint: "Approach from Gate of Mammon, use the Lonesome Spire portal, and descend to the lowest level.", point: [9300, 11500], sourceIds: common.sidearms, relatedGuide: "sidearms", pinType: "Dungeon anchor" }),
+  marker({ id: "sidearm-cursed-child", title: "Cursed Child", category: "sidearm", region: "Revered Beacon", summary: "A short-range control Sidearm that pushes enemies away from dangerous close pressure.", routeHint: "Enter the Beacon near Sester's Abbey, avoid the tracking golden light, and destroy its source at the top.", point: [10938, 11256], sourceIds: common.sidearms, relatedGuide: "sidearms", pinType: "Dungeon anchor" }),
+  marker({ id: "sidearm-caged-hystrix", title: "Caged Hystrix", category: "sidearm", region: "Chamber of Becoming", summary: "A rapid multishot Sidearm found after the complete Sariel encounter.", routeHint: "Defeat Sariel, collect the arena rewards, then inspect the final exit room before leaving.", point: [10802, 12750], sourceIds: common.sidearms, relatedGuide: "sidearms", pinType: "Dungeon anchor" }),
+  marker({ id: "sidearm-triarch-repeater", title: "Triarch Repeater", category: "sidearm", region: "Blackwell Cavern", summary: "A sustained automatic Sidearm that rewards a long, controlled firing window.", routeHint: "Follow the Castigator's Keep network into Blackwell Cavern and clear the route to its final lighted chamber.", point: [10306, 11543], sourceIds: common.sidearms, relatedGuide: "sidearms", pinType: "Dungeon anchor" }),
+
+  marker({ id: "key-blackmarrow-marrow", title: "Blackmarrow Key — Marrow Keep Secret", category: "key", region: "Marrow Keep", summary: "A mapped Blackmarrow pickup associated with the hidden hub route and Shell Shade chests.", routeHint: "Inspect the wall and chained censer near the Genessa or training area; verify the inventory label because Blackwater is a separate key name.", point: [9677, 10090], sourceIds: common.blackmarrow, relatedGuide: "blackmarrow-key", pinType: "Dungeon anchor" }),
+  marker({ id: "key-blackmarrow-night-merchant", title: "Blackmarrow Key — Night Merchant", category: "key", region: "Abandoned Outpost", summary: "A Blackmarrow Key sold by the merchant who appears at Abandoned Outpost during Night Mode.", routeHint: "Call the night through Thestus, travel to Abandoned Outpost, and check the merchant inventory before returning to daylight.", point: [9270, 10814], sourceIds: common.blackmarrow, relatedGuide: "blackmarrow-key", pinType: "Route anchor" }),
+  marker({ id: "key-blackmarrow-shrine-sorrows", title: "Blackmarrow Key — Shrine of Sorrows", category: "key", region: "Mushroom Village night route", summary: "A Blackmarrow reward from the first-person Shrine of Sorrows Night Mode dungeon.", routeHint: "This pin marks Mushroom Village as the route anchor, not the exact interior reward room; call the night before searching.", point: [10508, 8868], sourceIds: common.blackmarrow, relatedGuide: "blackmarrow-key", pinType: "Route anchor" }),
+
+  marker({ id: "npc-zhirelle", title: "Zhirelle, the Shellkeeper", category: "npc", region: "Marrow Keep", summary: "Reveals most Shell locations for Glimpses and manages Bond and memory progression.", routeHint: "Use Zhirelle deliberately; location reveals compete with the same limited Glimpses needed for Shell development.", point: [9612, 10000], sourceIds: common.npcs, relatedGuide: "shell-locations" }),
+  marker({ id: "npc-sester-genessa", title: "Sester Genessa", category: "npc", region: "Marrow Keep", summary: "The hub NPC who accepts Sester's Censer and connects to Genessa's playable Shell unlock.", routeHint: "Find her below the Marrow Keep Beacon by the wooden ramp after completing Revenant Graves.", point: [9575, 9827], sourceIds: common.npcs, relatedGuide: "genessa" }),
+  marker({ id: "npc-vlas-cart", title: "Vlas — Broken Cart", category: "npc", region: "Mammon approach", summary: "A verified Vlas state beside a broken cart, injured by an arrow and asking for a missing cat.", routeHint: "Preserve the exact dialogue and follow later map states; the complete cat route remains under verification.", point: [9982, 10891], sourceIds: common.npcs, relatedGuide: "npc-questlines", pinType: "Route anchor" }),
+  marker({ id: "npc-vlas-mammon", title: "Vlas — Mammon Route", category: "npc", region: "Western Mammon", summary: "A later mapped Vlas position in the Mammon route chain.", routeHint: "Treat this as a quest-state anchor and confirm that the earlier broken-cart dialogue is complete before searching.", point: [9274, 11519], sourceIds: common.npcs, relatedGuide: "npc-questlines", pinType: "Route anchor" }),
+  marker({ id: "npc-vlas-marrow", title: "Vlas — Marrow Keep Route", category: "npc", region: "Marrow Keep", summary: "A mapped Vlas state close to the central hub after the quest develops.", routeHint: "NPC movement depends on dialogue state; this is not a substitute for completing the current request.", point: [9718, 10147], sourceIds: common.npcs, relatedGuide: "npc-questlines", pinType: "Route anchor" }),
+  marker({ id: "npc-hilga-village", title: "Hilga — Mushroom Village", category: "npc", region: "Mushroom Village", summary: "Accepts the Poisoned Dagger during Gorf's cure quest near the cauldron area.", routeHint: "Cross the small bridge from Mushroom Village Beacon and look beside the large cauldron.", point: [10640, 8928], sourceIds: common.npcs, relatedGuide: "npc-questlines", pinType: "Route anchor" }),
+  marker({ id: "npc-hilga-gorf", title: "Hilga — Gorf Resolution", category: "npc", region: "Widow's Overlook route", summary: "A later Hilga state connected to the resolution of Gorf's cure quest.", routeHint: "Rest after the cauldron hand-in, read Hilga's note, then return toward Gorf and exhaust dialogue.", point: [10031, 8597], sourceIds: common.npcs, relatedGuide: "npc-questlines", pinType: "Route anchor" }),
+  marker({ id: "npc-egon", title: "Egon", category: "npc", region: "Castigator's Keep", summary: "Accepts Gloom in repeated portions for the Feed Me trophy and eventual return.", routeHint: "Search the central tower ground floor; Hall of Murmurs is nearby regional content, not Egon's room.", point: [10124, 11793], sourceIds: common.npcs, relatedGuide: "hall-of-murmurs", pinType: "Dungeon anchor" }),
+
+  marker({ id: "dungeon-hall-of-murmurs", title: "Hall of Murmurs", category: "dungeon", region: "Castigator's Keep", summary: "A short optional dungeon with five enemies, 750 Coins, and one Laterite in current reporting.", routeHint: "Go southwest from Castigator's Keep Beacon, descend beyond the courtyard, and use the right-side lever at the apparent dead end.", point: [10105, 12037], sourceIds: common.dungeons, relatedGuide: "hall-of-murmurs", pinType: "Dungeon anchor" }),
+  marker({ id: "dungeon-holding-cells-nochte", title: "Holding Cells — Nochte Route", category: "dungeon", region: "Northern Nochte", summary: "One of the mapped Holding Cells interiors in the northern route network.", routeHint: "This point is an interior anchor; use nearby Citadel and Nochte landmarks rather than walking directly across the world map.", point: [9200, 8172], sourceIds: common.dungeons, relatedGuide: "walkthrough", pinType: "Dungeon anchor" }),
+  marker({ id: "dungeon-holding-cells-fainweald", title: "Holding Cells — Fainweald Route", category: "dungeon", region: "Northern Fainweald", summary: "A second mapped Holding Cells interior in the Fainweald route cluster.", routeHint: "Treat the pin as a dungeon anchor and verify the entrance label before recording completion.", point: [10192, 8677], sourceIds: common.dungeons, relatedGuide: "walkthrough", pinType: "Dungeon anchor" }),
+
+  marker({ id: "night-abandoned-outpost", title: "Abandoned Outpost Night Merchant", category: "night", region: "Mammon", summary: "A Night Mode merchant route with exclusive Tarstones and a Blackmarrow Key.", routeHint: "Call the night at Marrow Keep before traveling; ordinary daylight does not expose the same merchant inventory.", point: [9270, 10814], sourceIds: common.night, relatedGuide: "night-mode", pinType: "Route anchor" }),
+  marker({ id: "night-shrine-sorrows", title: "Shrine of Sorrows", category: "night", region: "Mushroom Village", summary: "A first-person Night Mode dungeon with puzzles and a Blackmarrow Key reward.", routeHint: "This pin marks the verified regional approach, not the exact entrance pixel; look for the daylight-sealed riddle after calling the night.", point: [10508, 8868], sourceIds: common.night, relatedGuide: "night-mode", pinType: "Route anchor" }),
+
+  marker({ id: "upgrade-muradean-actuator", title: "Muradean Actuator Route", category: "upgrade", region: "Village Outskirts (Prologue)", summary: "Unlocks primary weapon enhancement at the Tarforge.", routeHint: "This route anchor marks Village Outskirts Beacon; open the entrance chest inside its prologue cleanse dungeon.", point: [7387, 10174], sourceIds: common.upgrades, relatedGuide: "tarforge", pinType: "Route anchor" }),
+  marker({ id: "upgrade-obsidian-lathe", title: "Obsidian Lathe Route", category: "upgrade", region: "Martyr's Tomb", summary: "Unlocks Sidearm enhancement and shares a chest route with Parasitic Stone.", routeHint: "Use Widow's Overlook and the Tiel or Martyr's Tomb branch; this is a route anchor rather than the exact chest coordinate.", point: [10366, 9132], sourceIds: common.upgrades, relatedGuide: "tarforge", pinType: "Route anchor" }),
+  marker({ id: "upgrade-etching-needles", title: "Etching Needles Route", category: "upgrade", region: "Sunken Village / Glutted Mire", summary: "Unlocks Tarstone tempering and leveling at the Tarforge.", routeHint: "Collect the chest after Tarblighted Shepherd and near Ruk before entering Magdalena's arena.", point: [11175, 9083], sourceIds: common.upgrades, relatedGuide: "tarforge", pinType: "Route anchor" }),
+  marker({ id: "upgrade-foundry-stone", title: "Foundry Stone Route", category: "upgrade", region: "Outskirts of Mammon", summary: "Unlocks Smelt Equipment and upgrade-material refunds for a Gloom fee.", routeHint: "Search the battlefield south of Outskirts of Mammon Beacon near the castle walls; this pin marks the starting anchor.", point: [9935, 10593], sourceIds: common.upgrades, relatedGuide: "tarforge", pinType: "Route anchor" }),
+  marker({ id: "upgrade-endless-core", title: "Endless Core", category: "upgrade", region: "Hidden Nave", summary: "The late component installed directly in the Tarforge to remove the normal weapon and Sidearm cap.", routeHint: "Follow the Unfound Path to Hidden Nave shortly before the final route and install the Core through the machine menu.", point: [13037, 8946], sourceIds: common.upgrades, relatedGuide: "tarforge", pinType: "Route anchor" }),
+
   marker({ id: "gate-glutted-mire", title: "Glutted Mire", category: "gate", region: "Mushroom Village", summary: "A Fainweald Corrupted Gate leading to Magdalena, Lady of the Woods.", routeHint: "Approach through the Mushroom Village and Sunken Village network.", point: [10914, 9102], sourceIds: common.bosses, relatedGuide: "bosses", spoiler: "major" }),
   marker({ id: "gate-sanguine-caverns", title: "Sanguine Caverns", category: "gate", region: "Northern Fainweald", summary: "A Fainweald Corrupted Gate leading to The Lost Child.", routeHint: "Use Stonebled Gate and the northern coastline as the approach landmarks.", point: [9882, 7557], sourceIds: common.bosses, relatedGuide: "bosses", spoiler: "major" }),
   marker({ id: "gate-prisoners-domain", title: "Prisoners' Domain", category: "gate", region: "Nochte", summary: "A Fainweald-side Corrupted Gate leading to The Nameless Captive.", routeHint: "Approach through Nochtean Gate and follow the prison landmarks westward.", point: [8573, 9737], sourceIds: common.bosses, relatedGuide: "bosses", spoiler: "major" }),
@@ -223,7 +316,7 @@ export const mapEditorialSections = [
   {
     heading: "What this map is designed to answer",
     paragraphs: [
-      "This is a curated launch-build map, not a wall of every material pickup. It answers the decisions that most often interrupt a first playthrough: where each permanent Shell is found, which route holds a primary weapon, where the map fragments sit, which keys unlock major detours, and which Corrupted Gate leads to each campaign boss. Hubs and service landmarks remain visible because a precise pin is not useful when the surrounding paths are difficult to distinguish. The initial layer therefore favors navigation and build-changing rewards over disposable loot.",
+      "This is a curated launch-build map, not a wall of every material pickup. It answers the decisions that most often interrupt a first playthrough: where each permanent Shell is found, which routes hold primary weapons and Sidearms, where the map fragments sit, which keys unlock major detours, how NPC and optional-dungeon routes connect, and which Corrupted Gate leads to each campaign boss. Hubs, Night Mode objectives, and Tarforge landmarks remain visible because a precise pin is not useful when the surrounding paths are difficult to distinguish.",
       "The complete fog-free world image remains available at every zoom level. Filters let you isolate one objective class, search by a location or item name, and hide major-boss information until you want it. The found control records progress only in local browser storage. No account is required, nothing is sent to a server, and clearing site storage resets the checklist. This makes the map useful on a second screen without turning it into another login or profile system.",
     ],
   },
@@ -245,7 +338,7 @@ export const mapEditorialSections = [
     heading: "A practical first-run layer order",
     paragraphs: [
       "For a low-spoiler first run, leave the boss switch off and begin with Hubs, Shells, Keys, and Fragments. Secure Marrow Keep, Mushroom Village Gate, Widow's Overlook, and Outskirts of Mammon as mental anchors. Reveal permanent Shell locations before spending scarce Glimpses blindly, then collect the regional fragments so the in-game map becomes useful on its own. The Chapel Key and Crypt Key deserve early attention because they open routes to substantial rewards rather than another small consumable cache.",
-      "Add Weapons and Key Tarstones when you have chosen a combat style. The weapon layer covers the complete primary roster, including the temporary prologue Iconoclast, while the Tarstone layer intentionally shows only a small set of high-value route targets rather than all seventy-seven reported stones. Finally, reveal Corrupted Gates and Major Bosses when you are ready to plan campaign progression. That order preserves discovery while still preventing the most expensive mistakes: missing an entire build option, entering the wrong interior, or crossing a region repeatedly for a key objective you passed earlier.",
+      "Add Weapons, Sidearms, upgrades, and Key Tarstones when you have chosen a combat style. The weapon and Sidearm layers cover the verified launch rosters, while the Tarstone layer intentionally shows only a small set of high-value route targets rather than every stone. NPC, dungeon, and Night layers contain exact points where available and clearly labeled route anchors where an interior has no world-map coordinate. Finally, reveal Corrupted Gates and Major Bosses when you are ready to plan campaign progression.",
     ],
   },
 ];

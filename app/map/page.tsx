@@ -87,8 +87,8 @@ export default function MapPage() {
           <p className={styles.kicker}>World record // Launch build 1.0</p>
           <h1>{mapPageMeta.heading}</h1>
           <p className={styles.heroLede}>
-            A complete, zoomable world map with a curated layer for every permanent Shell,
-            primary weapon, map fragment, progression key, Corrupted Gate, and major boss.
+            A complete, zoomable world map with curated layers for permanent Shells,
+            weapons, Sidearms, NPC routes, upgrades, keys, fragments, Gates, and major bosses.
           </p>
           <div className={styles.heroMeta}>
             <span>{mapMarkers.length} essential markers</span>

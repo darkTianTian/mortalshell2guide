@@ -4,6 +4,8 @@ import { equipmentArticles } from "./equipment";
 import { worldArticles } from "./world";
 import { trendingArticles } from "./trending";
 import { opportunityArticles } from "./opportunities";
+import { hubArticles } from "./hubs";
+import { remainingShellArticles } from "./remaining-shells";
 
 export const guideArticles: GuideArticle[] = [
   ...shellArticles,
@@ -11,6 +13,8 @@ export const guideArticles: GuideArticle[] = [
   ...worldArticles,
   ...trendingArticles,
   ...opportunityArticles,
+  ...hubArticles,
+  ...remainingShellArticles,
 ];
 
 export const guideArticleMap = new Map(

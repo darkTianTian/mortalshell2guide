@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { guideArticleMap, guideArticles } from "../articles";
 import { articleWordCount } from "../types";
+import { CURRENT_VERIFICATION, getGuideEnhancement } from "../enhancements";
 import styles from "./guide.module.css";
 
 const siteUrl = "https://mortalshell2guide.org";
@@ -50,16 +51,29 @@ export default async function GuidePage({ params }: PageProps) {
     .map((relatedSlug) => guideArticleMap.get(relatedSlug))
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
   const canonical = `${siteUrl}/guides/${article.slug}`;
+  const enhancement = getGuideEnhancement(article);
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.heading,
-    description: article.description,
-    dateModified: "2026-08-20",
-    inLanguage: "en",
-    mainEntityOfPage: canonical,
-    publisher: { "@type": "Organization", name: "Shellbound" },
-    image: `${siteUrl}${article.image}`,
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: article.heading,
+        description: article.description,
+        dateModified: article.updatedAt,
+        inLanguage: "en",
+        mainEntityOfPage: canonical,
+        publisher: { "@type": "Organization", name: "Shellbound" },
+        image: `${siteUrl}${article.image}`,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: enhancement.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      },
+    ],
   };
 
   return (
@@ -122,6 +136,20 @@ export default async function GuidePage({ params }: PageProps) {
             <p>{article.quickAnswer}</p>
           </div>
 
+          <section className={styles.fieldCard} aria-label="Guide at a glance">
+            <div className={styles.fieldStatus}>
+              <span>Verification</span>
+              <strong>{CURRENT_VERIFICATION}</strong>
+            </div>
+            <dl>
+              <div><dt>Start</dt><dd>{enhancement.start}</dd></div>
+              <div><dt>Objective</dt><dd>{enhancement.goal}</dd></div>
+              <div><dt>Result</dt><dd>{enhancement.result}</dd></div>
+              <div><dt>Watch for</dt><dd>{enhancement.risk}</dd></div>
+            </dl>
+            <a href={enhancement.mapUrl}>Open the relevant map marker ↗</a>
+          </section>
+
           <div className={styles.intro}>
             {article.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
@@ -138,6 +166,16 @@ export default async function GuidePage({ params }: PageProps) {
               </div>
             </section>
           ))}
+
+          <section className={styles.faq}>
+            <div><span>Field questions</span><h2>Frequently asked questions</h2></div>
+            {enhancement.faqs.map((faq) => (
+              <details key={faq.question}>
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </section>
 
           <section className={styles.sources}>
             <div><span>Research log</span><h2>Sources checked</h2></div>
