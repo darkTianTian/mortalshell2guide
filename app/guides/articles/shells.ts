@@ -43,8 +43,8 @@ export const shellArticles: GuideArticle[] = [
       {
         heading: "Why Sester Genessa is different",
         paragraphs: [
-          "Sester Genessa is part of the permanent roster, but launch coverage warns that she does not follow the same straightforward location-reveal flow as most Shells. Treat her as a special unlock rather than assuming a missing marker is a bug. The safest approach is to progress Marrow Keep services, keep speaking to major hub characters after important bosses, and read new dialogue before spending every Glimpse on map reveals. We are not publishing an exact Genessa trigger until it has been independently reproduced on the retail build.",
-          "That restraint is intentional. Search results already contain pages that substitute characters from the first game, invent unnamed Shells, or attach old Fallgrim locations to the sequel. The verified eight-name roster above is solid; some exact endgame triggers are still being compared across platforms. A guide that marks uncertainty protects your save better than a confident but beta-era checklist.",
+          "Sester Genessa is part of the permanent roster, but she does not follow the standard location-reveal flow. Travel from Outskirts of Mammon to Revenant Graves, touch Sester's Censer, defeat Sester Secundus, collect the Censer, and return it to Genessa below Marrow Keep Beacon. Completing the memory sequence that follows adds Genessa, the Wayward to the playable roster without a Tar or Glimpse fee.",
+          "This exact trigger is now supported by current retail route reporting and the completed eight-Shell roster. It also explains why spending Glimpses with Zhirelle or reaching the Genessa marker alone cannot finish the unlock. Use the dedicated Genessa guide for the Revenant Graves approach, encounter preparation, hand-in, summon-focused build, and common wrong turns.",
         ],
       },
       {
@@ -61,7 +61,7 @@ export const shellArticles: GuideArticle[] = [
       { label: "GamesRadar: all Shells and unlock system", url: "https://www.gamesradar.com/games/rpg/mortal-shell-2-shells/", type: "Editorial" },
       { label: "Windows Central launch review", url: "https://www.windowscentral.com/gaming/mortal-shell-2-is-both-a-love-letter-and-an-inspiration-to-the-soulslike-genre", type: "Editorial" },
     ],
-    related: ["shell-tier-list", "eredrim", "shell-points"],
+    related: ["genessa", "shell-tier-list", "eredrim"],
   },
   {
     slug: "shell-tier-list",

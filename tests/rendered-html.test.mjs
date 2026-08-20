@@ -16,6 +16,11 @@ const guideSlugs = [
   "beacons",
   "shell-points",
   "walkthrough",
+  "genessa",
+  "glimpse",
+  "patch-notes",
+  "editions",
+  "gragu",
 ];
 
 async function render(path = "/", accept = "text/html") {
@@ -52,6 +57,9 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /Search Shells, weapons, bosses/);
   assert.match(html, /<a href="\/guides">All Guides<\/a>/);
   assert.match(html, /<a href="\/map">Map<\/a>/);
+  for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu"]) {
+    assert.match(html, new RegExp(`href="/guides/${slug}"`));
+  }
   assert.match(html, /<link rel="canonical" href="https:\/\/mortalshell2guide\.org\/?"/i);
   assert.match(
     html,
@@ -70,7 +78,7 @@ test("publishes sitemap and robots discovery files", async () => {
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\//);
   assert.match(sitemap, /<lastmod>2026-08-20T00:00:00\.000Z<\/lastmod>/);
-  assert.equal((sitemap.match(/<url>/g) ?? []).length, 17);
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 22);
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\/map/);
   for (const slug of guideSlugs) {
     assert.match(sitemap, new RegExp(`https://mortalshell2guide\\.org/guides/${slug}`));

@@ -13,6 +13,51 @@ type Guide = {
 
 const guides: Guide[] = [
   {
+    id: "genessa",
+    category: "Shells",
+    title: "Unlock and build Genessa",
+    excerpt:
+      "Revenant Graves, Sester's Censer, Sester Secundus, Faithful Doubles, and a safe Bond plan.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "glimpse",
+    category: "Progression",
+    title: "Spend Glimpses safely",
+    excerpt:
+      "Where fixed Glimpses come from, why infinite farms fail, and which purchases protect your run.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "patch-notes",
+    category: "Updates",
+    title: "Latest patch notes",
+    excerpt:
+      "Verified retail hotfixes, current fixes, platform rollout guidance, and beta-patch separation.",
+    readTime: "7 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "editions",
+    category: "World",
+    title: "Compare every edition",
+    excerpt:
+      "Standard, Devout, and PS5 Revered prices, contents, Obsidian skins, and current availability.",
+    readTime: "7 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "gragu",
+    category: "Shells",
+    title: "Unlock Gragu",
+    excerpt:
+      "Heart of Vatra, the eastern temple route, Berserker's Stone, and kill-driven build priorities.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
     id: "shell-locations",
     category: "Shells",
     title: "Find all eight Shells",
@@ -93,6 +138,8 @@ const categories = [
   "Bosses",
   "World",
   "Routes",
+  "Progression",
+  "Updates",
 ];
 
 const paths = [
