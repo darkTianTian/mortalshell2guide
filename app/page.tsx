@@ -13,6 +13,42 @@ type Guide = {
 
 const guides: Guide[] = [
   {
+    id: "beginner-guide",
+    category: "Routes",
+    title: "Beginner guide and first route",
+    excerpt:
+      "A safe opening path, Guard and Harden tactics, current currencies, upgrade priorities, and mistake fixes.",
+    readTime: "10 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "chapel-key",
+    category: "Items",
+    title: "Chapel Key and Shrine of Trials",
+    excerpt:
+      "Reveal the illusion near Mushroom Village, solve both trials, and claim Axe and Dagger.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "forgotten-crossbow",
+    category: "Arsenal",
+    title: "Find Forgotten Crossbow",
+    excerpt:
+      "Damp Key, Flooded Village's locked door, safe ranged pulls, and Obsidian Lathe upgrades.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "monolith",
+    category: "Bosses",
+    title: "Beat Monolith after the patch",
+    excerpt:
+      "Obsidian Vault route, rotating-beam positioning, retimed attacks, and verified balance changes.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
     id: "npc-questlines",
     category: "NPCs",
     title: "Complete NPC questlines",
@@ -188,7 +224,7 @@ const guides: Guide[] = [
     category: "Shells",
     title: "Find all eight Shells",
     excerpt:
-      "The verified launch roster, built-in location reveals, Glimpse costs, and a safe unlock order.",
+      "The verified launch roster, Gloom-funded location reveals, Glimpse refunds, and a safe unlock order.",
     readTime: "8 min",
     difficulty: "Essential",
   },

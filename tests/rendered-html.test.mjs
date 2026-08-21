@@ -35,6 +35,10 @@ const guideSlugs = [
   "proxima",
   "lazlo",
   "sariel",
+  "chapel-key",
+  "forgotten-crossbow",
+  "beginner-guide",
+  "monolith",
 ];
 
 async function render(path = "/", accept = "text/html") {
@@ -71,7 +75,7 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /Search Shells, weapons, bosses/);
   assert.match(html, /<a href="\/guides">All Guides<\/a>/);
   assert.match(html, /<a href="\/map">Map<\/a>/);
-  for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu", "blackmarrow-key", "smert", "ps5", "sidearms", "hall-of-murmurs", "npc-questlines", "night-mode", "tarforge", "trophies", "new-game-plus", "tiel", "proxima", "lazlo", "sariel"]) {
+  for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu", "blackmarrow-key", "smert", "ps5", "sidearms", "hall-of-murmurs", "npc-questlines", "night-mode", "tarforge", "trophies", "new-game-plus", "tiel", "proxima", "lazlo", "sariel", "chapel-key", "forgotten-crossbow", "beginner-guide", "monolith"]) {
     assert.match(html, new RegExp(`href="/guides/${slug}"`));
   }
   assert.match(html, /<link rel="canonical" href="https:\/\/mortalshell2guide\.org\/?"/i);
@@ -95,8 +99,8 @@ test("publishes sitemap and robots discovery files", async () => {
   assert.equal(sitemapResponse.status, 200);
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\//);
-  assert.match(sitemap, /<lastmod>2026-08-21T00:00:00\.000Z<\/lastmod>/);
-  assert.equal((sitemap.match(/<url>/g) ?? []).length, 36);
+  assert.match(sitemap, /<lastmod>2026-08-22T00:00:00\.000Z<\/lastmod>/);
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 40);
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\/map/);
   for (const slug of guideSlugs) {
     assert.match(sitemap, new RegExp(`https://mortalshell2guide\\.org/guides/${slug}`));
@@ -115,7 +119,7 @@ test("publishes automatic LLM indexes from the guide corpus", async () => {
   assert.match(indexResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
   const index = await indexResponse.text();
   assert.match(index, /^# Shellbound — Mortal Shell II Field Guide/m);
-  assert.match(index, /Latest content update: 2026-08-21/);
+  assert.match(index, /Latest content update: 2026-08-22/);
   assert.match(index, /https:\/\/mortalshell2guide\.org\/llms-full\.txt/);
   assert.match(index, /https:\/\/mortalshell2guide\.org\/map/);
   for (const slug of guideSlugs) {

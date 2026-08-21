@@ -10,8 +10,8 @@ export const worldArticles: GuideArticle[] = [
     category: "NPCs",
     keyword: "mortal shell 2 baghead",
     spoiler: "Major spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-shot-04.webp",
     imageAlt: "A mysterious musician standing in a warm firelit Mortal Shell II cavern",
     quickAnswer: "Baghead returns with a joke ending that rolls credits, then lets you continue from your latest Beacon. Current launch players report keeping earned Gloom, but Baghead disappears after the sequence.",
@@ -66,8 +66,8 @@ export const worldArticles: GuideArticle[] = [
     category: "Bosses",
     keyword: "mortal shell 2 bosses",
     spoiler: "Major spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-world.webp",
     imageAlt: "A Mortal Shell II warrior approaching a huge enemy between two burning torches",
     quickAnswer: "The main route contains six Corrupted Gate bosses across Fainweald and Mammon, three guardians in the Unfound Path, and final boss Zmey the Unbidden. The prologue’s predetermined encounter is separate.",
@@ -79,7 +79,7 @@ export const worldArticles: GuideArticle[] = [
       {
         heading: "The six Corrupted Gate bosses",
         paragraphs: [
-          "Fainweald contains Glutted Mire, Sanguine Caverns, and Prisoners’ Domain. Their major bosses are Magdalena, Lady of the Woods; The Lost Child; and The Nameless Captive. Magdalena uses ramming movement, fire, and summoned explosive creatures, making lateral avoidance more important than trading. The Lost Child has dangerous breath and grab behavior. The Nameless Captive is a more direct melee test with wide, repeated sword attacks.",
+          "Fainweald contains Glutted Mire, Sanguine Caverns, and Prisoners’ Domain. Their major bosses are Magdalena, Lady of the Woods; The Lost Child; and The Nameless Captive. Magdalena uses ramming movement, fire, and summoned explosive creatures, making lateral avoidance more important than trading. The Lost Child retains dangerous breath and grab behavior, but Balance Patch 1 reduces its base damage by 10% and maximum health by 15%. The Nameless Captive is a more direct melee test with wide, repeated sword attacks.",
           "Mammon contains Conquered Temple, Withered Shoals, and Faded Citadel. Their bosses are Droeg the Conqueror, Hexapod, and Isaac the Scholar Prince. Droeg mixes a huge club with homing Frostfire. Hexapod exposes its head during readable animations and has a forward surge best avoided sideways. Isaac closes distance with long-reaching lunges and becomes more erratic after losing his shield at half health.",
         ],
         bullets: [
@@ -94,14 +94,14 @@ export const worldArticles: GuideArticle[] = [
       {
         heading: "The Unfound Path guardians",
         paragraphs: [
-          "The final dungeon is divided into three branches whose tendrils block the central route. Bridge of Procession ends with Orrem, first fought as the Discarded Golem and then as the faster Reclaimed form. Obsidian Vault contains The Monolith, a high-health target that adds rotating beams after half health. Faithful’s Shelter contains Malborn Offspring, a two-phase fight with delayed multi-hit strings and lightning in the resurrected phase.",
+          "The final dungeon is divided into three branches whose tendrils block the central route. Bridge of Procession ends with Orrem, first fought as the Discarded Golem and then as the faster Reclaimed form. Obsidian Vault contains The Monolith, which adds rotating beams after half health. Balance Patch 1 lowers its base damage by 19%, maximum health by 10%, and retimes several attacks, so pre-patch dodge videos may no longer match exactly. Faithful’s Shelter contains Malborn Offspring, a two-phase fight with delayed multi-hit strings and lightning in the resurrected phase.",
           "Do not carry a route-clearing loadout unchanged into all three. Orrem asks for enough healing to survive two phases. The Monolith rewards movement and patience more than close-range greed. Malborn Offspring punishes memorized dodge timing because its chains vary in length and delay. Current reporting recommends lightning-aware Proxima upgrades or Genessa’s distractions for the latter, but the broader rule is to solve the branch’s mechanic rather than force one universal build.",
         ],
       },
       {
         heading: "Rewards and Shell summons",
         paragraphs: [
-          "Several major fights offer the option to spend a Glimpse on a spectral Shell summon. Documented pairings include Smert at Magdalena, Tiel at The Lost Child, Eredrim at The Nameless Captive, Gragu at Droeg, Proxima at Hexapod, Lazlo at Isaac, and Sariel at Orrem. A summon can distract the target and create a safer healing or weapon window, but spending the Glimpse has an opportunity cost if you are still revealing Shell locations.",
+          "Several major fights offer the option to spend a Glimpse on a spectral Shell summon. Documented pairings include Smert at Magdalena, Tiel at The Lost Child, Eredrim at The Nameless Captive, Gragu at Droeg, Proxima at Hexapod, Lazlo at Isaac, and Sariel at Orrem. A summon can distract the target and create a safer healing or weapon window, but spending the Glimpse still competes with Bonds and memories even though Balance Patch 1 moved map reveals to Gloom.",
           "Boss rewards also connect to weapon abilities and progression. Current guides associate Magdalena’s Memento with Axe and Dagger, Lost Clotstone with heavy weapons, Captive’s Scabstone with Great Martyr’s Blade, Conqueror’s Reward with Black Needle, Hexapod Core with Axatana, and Scholar’s Wormstone with Clockwork Scythe. Check compatibility before building around a reward; owning an effect and having the correct weapon are separate conditions.",
         ],
       },
@@ -118,6 +118,7 @@ export const worldArticles: GuideArticle[] = [
       { label: "Complete retail major-boss guide", url: "https://ccstartup.com/blog/2026/08/17/all-bosses-in-mortal-shell-2-and-how-to-beat-them/", type: "Editorial" },
       { label: "NerdsChalk Magdalena launch guide", url: "https://nerdschalk.com/mortal-shell-2-magdalena-boss-location-build-and-fight-tips/", type: "Editorial" },
       { label: "Windows Central complete-game review", url: "https://www.windowscentral.com/gaming/mortal-shell-2-is-both-a-love-letter-and-an-inspiration-to-the-soulslike-genre", type: "Editorial" },
+      { label: "Team Mortal Shell Balance Patch 1 notes", url: "https://www.reddit.com/r/MortalShell/comments/1vttz2d/balance_patch_1/", type: "Official" },
     ],
     related: ["final-boss", "walkthrough", "beacons"],
   },
@@ -130,8 +131,8 @@ export const worldArticles: GuideArticle[] = [
     category: "Bosses",
     keyword: "mortal shell 2 final boss",
     spoiler: "Major spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-shot-03.webp",
     imageAlt: "An armored Mortal Shell II warrior confronting a towering creature",
     quickAnswer: "Zmey the Unbidden is the final boss. Dodge Blade Slam sideways, leave the Cascading Flare zones instead of trading through them, and use Tiel’s stealth openings or Genessa’s distraction utility.",
@@ -192,8 +193,8 @@ export const worldArticles: GuideArticle[] = [
     category: "Exploration",
     keyword: "mortal shell 2 beacons",
     spoiler: "Gameplay spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-world.webp",
     imageAlt: "A warrior walking between burning Beacon-like torches in Mortal Shell II",
     quickAnswer: "Beacons are checkpoints, rest points, progression interfaces, and fast-travel anchors. Some must be cleansed through a compact interior challenge before they provide their full reward.",
@@ -220,7 +221,7 @@ export const worldArticles: GuideArticle[] = [
         heading: "Route planning with Shells and keys",
         paragraphs: [
           "Use Beacons to divide a long objective into verified segments. When pursuing Eredrim or another marked Shell, activate every point that does not require a major detour. When carrying Crypt Key toward Hall of Echoes, make the nearest Beacon the start of the key route. When testing a new weapon, choose a short loop from a Beacon so the enemies reset consistently and your comparison remains useful.",
-          "Glimpses create a planning tradeoff because launch reporting ties them both to Beacon cleansing and Shell discovery or Bond progression. Do not spend the last Glimpse revealing a curiosity if the current body needs a defining upgrade. Conversely, a new Shell that solves the next boss can be worth more than a marginal node. The Shell locations and Shell Points pages explain that decision in detail.",
+          "Glimpses create a planning tradeoff because Beacon cleansing can award them while Bonds, memories, and some boss summons consume them. Balance Patch 1 removed Shell map reveals from that competition by changing their cost to Gloom. Do not spend the last Glimpse on a tactical summon if the current body needs a defining upgrade. The Glimpse and Shell Points pages explain that decision in detail.",
         ],
       },
       {
@@ -248,8 +249,8 @@ export const worldArticles: GuideArticle[] = [
     category: "Walkthrough",
     keyword: "mortal shell 2 walkthrough",
     spoiler: "Major spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-shot-06.webp",
     imageAlt: "A Mortal Shell II warrior following a rain-soaked path toward a distant enemy",
     quickAnswer: "Complete the prologue, establish Marrow Keep, recover Ova through six Corrupted Gate dungeons across Fainweald and Mammon, clear three Unfound Path branches, then defeat Zmey.",
@@ -262,7 +263,7 @@ export const worldArticles: GuideArticle[] = [
         heading: "Prologue to Marrow Keep",
         paragraphs: [
           "Use the prologue to learn attacks, the equipped Seal, Break, Riposte, and the Foundling recovery state. Harros is the tutorial Shell but is not counted among the eight permanent launch choices. Do not judge the full build system by this section. Complete the required encounter, follow the path into the open world, and prioritize reaching Marrow Keep rather than exhausting every side turn while services remain locked.",
-          "At the hub, identify Zhirelle, the Shellkeeper, and the Tarforge services. Tiel and Proxima should be marked after the prologue. Spend Glimpses carefully: they can reveal most remaining Shell locations and also support Bond progression. Choose one primary body and one weapon, activate nearby Beacons, and avoid spreading early upgrades across several experiments. This preparation makes every flexible gate order easier.",
+          "At the hub, identify Zhirelle, the Shellkeeper, and the Tarforge services. Tiel and Proxima should be marked after the prologue. Balance Patch 1 makes most remaining Shell map reveals cost Gloom, preserving Glimpses for Bonds and memories. Choose one primary body and one weapon, activate nearby Beacons, and avoid spreading early upgrades across several experiments. This preparation makes every flexible gate order easier.",
         ],
       },
       {

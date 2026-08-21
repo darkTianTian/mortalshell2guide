@@ -4,17 +4,17 @@ export const shellArticles: GuideArticle[] = [
   {
     slug: "shell-locations",
     title: "Mortal Shell 2 Shell Locations: Find All 8 Shells Guide",
-    description: "Find every Mortal Shell 2 Shell with a verified unlock route, the full eight-Shell roster, Glimpse costs, location-marking advice, and spoiler warnings.",
+    description: "Find every Mortal Shell 2 Shell with verified unlock routes, the full eight-Shell roster, new Gloom map costs, refund details, and spoiler warnings.",
     heading: "All Shell locations and how unlocking works",
     eyebrow: "Shell guide // High-demand route",
     category: "Shells",
     keyword: "mortal shell 2 shell locations",
     spoiler: "Gameplay spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-shot-03.webp",
     imageAlt: "An armored Mortal Shell II warrior wielding a hooked polearm against a towering creature",
-    quickAnswer: "Mortal Shell 2 has eight permanent playable Shells. Tiel and Proxima are marked after the prologue; Zhirelle in Marrow Keep can reveal most of the others for Glimpses, while Sester Genessa follows a different unlock path.",
+    quickAnswer: "Mortal Shell 2 has eight permanent playable Shells. Tiel and Proxima are marked after the prologue; after Balance Patch 1, Zhirelle reveals most others for Gloom, while Sester Genessa follows a different unlock path.",
     intro: [
       "Searching for every Mortal Shell 2 Shell location is less about memorizing eight isolated coordinates and more about understanding the game’s built-in discovery system. The launch roster is Tiel, Proxima, Eredrim, Gragu, Smert, Lazlo, Sariel, and Sester Genessa. Harros also appears as the tutorial Shell, but current launch reporting identifies him as a prologue-only body rather than one of the eight permanent choices. That distinction matters because older previews sometimes describe nine confirmed Shells by counting Harros alongside the permanent roster.",
       "This guide uses the launch-build roster published by GamesRadar, the official gameplay reveal naming Tiel, Eredrim, and Proxima, and current reviews that played the complete game. We deliberately avoid copying beta coordinates into the launch guide. Community map makers report that several item positions changed after the beta, so an exact pin that has not been checked in the final build is more harmful than a clear route based on the systems the game itself provides.",
@@ -36,7 +36,7 @@ export const shellArticles: GuideArticle[] = [
       {
         heading: "Use Zhirelle instead of a copied beta map",
         paragraphs: [
-          "After the prologue, the game reveals Tiel and Proxima automatically. For most remaining warriors, speak with Zhirelle, the Shellkeeper at Marrow Keep. Her interface lets you choose a Shell and spend Glimpses to reveal its position on the in-game map. Current launch reporting places the reveal price between three and five Glimpses depending on the target. Because those same Glimpses are useful for Bond progression, reveal the Shell you genuinely intend to try instead of paying to expose the entire roster immediately.",
+          "After the prologue, the game reveals Tiel and Proxima automatically. For most remaining warriors, speak with Zhirelle, the Shellkeeper at Marrow Keep. Balance Patch 1 changed her map-reveal currency from Glimpses to Gloom, leaving the rarer Glimpses available for Bonds and memories. Players who bought reveals before the patch can collect the spent Glimpses from the Shell Keeper alcove in Blackmarrow. Check the displayed Gloom price before confirming because the official note does not publish a fixed amount for every target.",
           "A practical first route is Tiel for mobility, followed by Eredrim when you want a safer health cushion for later encounters. Proxima is already marked and provides positional control, so she is a sensible alternative if Tiel’s low tolerance for mistakes feels uncomfortable. Whichever marker you choose, activate Beacons along the journey. A Shell run often passes optional dungeons and side paths, and banking your progress prevents one long retrieval attempt from becoming the real difficulty.",
         ],
       },
@@ -44,7 +44,7 @@ export const shellArticles: GuideArticle[] = [
         heading: "Why Sester Genessa is different",
         paragraphs: [
           "Sester Genessa is part of the permanent roster, but she does not follow the standard location-reveal flow. Travel from Outskirts of Mammon to Revenant Graves, touch Sester's Censer, defeat Sester Secundus, collect the Censer, and return it to Genessa below Marrow Keep Beacon. Completing the memory sequence that follows adds Genessa, the Wayward to the playable roster without a Tar or Glimpse fee.",
-          "This exact trigger is now supported by current retail route reporting and the completed eight-Shell roster. It also explains why spending Glimpses with Zhirelle or reaching the Genessa marker alone cannot finish the unlock. Use the dedicated Genessa guide for the Revenant Graves approach, encounter preparation, hand-in, summon-focused build, and common wrong turns.",
+          "This exact trigger is now supported by current retail route reporting and the completed eight-Shell roster. It also explains why buying a map reveal from Zhirelle or reaching the Genessa marker alone cannot finish the unlock. Use the dedicated Genessa guide for the Revenant Graves approach, encounter preparation, hand-in, summon-focused build, and common wrong turns.",
         ],
       },
       {
@@ -59,6 +59,7 @@ export const shellArticles: GuideArticle[] = [
       { label: "Mortal Shell II official site", url: "https://mortalshell.com/", type: "Official" },
       { label: "Cold Symmetry official gameplay reveal on Steam", url: "https://steamcommunity.com/app/2584270", type: "Official" },
       { label: "GamesRadar: all Shells and unlock system", url: "https://www.gamesradar.com/games/rpg/mortal-shell-2-shells/", type: "Editorial" },
+      { label: "Team Mortal Shell Balance Patch 1 notes", url: "https://www.reddit.com/r/MortalShell/comments/1vttz2d/balance_patch_1/", type: "Official" },
       { label: "Windows Central launch review", url: "https://www.windowscentral.com/gaming/mortal-shell-2-is-both-a-love-letter-and-an-inspiration-to-the-soulslike-genre", type: "Editorial" },
     ],
     related: ["genessa", "shell-tier-list", "eredrim"],
@@ -72,8 +73,8 @@ export const shellArticles: GuideArticle[] = [
     category: "Shells",
     keyword: "mortal shell 2 shell tier list",
     spoiler: "Gameplay spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-shot-03.webp",
     imageAlt: "A Mortal Shell II warrior facing a tall skeletal enemy in an icy field",
     quickAnswer: "Tiel and Eredrim are the strongest broadly verified launch choices: Tiel leads early and midgame mobility, while Eredrim provides the safest later-game durability. Proxima and Genessa form the next flexible tier.",
@@ -135,8 +136,8 @@ export const shellArticles: GuideArticle[] = [
     category: "Shells",
     keyword: "eredrim mortal shell 2",
     spoiler: "Gameplay spoilers",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-shot-12.webp",
     imageAlt: "A heavily armored warrior fighting a group in a ruined Mortal Shell II settlement",
     quickAnswer: "Eredrim is the launch roster’s safest durability-focused Shell and a strong mid-to-late-game target. Reveal his location through Zhirelle, then build around deliberate heavy pressure rather than trying to imitate Tiel’s mobility.",
@@ -148,7 +149,7 @@ export const shellArticles: GuideArticle[] = [
       {
         heading: "How to locate and unlock Eredrim",
         paragraphs: [
-          "Eredrim is not one of the two Shells automatically marked after the prologue. Once Marrow Keep opens as your hub, speak to Zhirelle, the Shellkeeper. Select Eredrim from the available discovery choices and spend the requested Glimpses to reveal his position on your map. GamesRadar reports that most Shell reveals cost between three and five Glimpses. This method is more trustworthy than following a beta screenshot because launch players have reported moved item markers and altered routes.",
+          "Eredrim is not one of the two Shells automatically marked after the prologue. Once Marrow Keep opens as your hub, speak to Zhirelle, the Shellkeeper. Select Eredrim from the available discovery choices and spend the displayed Gloom to reveal his position. Balance Patch 1 replaced the former Glimpse fee; previously spent reveal Glimpses can be reclaimed in the Shell Keeper alcove in Blackmarrow. This method is more trustworthy than following a beta screenshot because launch players have reported moved item markers and altered routes.",
           "Prepare the trip like a route, not a sprint. Activate every Beacon you pass, spend vulnerable progression currency, and keep one reliable sidearm ready for enemies controlling narrow approaches. After possession, return to a controlled area and test Eredrim’s base movement and ability before buying nodes. The unlock is only the start; a focused upgrade plan matters more than reaching the body a few minutes earlier.",
         ],
       },
@@ -169,7 +170,7 @@ export const shellArticles: GuideArticle[] = [
       {
         heading: "Spend Shell Points without diluting the build",
         paragraphs: [
-          "Use Shell Points on the branch that strengthens Eredrim’s defining job before buying situational variety. If a node improves survival or converts defense into a reliable counter, it supports every unknown encounter. A niche effect that requires a particular enemy state should wait until your core route feels stable. Keep Glimpses available for Bond progression and for revealing another Shell only when you have a clear reason to change roles.",
+          "Use Shell Points on the branch that strengthens Eredrim’s defining job before buying situational variety. If a node improves survival or converts defense into a reliable counter, it supports every unknown encounter. A niche effect that requires a particular enemy state should wait until your core route feels stable. Keep Glimpses available for Bond progression; map reveals now draw from the repeatable Gloom economy instead.",
           "Review deaths before purchasing. If you die during attack recovery, change weapon timing or reinforce the defensive loop. If you die after running out of Resolve, improve generation and stop spending it on low-value sidearm shots. If crowds surround you, invest in area control or change the approach rather than stacking more health. Eredrim’s large margin is most useful when it helps diagnose the real problem instead of hiding it.",
         ],
       },
@@ -191,20 +192,20 @@ export const shellArticles: GuideArticle[] = [
     category: "Progression",
     keyword: "mortal shell 2 shell points",
     spoiler: "Spoiler-light",
-    updated: "August 21, 2026",
-    updatedAt: "2026-08-21",
+    updated: "August 22, 2026",
+    updatedAt: "2026-08-22",
     image: "/ms2-combat.webp",
     imageAlt: "A ruined Mortal Shell II fortress with a fire burning beneath its walls",
-    quickAnswer: "Shell Points develop the skill tree of the individual Shell you are using. They are not the same as Glimpses, which reveal Shell locations and deepen Bonds, or Gloom, which supports broader Harbinger progression.",
+    quickAnswer: "Shell Points develop the equipped Shell's skill tree. Glimpses deepen Bonds and memories; after Balance Patch 1, Gloom also pays Zhirelle's Shell map-reveal fees alongside broader progression.",
     intro: [
-      "Mortal Shell 2 Shell Points are easy to misunderstand because the sequel layers several progression systems over the same character. Shell Points belong to the warrior body and develop its individual tree. Glimpses are a separate, rarer resource used for location reveals and deeper Bond progression. Gloom is the more general currency earned through combat and spent through Beacon-driven growth. Resolve is not permanent progression at all; it is combat fuel for abilities, sidearms, and finishers.",
+      "Mortal Shell 2 Shell Points are easy to misunderstand because the sequel layers several progression systems over the same character. Shell Points belong to the warrior body and develop its individual tree. Glimpses are a separate, rarer resource used for deeper Bond progression and memories. Gloom is the more general combat currency and, after Balance Patch 1, pays for Zhirelle's Shell map reveals. Resolve is not permanent progression at all; it is combat fuel for abilities, sidearms, and finishers.",
       "The precise rate at which every level awards Shell Points is still being compared across launch platforms and patches, so this guide does not publish a rigid farm table. What is verified is their purpose: Cold Symmetry’s sequel gives each Shell a deeper tree, reviewers describe individual active and passive upgrades, and launch players use Shell Points to develop those branches. The useful question is not only where a point came from, but whether the next node makes your current combat loop more reliable.",
     ],
     sections: [
       {
         heading: "Separate the four progression resources",
         paragraphs: [
-          "Before spending anything, name the layer you are improving. Shell Points strengthen the equipped body’s tree. Glimpses help reveal undiscovered Shells through Zhirelle and deepen the relationship with a chosen body. Gloom is accumulated through enemies and broader exploration, then banked into general progression. Resolve fills and empties during combat. Treating these as interchangeable leads to bad advice, such as hoarding Resolve for a permanent unlock or spending every Glimpse on map markers when your primary Shell still needs Bond upgrades.",
+          "Before spending anything, name the layer you are improving. Shell Points strengthen the equipped body’s tree. Glimpses deepen the relationship with a chosen body. Gloom is accumulated through enemies and broader exploration, funds general progression, and now pays Zhirelle's Shell map-reveal fees. Resolve fills and empties during combat. Treating these as interchangeable leads to bad advice, such as hoarding Resolve for a permanent unlock or spending every Glimpse as though pre-patch map costs still applied.",
           "A simple inventory review prevents mistakes. Ask whether the resource survives a fight, whether it belongs to the Harbinger or the Shell, and whether spending it changes the current run permanently. If a guide cannot answer those questions, do not follow its upgrade order. Mortal Shell 2 is designed around mixing bodies, weapons, Seals, and Tarstones, but each system advances through a different channel.",
         ],
       },

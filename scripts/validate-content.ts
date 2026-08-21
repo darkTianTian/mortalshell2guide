@@ -10,7 +10,7 @@ import {
 } from "../app/map/map-data";
 import { guideExtras, getGuideEnhancement } from "../app/guides/enhancements";
 
-assert.equal(guideArticles.length, 33, "expected thirty-three launch guide pages");
+assert.equal(guideArticles.length, 37, "expected thirty-seven launch guide pages");
 assert.equal(guideArticleMap.size, guideArticles.length, "guide slugs must be unique");
 assert.equal(Object.keys(guideExtras).length, guideArticles.length, "every guide needs a structured enhancement");
 
