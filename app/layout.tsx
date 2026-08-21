@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 const title = "Shellbound — Mortal Shell II Field Guide";
 const description =
   "Master Mortal Shell II with spoiler-aware routes, Shell builds, weapon tactics, boss preparation, dungeon guidance, and launch-week field notes.";
+const googleAnalyticsId = "G-BDWC6HJWKB";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mortalshell2guide.org"),
@@ -55,6 +56,19 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="describedby" href="/llms.txt" />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+        />
+        <script
+          id="google-analytics-config"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');`,
+          }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}

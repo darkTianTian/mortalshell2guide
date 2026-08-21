@@ -82,6 +82,10 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /<link rel="icon" href="\/icon\.png\?[^"]+" sizes="512x512" type="image\/png"\/>/i);
   assert.match(html, /<link rel="apple-touch-icon" href="\/apple-icon\.png\?[^"]+" sizes="180x180" type="image\/png"\/>/i);
   assert.match(html, /<link rel="describedby" href="\/llms\.txt"\/>/i);
+  assert.match(html, /googletagmanager\.com\/gtag\/js\?id=G-BDWC6HJWKB/i);
+  assert.match(html, /id="google-analytics-config"/i);
+  assert.match(html, /gtag\('config', 'G-BDWC6HJWKB'\)/i);
+  assert.equal((html.match(/<script[^>]*src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-BDWC6HJWKB"/gi) ?? []).length, 1);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
