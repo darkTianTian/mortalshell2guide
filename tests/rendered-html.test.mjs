@@ -79,6 +79,11 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /<a href="\/map">Map<\/a>/);
   assert.match(html, /<meta name="viewport" content="[^"]*width=device-width[^"]*initial-scale=1[^"]*"/i);
   assert.match(html, /<nav aria-label="Mobile navigation">/i);
+  assert.match(html, /<nav class="language-switcher" aria-label="Language selector">/i);
+  assert.match(html, /href="\/zh-cn"[^>]*>简中<\/a>/i);
+  assert.match(html, /href="\/zh-hant"[^>]*>繁中<\/a>/i);
+  assert.match(html, /<link rel="alternate" hrefLang="zh-CN" href="https:\/\/mortalshell2guide\.org\/zh-cn"/i);
+  assert.match(html, /<link rel="alternate" hrefLang="zh-Hant" href="https:\/\/mortalshell2guide\.org\/zh-hant"/i);
   for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu", "blackmarrow-key", "smert", "ps5", "sidearms", "hall-of-murmurs", "npc-questlines", "night-mode", "tarforge", "trophies", "new-game-plus", "tiel", "proxima", "lazlo", "sariel", "chapel-key", "forgotten-crossbow", "beginner-guide", "monolith"]) {
     assert.match(html, new RegExp(`href="/guides/${slug}"`));
   }
@@ -96,6 +101,21 @@ test("server-renders the Shellbound field guide", async () => {
   assert.equal((html.match(/<script[^>]*src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-BDWC6HJWKB"/gi) ?? []).length, 1);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+});
+
+test("renders public Simplified and Traditional Chinese routes", async () => {
+  for (const [prefix, lang, phrase] of [["/zh-cn", "zh-CN", "全部攻略"], ["/zh-hant", "zh-Hant", "全部攻略"]]) {
+    for (const path of ["", "/guides", "/map", "/guides/beginner-guide"]) {
+      const response = await render(`${prefix}${path}`);
+      assert.equal(response.status, 200, `${prefix}${path} should render`);
+      const html = await response.text();
+      assert.match(html, new RegExp(`lang="${lang}"`));
+      assert.match(html, new RegExp(phrase));
+      assert.match(html, new RegExp(`href="${prefix}/guides`));
+      assert.match(html, new RegExp(`<link rel="canonical" href="https://mortalshell2guide\\.org${prefix}`));
+      assert.doesNotMatch(html, /__(?:AREA|BOSS|ITEM|PERSON|SYSTEM|WEAPON)\d+__|[\uE000-\uF8FF]/u);
+    }
+  }
 });
 
 test("provides mobile navigation on every primary surface", async () => {
@@ -179,8 +199,10 @@ test("publishes sitemap and robots discovery files", async () => {
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\//);
   assert.match(sitemap, /<lastmod>2026-08-22T00:00:00\.000Z<\/lastmod>/);
-  assert.equal((sitemap.match(/<url>/g) ?? []).length, 40);
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 120);
   assert.match(sitemap, /https:\/\/mortalshell2guide\.org\/map/);
+  assert.match(sitemap, /https:\/\/mortalshell2guide\.org\/zh-cn\/map/);
+  assert.match(sitemap, /https:\/\/mortalshell2guide\.org\/zh-hant\/guides\/beginner-guide/);
   for (const slug of guideSlugs) {
     assert.match(sitemap, new RegExp(`https://mortalshell2guide\\.org/guides/${slug}`));
   }

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import SiteFooter from "./components/SiteFooter";
 import "./globals.css";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,12 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: "https://mortalshell2guide.org/",
+    languages: {
+      en: "https://mortalshell2guide.org/",
+      "zh-CN": "https://mortalshell2guide.org/zh-cn",
+      "zh-Hant": "https://mortalshell2guide.org/zh-hant",
+      "x-default": "https://mortalshell2guide.org/",
+    },
   },
   openGraph: {
     title,
@@ -79,6 +86,7 @@ gtag('config', '${googleAnalyticsId}');`,
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <LanguageSwitcher />
         {children}
         <SiteFooter />
       </body>

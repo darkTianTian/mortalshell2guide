@@ -53,15 +53,11 @@ const persistFound = (found: Set<string>) => {
   }
 };
 
-const markerById = new Map(mapMarkers.map((item) => [item.id, item]));
-const categoryById = new Map(mapCategories.map((item) => [item.id, item]));
-const allCategoryIds = mapCategories.map((item) => item.id);
 const positionStandards: Record<MapPinType, string> = {
   "Exact position": "Cross-checked retail coordinate for the visible overworld point.",
   "Interior anchor": "Verified interior or dungeon cluster; follow the route note for the room-level pickup.",
   "Route anchor": "Verified route start or quest-state location, not a claim that the reward lies on this pixel.",
 };
-const positionCounts = MapPinTypeCounter(mapMarkers);
 
 function MapPinTypeCounter(markers: MapMarker[]) {
   const counts: Record<MapPinType, number> = {
@@ -73,7 +69,54 @@ function MapPinTypeCounter(markers: MapMarker[]) {
   return counts;
 }
 
-export default function InteractiveMap() {
+export type InteractiveMapCopy = {
+  kicker: string;
+  title: string;
+  searchPlaceholder: string;
+  clearSearch: string;
+  revealSpoilers: string;
+  hideSpoilers: string;
+  positionStandard: string;
+  exactPosition: string;
+  interiorAnchor: string;
+  routeAnchor: string;
+  exactDescription: string;
+  interiorDescription: string;
+  routeDescription: string;
+  dragCaption: string;
+  visible: string;
+  found: string;
+  routeNote: string;
+  markFound: string;
+  markedFound: string;
+  openGuide: string;
+  visibleMarkers: string;
+  noMarker: string;
+  noMarkerHelp: string;
+  reset: string;
+};
+
+const defaultCopy: InteractiveMapCopy = {
+  kicker: "Launch map // Verified essentials", title: "Find the next thing that changes your run.", searchPlaceholder: "Search Shell, weapon, region…", clearSearch: "Clear map search",
+  revealSpoilers: "Reveal boss spoilers", hideSpoilers: "Boss spoilers shown", positionStandard: "Position standard", exactPosition: "Exact position", interiorAnchor: "Interior anchor", routeAnchor: "Route anchor",
+  exactDescription: positionStandards["Exact position"], interiorDescription: positionStandards["Interior anchor"], routeDescription: positionStandards["Route anchor"],
+  dragCaption: "Drag to pan · wheel or controls to zoom · detail badges distinguish exact coordinates from interior and route anchors.", visible: "visible", found: "found", routeNote: "Route note",
+  markFound: "Mark as found", markedFound: "✓ Marked found", openGuide: "Open full guide ↗", visibleMarkers: "Visible markers", noMarker: "No visible marker.", noMarkerHelp: "Clear the search, turn a category back on, or reveal boss spoilers.", reset: "Reset",
+};
+
+export default function InteractiveMap({ markers = mapMarkers, categories = mapCategories, localePrefix = "", copy }: {
+  markers?: MapMarker[];
+  categories?: typeof mapCategories;
+  localePrefix?: string;
+  copy?: Partial<InteractiveMapCopy>;
+}) {
+  const labels = { ...defaultCopy, ...copy };
+  const markerById = useMemo(() => new Map(markers.map((item) => [item.id, item])), [markers]);
+  const categoryById = useMemo(() => new Map(categories.map((item) => [item.id, item])), [categories]);
+  const allCategoryIds = useMemo(() => categories.map((item) => item.id), [categories]);
+  const positionCounts = useMemo(() => MapPinTypeCounter(markers), [markers]);
+  const pinTypeLabels: Record<MapPinType, string> = { "Exact position": labels.exactPosition, "Interior anchor": labels.interiorAnchor, "Route anchor": labels.routeAnchor };
+  const pinTypeDescriptions: Record<MapPinType, string> = { "Exact position": labels.exactDescription, "Interior anchor": labels.interiorDescription, "Route anchor": labels.routeDescription };
   const [query, setQuery] = useState("");
   const [activeCategories, setActiveCategories] = useState<Set<MapCategory>>(
     () => new Set(allCategoryIds),
@@ -86,7 +129,7 @@ export default function InteractiveMap() {
   const dragRef = useRef<DragState | null>(null);
   const suppressPinClickRef = useRef(false);
 
-  const selected = markerById.get(selectedId) ?? mapMarkers[0];
+  const selected = markerById.get(selectedId) ?? markers[0];
   const normalizedQuery = query.trim().toLowerCase();
 
   useEffect(() => {
@@ -115,11 +158,11 @@ export default function InteractiveMap() {
       }
     });
     return () => window.cancelAnimationFrame(frame);
-  }, []);
+  }, [markerById]);
 
   const visibleMarkers = useMemo(
     () =>
-      mapMarkers.filter((item) => {
+      markers.filter((item) => {
         if (!activeCategories.has(item.category)) return false;
         if (item.spoiler === "major" && !showSpoilers) return false;
         if (!normalizedQuery) return true;
@@ -128,7 +171,7 @@ export default function InteractiveMap() {
           .toLowerCase()
           .includes(normalizedQuery);
       }),
-    [activeCategories, normalizedQuery, showSpoilers],
+    [activeCategories, markers, normalizedQuery, showSpoilers],
   );
 
   const clampView = (next: ViewState): ViewState => {
@@ -268,8 +311,8 @@ export default function InteractiveMap() {
     <section className={styles.workbench} aria-labelledby="interactive-map-title">
       <div className={styles.mapTopbar}>
         <div>
-          <p className={styles.kicker}>Launch map // Verified essentials</p>
-          <h2 id="interactive-map-title">Find the next thing that changes your run.</h2>
+          <p className={styles.kicker}>{labels.kicker}</p>
+          <h2 id="interactive-map-title">{labels.title}</h2>
         </div>
         <label className={styles.search}>
           <span aria-hidden="true">⌕</span>
@@ -278,9 +321,9 @@ export default function InteractiveMap() {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search Shell, weapon, region…"
+            placeholder={labels.searchPlaceholder}
           />
-          {query && <button type="button" onClick={() => setQuery("")} aria-label="Clear map search">×</button>}
+          {query && <button type="button" onClick={() => setQuery("")} aria-label={labels.clearSearch}>×</button>}
         </label>
       </div>
 
@@ -305,8 +348,8 @@ export default function InteractiveMap() {
       </div>
 
       <div className={styles.filterBar} aria-label="Map marker filters">
-        {mapCategories.map((category) => {
-          const count = mapMarkers.filter((item) => item.category === category.id).length;
+        {categories.map((category) => {
+          const count = markers.filter((item) => item.category === category.id).length;
           return (
             <button
               key={category.id}
@@ -327,16 +370,16 @@ export default function InteractiveMap() {
           onClick={handleSpoilers}
           aria-pressed={showSpoilers}
         >
-          {showSpoilers ? "Boss spoilers shown" : "Reveal boss spoilers"}
+          {showSpoilers ? labels.hideSpoilers : labels.revealSpoilers}
         </button>
       </div>
 
       <div className={styles.positionLegend} role="note" aria-label="Map position standards">
-        <strong>Position standard</strong>
+        <strong>{labels.positionStandard}</strong>
         {(Object.keys(positionStandards) as MapPinType[]).map((pinType) => (
           <span key={pinType} data-position-type={pinType}>
             <i aria-hidden="true" />
-            {pinType} <b>{positionCounts[pinType]}</b>
+            {pinTypeLabels[pinType]} <b>{positionCounts[pinType]}</b>
           </span>
         ))}
       </div>
@@ -397,16 +440,16 @@ export default function InteractiveMap() {
               <button type="button" onClick={() => zoomAt(view.scale + 0.35)} aria-label="Zoom in">+</button>
               <output aria-live="polite">{Math.round(view.scale * 100)}%</output>
               <button type="button" onClick={() => zoomAt(view.scale - 0.35)} aria-label="Zoom out">−</button>
-              <button type="button" onClick={() => setView({ scale: 1, x: 0, y: 0 })}>Reset</button>
+              <button type="button" onClick={() => setView({ scale: 1, x: 0, y: 0 })}>{labels.reset}</button>
             </div>
 
             <div className={styles.mapStatus}>
-              <span>{visibleMarkers.length} visible</span>
-              <span>{found.size}/{mapMarkers.length} found</span>
+              <span>{visibleMarkers.length} {labels.visible}</span>
+              <span>{found.size}/{markers.length} {labels.found}</span>
             </div>
           </div>
           <p className={styles.mapCaption}>
-            Drag to pan · wheel or controls to zoom · detail badges distinguish exact coordinates from interior and route anchors.
+            {labels.dragCaption}
           </p>
         </div>
 
@@ -414,25 +457,25 @@ export default function InteractiveMap() {
           <article className={styles.detailCard}>
             <div className={styles.detailTopline}>
               <span data-category={selected.category}>{categoryById.get(selected.category)?.label}</span>
-              <span>{selected.pinType}</span>
+              <span>{pinTypeLabels[selected.pinType]}</span>
             </div>
             <h3>{selected.title}</h3>
             <p className={styles.region}>{selected.region}</p>
             <p>{selected.summary}</p>
             <div className={styles.routeHint}>
-              <span>Route note</span>
+              <span>{labels.routeNote}</span>
               <p>{selected.routeHint}</p>
             </div>
             <div className={styles.positionStandard} data-position-type={selected.pinType}>
-              <span>Position standard</span>
-              <strong>{selected.pinType}</strong>
-              <p>{positionStandards[selected.pinType]}</p>
+              <span>{labels.positionStandard}</span>
+              <strong>{pinTypeLabels[selected.pinType]}</strong>
+              <p>{pinTypeDescriptions[selected.pinType]}</p>
             </div>
             <div className={styles.detailActions}>
               <button type="button" onClick={() => toggleFound(selected.id)}>
-                {found.has(selected.id) ? "✓ Marked found" : "Mark as found"}
+                {found.has(selected.id) ? labels.markedFound : labels.markFound}
               </button>
-              {selected.relatedGuide && <a href={`/guides/${selected.relatedGuide}`}>Open full guide ↗</a>}
+              {selected.relatedGuide && <a href={`${localePrefix}/guides/${selected.relatedGuide}`}>{labels.openGuide}</a>}
               <FeedbackLink context={`Map marker: ${selected.title} (${selected.id})`}>
                 Report this marker ↗
               </FeedbackLink>
@@ -440,7 +483,7 @@ export default function InteractiveMap() {
           </article>
 
           <div className={styles.resultHeader}>
-            <span>Visible markers</span>
+            <span>{labels.visibleMarkers}</span>
             <strong>{String(visibleMarkers.length).padStart(2, "0")}</strong>
           </div>
           <div className={styles.resultList}>
@@ -461,8 +504,8 @@ export default function InteractiveMap() {
               </div>
             )) : (
               <div className={styles.emptyResult} role="status">
-                <strong>No visible marker.</strong>
-                <p>Clear the search, turn a category back on, or reveal boss spoilers.</p>
+                <strong>{labels.noMarker}</strong>
+                <p>{labels.noMarkerHelp}</p>
               </div>
             )}
           </div>

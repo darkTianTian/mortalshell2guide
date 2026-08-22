@@ -8,7 +8,7 @@ const siteUrl = "https://mortalshell2guide.org";
 const asDate = (date: string) => new Date(`${date}T00:00:00Z`);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const english: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/`,
       lastModified: asDate(latestGuideUpdate),
@@ -34,4 +34,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     })),
   ];
+  const localized = ["zh-cn", "zh-hant"].flatMap((locale) => english.map((entry) => ({
+    ...entry,
+    url: entry.url.replace(siteUrl, `${siteUrl}/${locale}`),
+  })));
+  return [...english, ...localized];
 }

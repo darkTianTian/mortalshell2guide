@@ -13,7 +13,12 @@ const mobileLinks: Array<{ href: string; key: SiteNavKey; label: string }> = [
   { href: "/guides/bosses", key: "bosses", label: "Bosses" },
 ];
 
-export default function MobileNav({ active }: { active?: SiteNavKey }) {
+export default function MobileNav({ active, prefix = "", labels, menuLabel = "Menu" }: {
+  active?: SiteNavKey;
+  prefix?: string;
+  labels?: Partial<Record<SiteNavKey, string>>;
+  menuLabel?: string;
+}) {
   const menuRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -39,18 +44,18 @@ export default function MobileNav({ active }: { active?: SiteNavKey }) {
     <details className="mobile-nav" ref={menuRef}>
       <summary aria-label="Open site navigation">
         <span aria-hidden="true"><i /><i /><i /></span>
-        <b>Menu</b>
+        <b>{menuLabel}</b>
       </summary>
       <nav aria-label="Mobile navigation">
         {mobileLinks.map((link, index) => (
           <a
             aria-current={active === link.key ? "page" : undefined}
-            href={link.href}
+            href={`${prefix}${link.href === "/" ? "" : link.href}` || "/"}
             key={link.href}
             onClick={() => { if (menuRef.current) menuRef.current.open = false; }}
           >
             <span>{String(index + 1).padStart(2, "0")}</span>
-            {link.label}
+            {labels?.[link.key] ?? link.label}
           </a>
         ))}
       </nav>

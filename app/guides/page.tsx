@@ -8,7 +8,7 @@ const siteUrl = "https://mortalshell2guide.org";
 export const metadata: Metadata = {
   title: "Mortal Shell 2 Guides, Builds, Bosses, and Locations",
   description: "Browse verified Mortal Shell 2 guides for Shell locations, Tarstones, weapons, bosses, progression, key items, builds, and the full story route.",
-  alternates: { canonical: "https://mortalshell2guide.org/guides" },
+  alternates: { canonical: "https://mortalshell2guide.org/guides", languages: { en: "https://mortalshell2guide.org/guides", "zh-CN": "https://mortalshell2guide.org/zh-cn/guides", "zh-Hant": "https://mortalshell2guide.org/zh-hant/guides", "x-default": "https://mortalshell2guide.org/guides" } },
 };
 
 export default function GuidesIndex() {

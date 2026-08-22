@@ -115,6 +115,26 @@ When adding or moving a marker, update its source IDs and `MAP_UPDATED_AT`, run 
 
 When adding or updating a guide, set its ISO `updatedAt` value and deploy. The sitemap and both LLM files will update automatically; they should not be maintained by hand.
 
+## Localization workflow
+
+Public locales are English, Simplified Chinese, and Traditional Chinese:
+
+- English keeps the existing canonical routes (`/`, `/guides/...`, `/map`).
+- Simplified Chinese uses `/zh-cn`.
+- Traditional Chinese uses `/zh-hant`.
+
+Chinese dictionaries are generated from the structured English corpus by `scripts/generate-locales.ts`. The generator protects game-specific entities before translating ordinary prose. Officially verified localized terms are restored from its terminology registry; terms without a verified in-game localized name remain in English instead of being guessed.
+
+Regenerate both Chinese dictionaries after changing guide or map copy:
+
+```bash
+./node_modules/.bin/tsx scripts/generate-locales.ts
+```
+
+Future updates may begin as internal Simplified Chinese drafts, but drafts must not be published directly. Normalize all game entities to protected terminology IDs first, then produce the English and Traditional Chinese versions. Simplified Chinese wording is never used as evidence for a Traditional Chinese in-game name.
+
+Every locale publishes its own canonical URL and reciprocal `hreflang` entries. The sitemap is generated from the English route list and currently emits all three language variants automatically.
+
 ## Current automation status
 
 GitHub stores the source, but pushing to `main` does **not** currently trigger a Cloudflare deployment. Production releases are performed manually with Wrangler using the authenticated local Cloudflare session.

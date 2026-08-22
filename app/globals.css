@@ -50,6 +50,22 @@ button, a { -webkit-tap-highlight-color: transparent; }
 img { display: block; max-width: 100%; }
 ::selection { color: var(--black); background: var(--ember-light); }
 
+.language-switcher {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 100;
+  display: flex;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(8,9,7,.94);
+  box-shadow: 0 12px 35px rgba(0,0,0,.48);
+  backdrop-filter: blur(14px);
+}
+.language-switcher a { display:grid; place-items:center; min-width:47px; min-height:38px; padding:0 8px; color:#85877f; font:8px var(--font-geist-mono),monospace; letter-spacing:.06em; }
+.language-switcher a:hover,.language-switcher a:focus-visible { color:#ffae61; outline:none; }
+.language-switcher a[aria-current="page"] { color:#160d08; background:#ffae61; }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -638,6 +654,8 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 540px) {
+  .language-switcher { right:12px; bottom:max(12px,env(safe-area-inset-bottom)); }
+  .language-switcher a { min-width:44px; min-height:40px; padding:0 6px; }
   .hero { min-height: 820px; }
   .hero-content { min-height: 820px; padding-bottom: 250px; }
   .game-title h1 { max-width: 100%; font-size: clamp(3rem, 14.5vw, 4.5rem); overflow-wrap: anywhere; }

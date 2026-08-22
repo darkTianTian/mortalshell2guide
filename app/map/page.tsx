@@ -14,7 +14,7 @@ import styles from "./map.module.css";
 export const metadata: Metadata = {
   title: mapPageMeta.title,
   description: mapPageMeta.description,
-  alternates: { canonical: mapPageMeta.canonical },
+  alternates: { canonical: mapPageMeta.canonical, languages: { en: mapPageMeta.canonical, "zh-CN": "https://mortalshell2guide.org/zh-cn/map", "zh-Hant": "https://mortalshell2guide.org/zh-hant/map", "x-default": mapPageMeta.canonical } },
   openGraph: {
     title: mapPageMeta.title,
     description: mapPageMeta.description,

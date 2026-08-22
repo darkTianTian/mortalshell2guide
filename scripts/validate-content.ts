@@ -9,6 +9,8 @@ import {
   mapSources,
 } from "../app/map/map-data";
 import { guideExtras, getGuideEnhancement } from "../app/guides/enhancements";
+import zhCN from "../app/i18n/generated/zh-CN.json";
+import zhHant from "../app/i18n/generated/zh-Hant.json";
 
 assert.equal(guideArticles.length, 37, "expected thirty-seven launch guide pages");
 assert.equal(guideArticleMap.size, guideArticles.length, "guide slugs must be unique");
@@ -41,6 +43,21 @@ assert.deepEqual(
   { hub: 7, shell: 8, weapon: 8, sidearm: 8, tarstone: 7, fragment: 11, key: 5, npc: 8, dungeon: 3, night: 2, upgrade: 5, gate: 6, boss: 10 },
   "map category counts changed unexpectedly",
 );
+
+assert.equal(Object.keys(zhCN).length, Object.keys(zhHant).length, "Chinese locale dictionaries must stay aligned");
+assert.ok(Object.keys(zhCN).length >= 1800, "Chinese locale dictionaries are incomplete");
+for (const [locale, dictionary] of [["zh-CN", zhCN], ["zh-Hant", zhHant]] as const) {
+  for (const article of guideArticles) {
+    for (const field of ["title", "description", "heading", "quickAnswer"]) {
+      assert.ok(dictionary[`guide.${article.slug}.${field}` as keyof typeof dictionary], `${locale} is missing ${article.slug}.${field}`);
+    }
+  }
+  for (const value of Object.values(dictionary)) {
+    assert.doesNotMatch(value, /__(?:AREA|BOSS|ITEM|PERSON|SYSTEM|WEAPON)\d+__|[\uE000-\uF8FF]/u, `${locale} contains an unresolved protected term`);
+  }
+}
+assert.doesNotMatch(JSON.stringify(zhCN), /凡人(?:外壳|躯壳)\s*2/, "Simplified Chinese must use the official game title");
+assert.doesNotMatch(JSON.stringify(zhHant), /凡人(?:外殼|軀殼)\s*2/, "Traditional Chinese must use the official game title fallback");
 for (const marker of mapMarkers) {
   assert.ok(marker.x >= 1 && marker.x <= 99 && marker.y >= 1 && marker.y <= 99, `${marker.id} is outside map bounds`);
   assert.ok(marker.sourceIds.length >= 2, `${marker.id} needs at least two sources`);

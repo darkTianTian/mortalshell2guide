@@ -50,6 +50,8 @@ Latest content update: ${latestGuideUpdate}. The interactive map uses the same v
 - [Shellbound homepage](${siteUrl}): Main navigation, confirmed game facts, featured guides, and launch resources.
 - [All Mortal Shell II guides](${siteUrl}/guides): Human-readable index of every published long-form guide.
 - [Mortal Shell 2 interactive map](${mapPageMeta.canonical}): ${mapPageMeta.description}
+- [简体中文站点](${siteUrl}/zh-cn): Simplified Chinese guide library with protected official game terminology.
+- [繁體中文站點](${siteUrl}/zh-hant): Traditional Chinese guide library with protected official game terminology.
 
 ${sections}
 
