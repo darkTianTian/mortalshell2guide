@@ -75,6 +75,8 @@ test("server-renders the Shellbound field guide", async () => {
   assert.match(html, /Search Shells, weapons, bosses/);
   assert.match(html, /<a href="\/guides">All Guides<\/a>/);
   assert.match(html, /<a href="\/map">Map<\/a>/);
+  assert.match(html, /<meta name="viewport" content="[^"]*width=device-width[^"]*initial-scale=1[^"]*"/i);
+  assert.match(html, /<nav aria-label="Mobile navigation">/i);
   for (const slug of ["genessa", "glimpse", "patch-notes", "editions", "gragu", "blackmarrow-key", "smert", "ps5", "sidearms", "hall-of-murmurs", "npc-questlines", "night-mode", "tarforge", "trophies", "new-game-plus", "tiel", "proxima", "lazlo", "sariel", "chapel-key", "forgotten-crossbow", "beginner-guide", "monolith"]) {
     assert.match(html, new RegExp(`href="/guides/${slug}"`));
   }
@@ -92,6 +94,20 @@ test("server-renders the Shellbound field guide", async () => {
   assert.equal((html.match(/<script[^>]*src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-BDWC6HJWKB"/gi) ?? []).length, 1);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+});
+
+test("provides mobile navigation on every primary surface", async () => {
+  for (const path of ["/", "/guides", "/map", "/guides/beginner-guide"]) {
+    const response = await render(path);
+    assert.equal(response.status, 200, `${path} should render`);
+    const html = await response.text();
+    assert.match(html, /<details class="mobile-nav">/i, `${path} needs a mobile menu`);
+    assert.match(html, /<summary aria-label="Open site navigation">/i);
+    assert.match(html, /<nav aria-label="Mobile navigation">/i);
+    for (const href of ["/guides", "/map", "/guides/shell-locations", "/guides/weapon-tier-list", "/guides/bosses"]) {
+      assert.match(html, new RegExp(`href="${href}"`), `${path} mobile menu should link to ${href}`);
+    }
+  }
 });
 
 test("publishes sitemap and robots discovery files", async () => {

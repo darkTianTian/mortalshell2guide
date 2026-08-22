@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import InteractiveMap from "./InteractiveMap";
+import MobileNav from "../components/MobileNav";
 import {
   MAP_UPDATED_AT,
   mapEditorialSections,
@@ -68,6 +69,7 @@ export default function MapPage() {
           <a href="/guides/weapon-tier-list">Weapons</a>
           <a href="/guides/bosses">Bosses</a>
         </nav>
+        <MobileNav />
         <a className={styles.homeLink} href="/">Return home ↗</a>
       </header>
 

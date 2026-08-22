@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import MobileNav from "./components/MobileNav";
 
 type Guide = {
   id: string;
@@ -411,6 +412,7 @@ export default function Home() {
           <a href="/map">Map</a>
           <a href="/guides">All Guides</a>
         </nav>
+        <MobileNav />
         <a className="launch-status" href="#intel">
           <span /> Launch build 1.0
         </a>

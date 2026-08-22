@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { guideArticleMap, guideArticles } from "../articles";
 import { articleWordCount } from "../types";
 import { CURRENT_VERIFICATION, getGuideEnhancement } from "../enhancements";
+import MobileNav from "../../components/MobileNav";
 import styles from "./guide.module.css";
 
 const siteUrl = "https://mortalshell2guide.org";
@@ -94,6 +95,7 @@ export default async function GuidePage({ params }: PageProps) {
           <a href="/guides/shell-locations">Shells</a>
           <a href="/guides/weapon-tier-list">Weapons</a>
         </nav>
+        <MobileNav />
         <a className={styles.homeLink} href="/">Return home ↗</a>
       </header>
 
