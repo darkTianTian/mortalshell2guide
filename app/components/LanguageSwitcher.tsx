@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const languages = [
   { label: "EN", path: "", lang: "en" },
@@ -12,6 +13,10 @@ export default function LanguageSwitcher() {
   const pathname = usePathname() ?? "/";
   const basePath = pathname.replace(/^\/(?:zh-cn|zh-hant)(?=\/|$)/, "") || "/";
   const current = pathname.startsWith("/zh-cn") ? "zh-CN" : pathname.startsWith("/zh-hant") ? "zh-Hant" : "en";
+
+  useEffect(() => {
+    document.documentElement.lang = current;
+  }, [current]);
 
   return (
     <nav className="language-switcher" aria-label="Language selector">
