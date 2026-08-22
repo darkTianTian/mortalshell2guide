@@ -7,7 +7,6 @@ import {
   mapEditorialSections,
   mapMarkers,
   mapPageMeta,
-  mapSources,
 } from "./map/map-data";
 
 const siteUrl = "https://mortalshell2guide.org";
@@ -42,7 +41,7 @@ export function buildLlmsIndex() {
 
 > An independent English-language guide to Mortal Shell II with verified launch-build coverage of Shells, weapons, Tarstones, bosses, key items, progression, and the main story route.
 
-Use the linked guides for focused answers. Each article identifies its spoiler level, update date, verification standard, and research sources. Details that have not been independently reproduced are labeled provisional instead of presented as confirmed facts.
+Use the linked guides for focused answers. Each article identifies its spoiler level, update date, and verification standard. Details that have not been independently reproduced are labeled provisional instead of presented as confirmed facts.
 
 Latest content update: ${latestGuideUpdate}. The interactive map uses the same versioned source data as the sitemap and full text export.
 
@@ -59,7 +58,6 @@ ${sections}
 - [Complete guide corpus](${siteUrl}/llms-full.txt): Full Markdown text of every guide in one file for deep retrieval and offline context.
 - [XML sitemap](${siteUrl}/sitemap.xml): Complete index of canonical human-readable pages and their last-modified dates.
 - [Robots policy](${siteUrl}/robots.txt): Current crawler access and sitemap declaration.
-- [Official Mortal Shell II website](https://mortalshell.com/): Primary source for official game features, media, and release information.
 `;
 }
 
@@ -79,10 +77,6 @@ function mapToMarkdown() {
   const editorial = mapEditorialSections
     .map((section) => `## ${section.heading}\n\n${section.paragraphs.join("\n\n")}`)
     .join("\n\n");
-  const sources = Object.values(mapSources)
-    .map((source) => `- [${source.label}](${source.url}) — ${source.type}. ${source.note}`)
-    .join("\n");
-
   return `# ${mapPageMeta.title}
 
 Canonical URL: ${mapPageMeta.canonical}
@@ -94,11 +88,7 @@ ${mapPageMeta.description}
 
 ${editorial}
 
-${markers}
-
-## Map sources checked
-
-${sources}`;
+${markers}`;
 }
 
 function articleToMarkdown(article: GuideArticle) {
@@ -111,9 +101,6 @@ function articleToMarkdown(article: GuideArticle) {
       return `## ${section.heading}\n\n${section.paragraphs.join("\n\n")}${bullets}`;
     })
     .join("\n\n");
-  const sources = article.sources
-    .map((source) => `- [${source.label}](${source.url}) — ${source.type}`)
-    .join("\n");
   const related = article.related
     .map((slug) => guideArticleMap.get(slug))
     .filter((item): item is GuideArticle => Boolean(item))
@@ -154,10 +141,6 @@ ${sections}
 
 ${faqs}
 
-## Sources checked
-
-${sources}
-
 ## Related guides
 
 ${related}`;
@@ -170,11 +153,11 @@ export function buildLlmsFull() {
 
   return `# Shellbound — Complete Mortal Shell II Guide Corpus
 
-> Full Markdown export of the verified Shellbound guide library for retrieval, citation discovery, and offline LLM context.
+> Full Markdown export of the verified Shellbound guide library for retrieval and offline LLM context.
 
 Generated automatically from the same structured article data used by the website, sitemap, metadata, and internal-link system. Latest content update: ${latestGuideUpdate}. Human-readable guide index: ${siteUrl}/guides. Concise LLM index: ${siteUrl}/llms.txt.
 
-Verification policy: official sources and current launch-build reporting take priority. Community findings are labeled by source type, and details without independent reproduction remain explicitly provisional.
+Verification policy: official material and current launch-build reporting take priority. Details without independent reproduction remain explicitly provisional.
 
 ---
 

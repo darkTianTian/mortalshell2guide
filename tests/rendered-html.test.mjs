@@ -131,6 +131,7 @@ test("publishes automatic LLM indexes from the guide corpus", async () => {
   assert.match(fullResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
   const full = await fullResponse.text();
   assert.match(full, /^# Shellbound — Complete Mortal Shell II Guide Corpus/m);
+  assert.doesNotMatch(full, /^## (?:Map )?Sources checked$/m);
   assert.ok(full.trim().split(/\s+/).length > 10_000, "full corpus should include all long-form guide text");
   assert.match(full, /Canonical URL: https:\/\/mortalshell2guide\.org\/map/);
   for (const slug of guideSlugs) {
@@ -150,7 +151,7 @@ test("renders the verified interactive map with SEO metadata and discovery conte
   assert.match(html, /Find the next thing that changes your run/);
   assert.match(html, /88(?:<!-- -->)? essential markers/);
   assert.match(html, /Marrow Keep/);
-  assert.match(html, /Map sources checked/);
+  assert.doesNotMatch(html, /Map sources checked|Research log|Sources &amp; verification/);
   assert.match(html, /ms2-interactive-world-map\.webp/);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
 });
@@ -165,7 +166,7 @@ test("renders every guide with compliant metadata and internal navigation", asyn
     assert.ok(title.length >= 50 && title.length <= 60, `${slug} title length ${title.length}`);
     assert.ok(description.length >= 140 && description.length <= 160, `${slug} description length ${description.length}`);
     assert.match(html, new RegExp(`<link rel="canonical" href="https://mortalshell2guide\\.org/guides/${slug}`));
-    assert.match(html, /Sources checked/);
+    assert.doesNotMatch(html, /Sources checked|Research log/);
     assert.match(html, /Guide at a glance|Retail build/);
     assert.match(html, /Frequently asked questions/);
     assert.match(html, /Related field notes/);

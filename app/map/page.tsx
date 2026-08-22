@@ -6,7 +6,6 @@ import {
   mapEditorialWordCount,
   mapMarkers,
   mapPageMeta,
-  mapSources,
 } from "./map-data";
 import styles from "./map.module.css";
 
@@ -108,7 +107,6 @@ export default function MapPage() {
             {mapEditorialWordCount().toLocaleString("en-US")} words explaining scope,
             controls, versioning, and a low-spoiler route order.
           </p>
-          <a href="#map-sources">Jump to research log ↓</a>
         </aside>
         <div className={styles.editorialBody}>
           {mapEditorialSections.map((section, index) => (
@@ -121,19 +119,6 @@ export default function MapPage() {
             </section>
           ))}
 
-          <section className={styles.sourceLog} id="map-sources">
-            <span>Research log</span>
-            <h2>Map sources checked</h2>
-            <ul>
-              {Object.entries(mapSources).map(([id, source]) => (
-                <li key={id}>
-                  <span>{source.type}</span>
-                  <a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>
-                  <p>{source.note}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
         </div>
       </section>
 

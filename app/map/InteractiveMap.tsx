@@ -11,7 +11,6 @@ import {
 import {
   mapCategories,
   mapMarkers,
-  mapSources,
   type MapCategory,
   type MapMarker,
 } from "./map-data";
@@ -336,21 +335,6 @@ export default function InteractiveMap() {
               </button>
               {selected.relatedGuide && <a href={`/guides/${selected.relatedGuide}`}>Open full guide ↗</a>}
             </div>
-            <details className={styles.verification}>
-              <summary>Sources & verification</summary>
-              <p>Launch coordinate plus an independent category or route cross-check.</p>
-              <ul>
-                {selected.sourceIds.map((sourceId) => {
-                  const source = mapSources[sourceId];
-                  return (
-                    <li key={sourceId}>
-                      <span>{source.type}</span>
-                      <a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </details>
           </article>
 
           <div className={styles.resultHeader}>

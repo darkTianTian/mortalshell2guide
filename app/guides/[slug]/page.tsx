@@ -177,17 +177,6 @@ export default async function GuidePage({ params }: PageProps) {
             ))}
           </section>
 
-          <section className={styles.sources}>
-            <div><span>Research log</span><h2>Sources checked</h2></div>
-            <ul>
-              {article.sources.map((source) => (
-                <li key={source.url}>
-                  <span>{source.type}</span>
-                  <a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>
-                </li>
-              ))}
-            </ul>
-          </section>
         </article>
       </div>
 
