@@ -125,13 +125,6 @@ export default function MapPage() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <span>
-          Independent fan guide. Base map art © Cold Symmetry and Playstack; used for
-          editorial identification. Marker text and interface © Shellbound.
-        </span>
-        <a href="/">Shellbound home ↑</a>
-      </footer>
     </main>
   );
 }

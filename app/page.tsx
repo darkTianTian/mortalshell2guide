@@ -642,18 +642,6 @@ export default function Home() {
         </div>
       </section>
 
-      <footer>
-        <a className="wordmark" href="#top">
-          <span className="sigil" aria-hidden="true">II</span>
-          <span className="wordmark-copy"><strong>Mortal Shell II</strong><small>Shellbound field guide</small></span>
-        </a>
-        <p>
-          An independent fan-made guide. Official screenshots © Playstack and
-          Cold Symmetry. Used for editorial identification; all rights remain
-          with their respective owners.
-        </p>
-        <a href="#top">Return to the surface ↑</a>
-      </footer>
     </main>
   );
 }

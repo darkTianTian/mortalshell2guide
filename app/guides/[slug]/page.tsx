@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { guideArticleMap, guideArticles } from "../articles";
 import { articleWordCount } from "../types";
 import { CURRENT_VERIFICATION, getGuideEnhancement } from "../enhancements";
+import FeedbackLink from "../../components/FeedbackLink";
 import MobileNav from "../../components/MobileNav";
 import styles from "./guide.module.css";
 
@@ -165,6 +166,12 @@ export default async function GuidePage({ params }: PageProps) {
                 {section.bullets && (
                   <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
                 )}
+                <FeedbackLink
+                  className={styles.dataFeedback}
+                  context={`Guide section: ${section.heading}`}
+                >
+                  Report data in this section ↗
+                </FeedbackLink>
               </div>
             </section>
           ))}
@@ -193,10 +200,6 @@ export default async function GuidePage({ params }: PageProps) {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <p>Independent fan guide. Game names and official imagery belong to Cold Symmetry and Playstack.</p>
-        <a href="/">Shellbound home ↑</a>
-      </footer>
     </main>
   );
 }

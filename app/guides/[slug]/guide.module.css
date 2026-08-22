@@ -55,6 +55,8 @@
 .section ul { margin: 28px 0 12px; padding: 0; border-top: 1px solid rgba(255,255,255,.15); list-style: none; }
 .section li { position: relative; padding: 14px 10px 14px 28px; border-bottom: 1px solid rgba(255,255,255,.12); color: #aaa79f; font-size: 12px; line-height: 1.65; }
 .section li::before { position: absolute; top: 19px; left: 6px; width: 6px; height: 6px; content: ""; background: #e0793f; transform: rotate(45deg); }
+.dataFeedback { display:inline-flex; align-items:center; min-height:38px; margin-top:9px; color:#777970; font:7px var(--font-geist-mono),monospace; letter-spacing:.08em; text-transform:uppercase; }
+.dataFeedback:hover { color:#ffae61; }
 .faq { margin-top:35px; padding:34px; border:1px solid rgba(255,255,255,.15); background:linear-gradient(135deg,#12130f,#0d0e0c); }
 .faq > div span { color:#e0793f; font-family:var(--font-geist-mono),monospace; font-size:7px; letter-spacing:.14em; text-transform:uppercase; }
 .faq h2 { margin:8px 0 24px; font-family:Georgia,serif; font-size:30px; font-weight:400; }
@@ -80,9 +82,6 @@
 .relatedGrid p { margin: 0; color: #777970; font-size: 10px; line-height: 1.6; }
 .relatedGrid i { margin-top: auto; color: #aaa79f; font-family: var(--font-geist-mono),monospace; font-size: 7px; font-style: normal; letter-spacing: .09em; text-transform: uppercase; }
 .relatedGrid > a:hover { background: #15130f; }
-.footer { display: flex; gap: 40px; align-items: center; justify-content: space-between; padding: 40px 3.5vw; border-top: 1px solid rgba(255,255,255,.15); color: #666861; font-size: 8px; }
-.footer p { margin: 0; }
-.footer a:hover { color: #ffae61; }
 @media (max-width:900px) {
   .header { grid-template-columns:1fr auto; min-height:76px; padding:0 20px; }
   .header > nav,.homeLink { display:none; }
@@ -136,8 +135,7 @@
   .relatedGrid h3 { margin-top:28px; font-size:23px; }
   .relatedGrid p { font-size:11px; }
   .relatedGrid i { display:flex; align-items:center; min-height:44px; }
-  .footer { flex-direction:column; align-items:flex-start; padding:35px 20px; font-size:9px; line-height:1.65; }
-  .footer a { display:flex; align-items:center; min-height:44px; }
+  .dataFeedback { min-height:44px; font-size:8px; }
 }
 
 @media (max-width:380px) {

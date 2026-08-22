@@ -17,6 +17,7 @@ import {
   type MapMarker,
   type MapPinType,
 } from "./map-data";
+import FeedbackLink from "../components/FeedbackLink";
 import styles from "./map.module.css";
 
 const STORAGE_KEY = "shellbound-map-found-v1";
@@ -407,6 +408,9 @@ export default function InteractiveMap() {
                 {found.has(selected.id) ? "✓ Marked found" : "Mark as found"}
               </button>
               {selected.relatedGuide && <a href={`/guides/${selected.relatedGuide}`}>Open full guide ↗</a>}
+              <FeedbackLink context={`Map marker: ${selected.title} (${selected.id})`}>
+                Report this marker ↗
+              </FeedbackLink>
             </div>
           </article>
 

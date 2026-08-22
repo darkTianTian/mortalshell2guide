@@ -112,6 +112,28 @@ test("provides mobile navigation on every primary surface", async () => {
   }
 });
 
+test("provides structured correction feedback on every primary surface", async () => {
+  for (const path of ["/", "/guides", "/map", "/guides/beginner-guide"]) {
+    const response = await render(path);
+    assert.equal(response.status, 200, `${path} should render`);
+    const html = await response.text();
+    assert.match(html, /<footer class="site-footer">/i, `${path} needs the global footer`);
+    assert.match(html, /feedback@mortalshell2guide\.org/i);
+    assert.match(html, /mailto:feedback@mortalshell2guide\.org\?subject=/i);
+    assert.match(html, /Data(?:%20|\+)%(?:2F|2f)(?:%20|\+)section/i);
+    assert.match(html, /Suggested(?:%20|\+)correction/i);
+    assert.match(html, /Source(?:%20|\+)%(?:2F|2f)(?:%20|\+)evidence/i);
+  }
+
+  const guide = await (await render("/guides/beginner-guide")).text();
+  assert.match(guide, /Report data in this section/i);
+  assert.match(guide, /data-feedback-context="Guide section:/i);
+
+  const map = await (await render("/map")).text();
+  assert.match(map, /Report this marker/i);
+  assert.match(map, /data-feedback-context="Map marker:/i);
+});
+
 test("labels the visible site identity as Mortal Shell II", async () => {
   for (const path of ["/", "/map", "/guides/beginner-guide"]) {
     const response = await render(path);
