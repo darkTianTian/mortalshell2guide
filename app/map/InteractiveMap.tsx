@@ -15,6 +15,7 @@ import {
   mapMarkers,
   type MapCategory,
   type MapMarker,
+  type MapPinType,
 } from "./map-data";
 import styles from "./map.module.css";
 
@@ -53,6 +54,22 @@ const persistFound = (found: Set<string>) => {
 
 const markerById = new Map(mapMarkers.map((item) => [item.id, item]));
 const categoryById = new Map(mapCategories.map((item) => [item.id, item]));
+const positionStandards: Record<MapPinType, string> = {
+  "Exact position": "Cross-checked retail coordinate for the visible overworld point.",
+  "Interior anchor": "Verified interior or dungeon cluster; follow the route note for the room-level pickup.",
+  "Route anchor": "Verified route start or quest-state location, not a claim that the reward lies on this pixel.",
+};
+const positionCounts = MapPinTypeCounter(mapMarkers);
+
+function MapPinTypeCounter(markers: MapMarker[]) {
+  const counts: Record<MapPinType, number> = {
+    "Exact position": 0,
+    "Interior anchor": 0,
+    "Route anchor": 0,
+  };
+  for (const item of markers) counts[item.pinType] += 1;
+  return counts;
+}
 
 export default function InteractiveMap() {
   const [query, setQuery] = useState("");
@@ -288,6 +305,16 @@ export default function InteractiveMap() {
         </button>
       </div>
 
+      <div className={styles.positionLegend} role="note" aria-label="Map position standards">
+        <strong>Position standard</strong>
+        {(Object.keys(positionStandards) as MapPinType[]).map((pinType) => (
+          <span key={pinType} data-position-type={pinType}>
+            <i aria-hidden="true" />
+            {pinType} <b>{positionCounts[pinType]}</b>
+          </span>
+        ))}
+      </div>
+
       <div className={styles.mapLayout}>
         <div className={styles.mapColumn}>
           <div
@@ -353,7 +380,7 @@ export default function InteractiveMap() {
             </div>
           </div>
           <p className={styles.mapCaption}>
-            Drag to pan · wheel or controls to zoom · boss and Corrupted Gate pins stay hidden until spoilers are revealed.
+            Drag to pan · wheel or controls to zoom · detail badges distinguish exact coordinates from interior and route anchors.
           </p>
         </div>
 
@@ -361,7 +388,7 @@ export default function InteractiveMap() {
           <article className={styles.detailCard}>
             <div className={styles.detailTopline}>
               <span data-category={selected.category}>{categoryById.get(selected.category)?.label}</span>
-              <span>{selected.pinType ?? "Overworld"}</span>
+              <span>{selected.pinType}</span>
             </div>
             <h3>{selected.title}</h3>
             <p className={styles.region}>{selected.region}</p>
@@ -369,6 +396,11 @@ export default function InteractiveMap() {
             <div className={styles.routeHint}>
               <span>Route note</span>
               <p>{selected.routeHint}</p>
+            </div>
+            <div className={styles.positionStandard} data-position-type={selected.pinType}>
+              <span>Position standard</span>
+              <strong>{selected.pinType}</strong>
+              <p>{positionStandards[selected.pinType]}</p>
             </div>
             <div className={styles.detailActions}>
               <button type="button" onClick={() => toggleFound(selected.id)}>
