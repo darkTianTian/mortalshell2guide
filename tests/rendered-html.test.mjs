@@ -112,6 +112,19 @@ test("provides mobile navigation on every primary surface", async () => {
   }
 });
 
+test("provides consistent desktop navigation on every primary surface", async () => {
+  for (const path of ["/", "/guides", "/map", "/guides/beginner-guide"]) {
+    const response = await render(path);
+    assert.equal(response.status, 200, `${path} should render`);
+    const html = await response.text();
+    assert.match(html, /<header class="site-header site-header--(?:overlay|solid)">/i);
+    assert.match(html, /<nav class="desktop-nav" aria-label="Primary navigation">/i);
+    for (const href of ["/guides", "/map", "/guides/shell-locations", "/guides/weapon-tier-list", "/guides/bosses"]) {
+      assert.match(html, new RegExp(`href="${href}"`), `${path} primary nav should link to ${href}`);
+    }
+  }
+});
+
 test("provides structured correction feedback on every primary surface", async () => {
   for (const path of ["/", "/guides", "/map", "/guides/beginner-guide"]) {
     const response = await render(path);
@@ -145,7 +158,19 @@ test("labels the visible site identity as Mortal Shell II", async () => {
 
   const indexResponse = await render("/guides");
   const index = await indexResponse.text();
-  assert.match(index, /<header[^>]*><a href="\/">Mortal Shell II<\/a>/i);
+  assert.match(index, /<header class="site-header site-header--solid">/i);
+  assert.match(index, /<strong>Mortal Shell II<\/strong><small>Shellbound field guide<\/small>/i);
+});
+
+test("publishes visible and structured breadcrumbs on hierarchical pages", async () => {
+  for (const path of ["/guides", "/map", "/guides/beginner-guide"]) {
+    const response = await render(path);
+    assert.equal(response.status, 200, `${path} should render`);
+    const html = await response.text();
+    assert.match(html, /<nav[^>]+aria-label="Breadcrumb">/i);
+    assert.match(html, /"@type":"BreadcrumbList"/i);
+    assert.match(html, /"itemListElement":\[/i);
+  }
 });
 
 test("publishes sitemap and robots discovery files", async () => {

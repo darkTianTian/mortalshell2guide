@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import MobileNav from "./components/MobileNav";
+import SiteHeader from "./components/SiteHeader";
 
 type Guide = {
   id: string;
@@ -397,26 +397,7 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Mortal Shell II guide home">
-          <span className="sigil" aria-hidden="true">II</span>
-          <span className="wordmark-copy">
-            <strong>Mortal Shell II</strong>
-            <small>Shellbound field guide</small>
-          </span>
-        </a>
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="/guides/shell-locations">Shells</a>
-          <a href="/guides/weapon-tier-list">Arsenal</a>
-          <a href="/guides/bosses">Bosses</a>
-          <a href="/map">Map</a>
-          <a href="/guides">All Guides</a>
-        </nav>
-        <MobileNav />
-        <a className="launch-status" href="#intel">
-          <span /> Launch build 1.0
-        </a>
-      </header>
+      <SiteHeader active="home" showLaunchStatus />
 
       <section className="hero" id="top">
         <img

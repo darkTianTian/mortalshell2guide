@@ -4,7 +4,7 @@ import { guideArticleMap, guideArticles } from "../articles";
 import { articleWordCount } from "../types";
 import { CURRENT_VERIFICATION, getGuideEnhancement } from "../enhancements";
 import FeedbackLink from "../../components/FeedbackLink";
-import MobileNav from "../../components/MobileNav";
+import SiteHeader from "../../components/SiteHeader";
 import styles from "./guide.module.css";
 
 const siteUrl = "https://mortalshell2guide.org";
@@ -75,8 +75,24 @@ export default async function GuidePage({ params }: PageProps) {
           acceptedAnswer: { "@type": "Answer", text: faq.answer },
         })),
       },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+          { "@type": "ListItem", position: 2, name: "Guides", item: `${siteUrl}/guides` },
+          { "@type": "ListItem", position: 3, name: article.heading, item: canonical },
+        ],
+      },
     ],
   };
+
+  const activeNav = article.slug === "shell-locations"
+    ? "shells"
+    : article.slug === "weapon-tier-list"
+      ? "weapons"
+      : article.slug === "bosses"
+        ? "bosses"
+        : "guides";
 
   return (
     <main className={styles.page}>
@@ -85,28 +101,15 @@ export default async function GuidePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
 
-      <header className={styles.header}>
-        <a className={styles.brand} href="/">
-          <span aria-hidden="true">II</span>
-          <div><strong>Mortal Shell II</strong><small>Shellbound field guide</small></div>
-        </a>
-        <nav aria-label="Guide navigation">
-          <a href="/guides">All guides</a>
-          <a href="/map">Map</a>
-          <a href="/guides/shell-locations">Shells</a>
-          <a href="/guides/weapon-tier-list">Weapons</a>
-        </nav>
-        <MobileNav />
-        <a className={styles.homeLink} href="/">Return home ↗</a>
-      </header>
+      <SiteHeader active={activeNav} />
 
       <section className={styles.hero}>
         <img src={article.image} alt={article.imageAlt} />
         <div className={styles.heroShade} />
         <div className={styles.heroContent}>
-          <div className={styles.breadcrumbs}>
-            <a href="/">Home</a><span>/</span><a href="/guides">Guides</a><span>/</span><span>{article.category}</span>
-          </div>
+          <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+            <a href="/">Home</a><span aria-hidden="true">/</span><a href="/guides">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{article.heading}</span>
+          </nav>
           <p className={styles.eyebrow}>{article.eyebrow}</p>
           <h1>{article.heading}</h1>
           <div className={styles.meta}>

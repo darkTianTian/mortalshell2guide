@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import InteractiveMap from "./InteractiveMap";
-import MobileNav from "../components/MobileNav";
+import SiteHeader from "../components/SiteHeader";
 import {
   MAP_UPDATED_AT,
   MAP_POSITION_AUDIT_AT,
@@ -41,15 +41,26 @@ export const metadata: Metadata = {
 export default function MapPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "Shellbound Mortal Shell 2 Interactive Map",
-    applicationCategory: "GameApplication",
-    operatingSystem: "Any",
-    inLanguage: "en",
-    url: mapPageMeta.canonical,
-    description: mapPageMeta.description,
-    dateModified: MAP_UPDATED_AT,
-    isAccessibleForFree: true,
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: "Shellbound Mortal Shell 2 Interactive Map",
+        applicationCategory: "GameApplication",
+        operatingSystem: "Any",
+        inLanguage: "en",
+        url: mapPageMeta.canonical,
+        description: mapPageMeta.description,
+        dateModified: MAP_UPDATED_AT,
+        isAccessibleForFree: true,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://mortalshell2guide.org" },
+          { "@type": "ListItem", position: 2, name: "Interactive map", item: mapPageMeta.canonical },
+        ],
+      },
+    ],
   };
 
   return (
@@ -59,20 +70,7 @@ export default function MapPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
 
-      <header className={styles.header}>
-        <a className={styles.brand} href="/">
-          <span aria-hidden="true">II</span>
-          <div><strong>Mortal Shell II</strong><small>Shellbound field guide</small></div>
-        </a>
-        <nav aria-label="Map navigation">
-          <a href="/guides">All guides</a>
-          <a href="/guides/shell-locations">Shells</a>
-          <a href="/guides/weapon-tier-list">Weapons</a>
-          <a href="/guides/bosses">Bosses</a>
-        </nav>
-        <MobileNav />
-        <a className={styles.homeLink} href="/">Return home ↗</a>
-      </header>
+      <SiteHeader active="map" />
 
       <section className={styles.hero}>
         <img
@@ -83,9 +81,9 @@ export default function MapPage() {
         <div className={styles.heroShade} />
         <div className={styles.heroGrid} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <div className={styles.breadcrumbs}>
-            <a href="/">Home</a><span>/</span><span>Interactive map</span>
-          </div>
+          <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+            <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Interactive map</span>
+          </nav>
           <p className={styles.kicker}>World record // Launch build 1.0</p>
           <h1>{mapPageMeta.heading}</h1>
           <p className={styles.heroLede}>

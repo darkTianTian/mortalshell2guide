@@ -1,7 +1,7 @@
 .page { min-height:100vh; padding-bottom:80px; background:#090a08; color:#e5e0d4; }
-.page header { display:flex; justify-content:space-between; min-height:76px; padding:0 4vw; align-items:center; border-bottom:1px solid rgba(255,255,255,.16); font:9px var(--font-geist-mono),monospace; letter-spacing:.1em; text-transform:uppercase; }
-.page header > a:first-child { font-family:Georgia,serif; font-size:20px; text-transform:none; }
 .hero { padding:110px 7vw 80px; border-bottom:1px solid rgba(255,255,255,.16); background:linear-gradient(110deg,#17100b,#090a08 60%); }
+.breadcrumbs { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:38px; color:#777970; font:8px var(--font-geist-mono),monospace; letter-spacing:.1em; text-transform:uppercase; }
+.breadcrumbs a:hover { color:#ffae61; }
 .hero p,.hero span { color:#e0793f; font:8px var(--font-geist-mono),monospace; letter-spacing:.14em; text-transform:uppercase; }
 .hero h1 { margin:20px 0 30px; font-family:Georgia,serif; font-size:clamp(4rem,8vw,9rem); font-weight:400; letter-spacing:-.05em; line-height:.85; }
 .hero h1 em { color:#777970; font-weight:400; }
@@ -14,8 +14,6 @@
 .grid p { margin:0; color:#7d7f78; font-size:11px; line-height:1.65; }
 .grid i { margin-top:auto; color:#aaa79f; font:7px var(--font-geist-mono),monospace; font-style:normal; letter-spacing:.09em; text-transform:uppercase; }
 @media(max-width:900px){
-  .page header{min-height:76px;padding:0 20px}
-  .page header>span{display:none}
   .grid{grid-template-columns:repeat(2,1fr);margin:50px 24px 0}
   .hero{padding:85px 24px 65px}
 }
@@ -31,7 +29,6 @@
   .grid i{display:flex;align-items:center;min-height:44px}
 }
 @media(max-width:380px){
-  .page header{padding-right:max(14px,env(safe-area-inset-right));padding-left:max(14px,env(safe-area-inset-left))}
   .hero,.grid{margin-right:0;margin-left:0}
   .hero{padding-right:16px;padding-left:16px}
   .grid{margin-right:16px;margin-left:16px}
