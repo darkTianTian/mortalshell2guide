@@ -205,7 +205,7 @@
   .search input { height:54px; font-size:14px; }
   .search button { width:44px; height:44px; font-size:18px; }
   .filterToolbar { align-items:stretch; flex-direction:column; gap:8px; }
-  .filterPresets { display:grid; grid-template-columns:repeat(3,1fr); }
+  .filterPresets { display:grid; grid-template-columns:repeat(2,1fr); }
   .filterPresets button { justify-content:center; padding-right:6px; padding-left:6px; }
   .filterToolbar > span { align-self:flex-end; }
   .filterBar button { flex:1 0 calc(33.33% - 7px); justify-content:center; }

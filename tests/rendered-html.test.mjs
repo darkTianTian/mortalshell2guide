@@ -239,7 +239,7 @@ test("renders the verified interactive map with SEO metadata and discovery conte
   assert.match(html, /aria-label="Quick marker filter actions"/);
   assert.match(html, />Show all<\/button>/);
   assert.match(html, />Hide all<\/button>/);
-  assert.match(html, />Shells only<\/button>/);
+  assert.doesNotMatch(html, />Shells only<\/button>/);
   assert.match(html, /13(?:<!-- -->)? categories shown/);
   assert.doesNotMatch(html, /Map sources checked|Research log|Sources &amp; verification/);
   assert.match(html, /ms2-interactive-world-map\.webp/);

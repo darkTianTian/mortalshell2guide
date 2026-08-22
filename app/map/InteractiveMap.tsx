@@ -187,9 +187,6 @@ export default function InteractiveMap() {
 
   const applyCategoryPreset = (categories: MapCategory[]) => {
     setActiveCategories(new Set(categories));
-    if (categories.length !== 1) return;
-    const firstMatch = mapMarkers.find((item) => item.category === categories[0]);
-    if (firstMatch) setSelectedId(firstMatch.id);
   };
 
   const toggleFound = (id: string) => {
@@ -302,13 +299,6 @@ export default function InteractiveMap() {
             aria-pressed={activeCategories.size === 0}
           >
             Hide all
-          </button>
-          <button
-            type="button"
-            onClick={() => applyCategoryPreset(["shell"])}
-            aria-pressed={activeCategories.size === 1 && activeCategories.has("shell")}
-          >
-            Shells only
           </button>
         </div>
         <span aria-live="polite">{activeCategories.size} / {allCategoryIds.length} categories shown</span>
