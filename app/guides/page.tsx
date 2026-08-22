@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function GuidesIndex() {
   return (
     <main className={styles.page}>
-      <header><a href="/">Shellbound</a><span><a href="/map">Interactive map</a> · <a href="/">Home ↗</a></span><MobileNav /></header>
+      <header><a href="/">Mortal Shell II</a><span><a href="/map">Interactive map</a> · <a href="/">Home ↗</a></span><MobileNav /></header>
       <section className={styles.hero}>
         <p>Verified launch-build coverage</p>
         <h1>Mortal Shell II<br /><em>Field Notes.</em></h1>
