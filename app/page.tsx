@@ -1,131 +1,385 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Guide = {
   id: string;
-  index: string;
   category: string;
-  readTime: string;
   title: string;
   excerpt: string;
-  label?: string;
+  readTime: string;
+  difficulty: "Essential" | "Field note" | "Deep dive";
 };
 
 const guides: Guide[] = [
   {
-    id: "first-route",
-    index: "01",
-    category: "Exploration",
-    readTime: "6 min",
-    title: "Your first 90 minutes",
+    id: "beginner-guide",
+    category: "Routes",
+    title: "Beginner guide and first route",
     excerpt:
-      "A low-risk route from the prologue into the first open region, with the detours that actually pay off.",
-    label: "Start here",
+      "A safe opening path, Guard and Harden tactics, current currencies, upgrade priorities, and mistake fixes.",
+    readTime: "10 min",
+    difficulty: "Essential",
   },
   {
-    id: "harden",
-    index: "02",
-    category: "Combat",
-    readTime: "4 min",
-    title: "Harden windows, explained",
+    id: "chapel-key",
+    category: "Items",
+    title: "Chapel Key and Shrine of Trials",
     excerpt:
-      "Turn the signature defensive tool into pressure: bait, interrupt, reset, then take back your turn.",
+      "Reveal the illusion near Mushroom Village, solve both trials, and claim Axe and Dagger.",
+    readTime: "8 min",
+    difficulty: "Essential",
   },
   {
-    id: "shell-role",
-    index: "03",
+    id: "forgotten-crossbow",
+    category: "Arsenal",
+    title: "Find Forgotten Crossbow",
+    excerpt:
+      "Damp Key, Flooded Village's locked door, safe ranged pulls, and Obsidian Lathe upgrades.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "monolith",
+    category: "Bosses",
+    title: "Beat Monolith after the patch",
+    excerpt:
+      "Obsidian Vault route, rotating-beam positioning, retimed attacks, and verified balance changes.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "npc-questlines",
+    category: "NPCs",
+    title: "Complete NPC questlines",
+    excerpt:
+      "Verified routes for Gorf, Hilga, Baghead, Egon, Gragu, Vlas, hub characters, and reset steps.",
+    readTime: "9 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "night-mode",
+    category: "World",
+    title: "Unlock Night Mode",
+    excerpt:
+      "Gloombound Flame, Thestus, difficulty changes, night merchants, hidden dungeons, and daylight return.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "tarforge",
+    category: "Progression",
+    title: "Restore the Tarforge",
+    excerpt:
+      "All five components for weapons, Sidearms, Tarstones, smelting refunds, and the final upgrade cap.",
+    readTime: "9 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "trophies",
+    category: "Completion",
+    title: "Trophies and 100% checklist",
+    excerpt:
+      "Platform counts, hidden objectives, missable NPC steps, Slayer Seal warning, and a safe cleanup route.",
+    readTime: "10 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "new-game-plus",
+    category: "Completion",
+    title: "Prepare for New Game Plus",
+    excerpt:
+      "Send Ova, every confirmed carryover and reset, Ovum survival, and the complete pre-NG+ checklist.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "tiel",
     category: "Shells",
-    readTime: "5 min",
-    title: "Choose a Shell by role",
+    title: "Build Tiel for Shadow",
     excerpt:
-      "Ignore tier-list noise. Match each warrior's strengths to your preferred range, tempo, and margin for error.",
+      "The torch-lit grave, Rash Memory flask, Shadow Dash timing, fast weapons, and boss pressure.",
+    readTime: "8 min",
+    difficulty: "Essential",
   },
   {
-    id: "posture",
-    index: "04",
-    category: "Weapons",
-    readTime: "4 min",
-    title: "Break posture with intent",
+    id: "proxima",
+    category: "Shells",
+    title: "Control fights with Proxima",
     excerpt:
-      "Build a repeatable pressure loop by pairing melee commitment with the right sidearm timing.",
-    label: "Core system",
+      "Shattered Beacon, Biosampler memory, Lightning pulls, mitigation, weapons, and safe positioning.",
+    readTime: "8 min",
+    difficulty: "Field note",
   },
   {
-    id: "dungeons",
-    index: "05",
-    category: "Exploration",
+    id: "lazlo",
+    category: "Shells",
+    title: "Build Lazlo as a tank",
+    excerpt:
+      "Royal Crypt, Vellen, Heat and Overheat cycles, Retribution, Burn pressure, and armor recovery.",
+    readTime: "8 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "sariel",
+    category: "Shells",
+    title: "End Sariel's revivals",
+    excerpt:
+      "Silent Steps, Chamber of Becoming, four tablets, Scythe, Caged Hystrix, and Pain recovery.",
+    readTime: "9 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "blackmarrow-key",
+    category: "Items",
+    title: "Use Blackmarrow Keys",
+    excerpt:
+      "Verified key sources, Marrow Keep Shade chests, Night Mode routes, and similar-key warnings.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "smert",
+    category: "Shells",
+    title: "Unlock and build Smert",
+    excerpt:
+      "Prophet's Rest, three blood pools, The Convert memory, Miracle, Chaos, and safe Overtime use.",
+    readTime: "8 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "ps5",
+    category: "Platform",
+    title: "PS5 and PS5 Pro guide",
+    excerpt:
+      "Performance and quality modes, install size, current fixes, editions, and trophy protection.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "sidearms",
+    category: "Arsenal",
+    title: "Find all eight Sidearms",
+    excerpt:
+      "Every location and combat role, plus Obsidian Lathe upgrades and the best first investments.",
+    readTime: "9 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "hall-of-murmurs",
+    category: "World",
+    title: "Hall of Murmurs and Egon",
+    excerpt:
+      "The Castigator's Keep dungeon, all rewards, Egon's location, and the Feed Me trophy route.",
+    readTime: "8 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "genessa",
+    category: "Shells",
+    title: "Unlock and build Genessa",
+    excerpt:
+      "Revenant Graves, Sester's Censer, Sester Secundus, Faithful Doubles, and a safe Bond plan.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "glimpse",
+    category: "Progression",
+    title: "Spend Glimpses safely",
+    excerpt:
+      "Where fixed Glimpses come from, why infinite farms fail, and which purchases protect your run.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "patch-notes",
+    category: "Updates",
+    title: "Latest patch notes",
+    excerpt:
+      "Verified retail hotfixes, current fixes, platform rollout guidance, and beta-patch separation.",
     readTime: "7 min",
-    title: "Read the compact open world",
-    excerpt:
-      "How landmarks, side paths, and dungeon entrances telegraph where the next meaningful reward may be hiding.",
+    difficulty: "Essential",
   },
   {
-    id: "no-stamina",
-    index: "06",
-    category: "Combat",
-    readTime: "3 min",
-    title: "No stamina does not mean no rhythm",
+    id: "editions",
+    category: "World",
+    title: "Compare every edition",
     excerpt:
-      "Your real limits are recovery frames, spacing, posture, and enemy retaliation—not a green bar.",
+      "Standard, Devout, and PS5 Revered prices, contents, Obsidian skins, and current availability.",
+    readTime: "7 min",
+    difficulty: "Field note",
   },
   {
-    id: "false-god",
-    index: "07",
-    category: "Boss Prep",
-    readTime: "5 min",
-    title: "Before you face a false god",
+    id: "gragu",
+    category: "Shells",
+    title: "Unlock Gragu",
     excerpt:
-      "A spoiler-light readiness check for upgrades, consumables, sidearm utility, and a clean first attempt.",
-    label: "Spoiler-light",
+      "Heart of Vatra, the eastern temple route, Berserker's Stone, and kill-driven build priorities.",
+    readTime: "8 min",
+    difficulty: "Field note",
   },
   {
-    id: "death-loop",
-    index: "08",
-    category: "Combat",
-    readTime: "4 min",
-    title: "Fix the death, not the build",
+    id: "shell-locations",
+    category: "Shells",
+    title: "Find all eight Shells",
     excerpt:
-      "A quick review loop for separating a routing problem from a timing, range, or loadout problem.",
+      "The verified launch roster, Gloom-funded location reveals, Glimpse refunds, and a safe unlock order.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "tarstones",
+    category: "Arsenal",
+    title: "Build with Tarstones",
+    excerpt:
+      "All four categories, slot limits, the strongest verified launch picks, and retail locations.",
+    readTime: "8 min",
+    difficulty: "Essential",
+  },
+  {
+    id: "shell-tier-list",
+    category: "Shells",
+    title: "Shell tier list",
+    excerpt:
+      "Tiel, Eredrim, Proxima, Genessa, and the complete roster ranked by verified launch roles.",
+    readTime: "7 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "weapon-tier-list",
+    category: "Arsenal",
+    title: "Weapon tier list",
+    excerpt:
+      "Axe and Dagger, Axatana, heavy control weapons, and sidearms ranked by practical value.",
+    readTime: "7 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "baghead",
+    category: "World",
+    title: "Baghead ending explained",
+    excerpt:
+      "Where the returning NPC appears, what the surprise credits mean, and what progress you keep.",
+    readTime: "6 min",
+    difficulty: "Field note",
+  },
+  {
+    id: "duality-stone",
+    category: "Arsenal",
+    title: "Duality Stone tested",
+    excerpt:
+      "What the reported double-strike effect changes, how to test it, and what remains unverified.",
+    readTime: "7 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "bosses",
+    category: "Bosses",
+    title: "All major bosses",
+    excerpt:
+      "Six Corrupted Gates, three Unfound Path guardians, rewards, summons, and final preparation.",
+    readTime: "8 min",
+    difficulty: "Deep dive",
+  },
+  {
+    id: "walkthrough",
+    category: "Routes",
+    title: "Main story walkthrough",
+    excerpt:
+      "The verified campaign spine from the prologue through six gates, Unfound Path, and Zmey.",
+    readTime: "9 min",
+    difficulty: "Field note",
   },
 ];
 
 const categories = [
   "All",
-  "Combat",
-  "Exploration",
   "Shells",
-  "Weapons",
-  "Boss Prep",
+  "Arsenal",
+  "Bosses",
+  "World",
+  "Routes",
+  "Progression",
+  "Updates",
+  "Items",
+  "Platform",
+  "NPCs",
+  "Completion",
+];
+
+const paths = [
+  {
+    index: "01",
+    label: "Shells",
+    title: "Possess the fallen",
+    copy: "Eight warriors. Eight ways to survive.",
+    image: "/ms2-shot-03.webp",
+    alt: "An armored Mortal Shell II warrior wielding a hooked polearm against a towering creature",
+    href: "/guides/shell-locations",
+  },
+  {
+    index: "02",
+    label: "Arsenal",
+    title: "Choose your violence",
+    copy: "Weapons, sidearms, posture breaks, upgrades.",
+    image: "/ms2-shot-12.webp",
+    alt: "A heavily armored Mortal Shell II warrior swinging a broad axe through a group of enemies",
+    href: "/guides/weapon-tier-list",
+  },
+  {
+    index: "03",
+    label: "Bestiary",
+    title: "Know what hunts you",
+    copy: "Enemy reads and spoiler-shielded boss prep.",
+    image: "/ms2-shot-04.webp",
+    alt: "A mysterious Mortal Shell II figure playing an accordion in a firelit cavern",
+    href: "/guides/bosses",
+  },
+  {
+    index: "04",
+    label: "World",
+    title: "Chart the Undermether",
+    copy: "Zoom, filter, search, and track 88 verified essentials.",
+    image: "/ms2-combat.webp",
+    alt: "A ruined stone fortress under a gray sky in Mortal Shell II",
+    href: "/map",
+  },
 ];
 
 const routeSteps = [
   {
-    number: "01",
-    time: "0—20 MIN",
+    time: "00—20",
     title: "Learn the threat cycle",
-    copy: "Use the opening enemies to isolate one action at a time: engage, harden, punish, disengage. Do not race past the tutorial's safe repetitions.",
-    tag: "NO SPOILERS",
+    copy: "Engage. Harden. Punish. Disengage. Use the opening enemies to isolate one action at a time.",
   },
   {
-    number: "02",
-    time: "20—50 MIN",
+    time: "20—50",
     title: "Open the first region",
-    copy: "Touch the main path, then turn around. Short side routes teach the region's visual language and usually cost less than pushing an unknown elite.",
-    tag: "LOW RISK",
+    copy: "Touch the main path, then turn around. Short detours teach the region's visual language at lower risk.",
   },
   {
-    number: "03",
-    time: "50—90 MIN",
-    title: "Commit to one upgrade loop",
-    copy: "Choose a weapon rhythm you can reproduce under pressure. Spend early resources on consistency before experimenting across every option.",
-    tag: "FOUNDATION",
+    time: "50—90",
+    title: "Commit to one loop",
+    copy: "Choose a weapon rhythm you can reproduce under pressure. Upgrade consistency before novelty.",
   },
 ];
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "/" && document.activeElement?.tagName !== "INPUT") {
+        event.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const filteredGuides = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -144,142 +398,154 @@ export default function Home() {
     <main>
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Shellbound home">
-          <span className="wordmark-mark" aria-hidden="true">
-            S
-          </span>
-          <span>
+          <span className="sigil" aria-hidden="true">S</span>
+          <span className="wordmark-copy">
             <strong>Shellbound</strong>
-            <small>Mortal Shell II field guide</small>
+            <small>Mortal Shell II codex</small>
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="#guides">Guides</a>
-          <a href="#route">Starter route</a>
-          <a href="#intel">Launch intel</a>
+          <a href="/guides/shell-locations">Shells</a>
+          <a href="/guides/weapon-tier-list">Arsenal</a>
+          <a href="/guides/bosses">Bosses</a>
+          <a href="/map">Map</a>
+          <a href="/guides">All Guides</a>
         </nav>
-        <a className="status-chip" href="#intel">
-          <span className="status-dot" /> Launch day guide
+        <a className="launch-status" href="#intel">
+          <span /> Launch build 1.0
         </a>
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow">Unofficial guide // Updated Aug 20, 2026</p>
-          <h1>
-            Enter the Undermether.
-            <span>Leave nothing unanswered.</span>
-          </h1>
+        <img
+          className="hero-image"
+          src="/ms2-world.webp"
+          alt="A warrior approaching a towering enemy between burning torches in Mortal Shell II"
+        />
+        <div className="hero-shade" />
+        <div className="hero-grid" aria-hidden="true" />
+        <div className="hero-content">
+          <p className="eyebrow">Unofficial player codex // Spoiler shield active</p>
+          <div className="game-title">
+            <span>Mortal Shell II</span>
+            <h1>Survive the<br />Undermether.</h1>
+          </div>
           <p className="hero-lede">
-            Spoiler-aware routes, combat theory, and field-tested decisions for
-            Mortal Shell II—built to get you unstuck without playing the game
-            for you.
+            Routes, Shell builds, weapon doctrine, and boss preparation—written
+            to make you dangerous without taking discovery away from you.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#route">
-              Start the route <span aria-hidden="true">↘</span>
+              Begin the first route <span aria-hidden="true">→</span>
             </a>
-            <a className="button button-quiet" href="#guides">
-              Browse all guides
+            <a className="button button-ghost" href="/guides">
+              Open the codex
             </a>
-          </div>
-          <div className="hero-proof" aria-label="Guide principles">
-            <span>01 / Spoiler-aware</span>
-            <span>02 / Evidence first</span>
-            <span>03 / Built for replay</span>
           </div>
         </div>
 
-        <div className="hero-art" aria-hidden="true">
-          <span className="artifact-label top-label">FIELD RECORD / 001</span>
-          <div className="shell-orbit orbit-one" />
-          <div className="shell-orbit orbit-two" />
-          <div className="shell-core">
-            <span className="core-scar scar-one" />
-            <span className="core-scar scar-two" />
-            <span className="core-scar scar-three" />
+        <div className="hero-feature">
+          <div className="feature-number">01</div>
+          <div>
+            <span>Featured field note</span>
+            <strong>What to do before the first false god</strong>
           </div>
-          <div className="artifact-coordinate">42° 16′ N<br />THE UNDERMETHER</div>
-          <span className="artifact-label bottom-label">HARDEN / HOLD / STRIKE</span>
+          <a href="/guides/bosses" aria-label="Read the featured field note">↗</a>
+        </div>
+
+        <div className="hero-rail" aria-hidden="true">
+          <span>Cold Symmetry</span>
+          <i />
+          <span>Field record // 0820</span>
         </div>
       </section>
 
-      <section className="intel-strip" id="intel" aria-label="Launch intel">
-        <div className="intel-intro">
-          <span className="section-kicker">Confirmed launch intel</span>
-          <p>What the official material tells us—no rumor padding.</p>
+      <section className="intel-strip" id="intel" aria-label="Confirmed game facts">
+        <div className="intel-label">
+          <span className="ember-dot" /> Confirmed game intel
         </div>
-        <dl className="intel-stats">
-          <div>
-            <dt>8</dt>
-            <dd>Playable Shells</dd>
-          </div>
-          <div>
-            <dt>60+</dt>
-            <dd>Dungeons</dd>
-          </div>
-          <div>
-            <dt>0</dt>
-            <dd>Stamina bars</dd>
-          </div>
-          <div>
-            <dt>20.08</dt>
-            <dd>Worldwide launch</dd>
-          </div>
+        <dl>
+          <div><dt>8</dt><dd>Playable Shells</dd></div>
+          <div><dt>60+</dt><dd>Dungeons</dd></div>
+          <div><dt>∞</dt><dd>No stamina bar</dd></div>
+          <div><dt>20.08.26</dt><dd>Worldwide launch</dd></div>
         </dl>
       </section>
 
-      <section className="route-section" id="route">
+      <section className="path-section" id="paths">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Recommended start</p>
-            <h2>The first 90 minutes</h2>
+            <p className="eyebrow">Choose your path</p>
+            <h2>Everything that can kill you.<br /><em>Catalogued.</em></h2>
           </div>
           <p>
-            A disciplined opening route for players who want direction, not a
-            checklist. Learn the world before you try to conquer it.
+            Start with the system giving you trouble. Every path favors useful
+            decisions over exhaustive lists and keeps story spoilers behind a warning.
           </p>
         </div>
-        <div className="route-grid">
-          {routeSteps.map((step) => (
-            <article className="route-card" key={step.number}>
-              <div className="route-card-top">
-                <span className="route-number">{step.number}</span>
-                <span className="route-tag">{step.tag}</span>
+
+        <div className="path-grid">
+          {paths.map((path) => (
+            <a className="path-card" href={path.href} key={path.label}>
+              <img src={path.image} alt={path.alt} />
+              <span className="path-shade" />
+              <div className="path-index">/{path.index}</div>
+              <div className="path-content">
+                <span>{path.label}</span>
+                <h3>{path.title}</h3>
+                <p>{path.copy}</p>
               </div>
-              <div>
-                <time>{step.time}</time>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </div>
-              <a href="#guides" aria-label={`Read ${step.title}`}>
-                Open field note <span aria-hidden="true">↗</span>
-              </a>
-            </article>
+              <div className="path-arrow" aria-hidden="true">↗</div>
+            </a>
           ))}
         </div>
       </section>
 
+      <section className="doctrine-section">
+        <img
+          src="/ms2-shot-12.webp"
+          alt="A Mortal Shell II warrior fighting several enemies with a heavy axe"
+        />
+        <div className="doctrine-shade" />
+        <div className="doctrine-copy">
+          <p className="eyebrow">Combat doctrine // 001</p>
+          <h2>No stamina.<br />No excuses.</h2>
+          <p>
+            Freedom from a stamina gauge changes the question. You are no longer
+            asking whether you can swing—you are asking whether the enemy can answer.
+          </p>
+          <a href="/guides/tarstones">Study the combat system <span>→</span></a>
+        </div>
+        <ol className="doctrine-list">
+          <li><span>01</span><strong>Close distance</strong><small>Make them commit first.</small></li>
+          <li><span>02</span><strong>Harden on impact</strong><small>Turn defense into pressure.</small></li>
+          <li><span>03</span><strong>Break posture</strong><small>Create the critical window.</small></li>
+          <li><span>04</span><strong>Execute</strong><small>End the exchange cleanly.</small></li>
+        </ol>
+      </section>
+
       <section className="guide-section" id="guides">
-        <div className="guide-header">
+        <div className="guide-heading">
           <div>
-            <p className="eyebrow">The living archive</p>
+            <p className="eyebrow">Search the archive</p>
             <h2>Field notes</h2>
           </div>
           <label className="search-box">
             <span aria-hidden="true">⌕</span>
             <span className="sr-only">Search guides</span>
             <input
+              ref={searchRef}
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search tactics, routes, systems…"
+              placeholder="Search Shells, weapons, bosses…"
             />
             <kbd>/</kbd>
           </label>
         </div>
 
-        <div className="filter-row" aria-label="Filter guides by category">
-          <div className="filter-list">
+        <div className="filter-row">
+          <div className="filter-list" aria-label="Filter guides by category">
             {categories.map((item) => (
               <button
                 className={category === item ? "active" : ""}
@@ -292,84 +558,99 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <span className="result-count">
-            {String(filteredGuides.length).padStart(2, "0")} records
-          </span>
+          <span>{String(filteredGuides.length).padStart(2, "0")} entries</span>
         </div>
 
-        {filteredGuides.length > 0 ? (
+        {filteredGuides.length ? (
           <div className="guide-grid">
-            {filteredGuides.map((guide) => (
+            {filteredGuides.map((guide, index) => (
               <article className="guide-card" id={guide.id} key={guide.id}>
-                <div className="guide-meta">
-                  <span className="guide-index">/{guide.index}</span>
+                <div className="guide-topline">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
                   <span>{guide.category}</span>
-                  <span>{guide.readTime}</span>
                 </div>
-                <h3>{guide.title}</h3>
-                <p>{guide.excerpt}</p>
-                <div className="guide-footer">
-                  {guide.label ? <span>{guide.label}</span> : <i />}
-                  <a href={`#${guide.id}`} aria-label={`Read ${guide.title}`}>
-                    Read note <span aria-hidden="true">↗</span>
-                  </a>
+                <div className="guide-body">
+                  <span className={`difficulty ${guide.difficulty.replace(" ", "-").toLowerCase()}`}>
+                    {guide.difficulty}
+                  </span>
+                  <h3>{guide.title}</h3>
+                  <p>{guide.excerpt}</p>
+                </div>
+                <div className="guide-bottom">
+                  <span>{guide.readTime} read</span>
+                  <a href={`/guides/${guide.id}`} aria-label={`Read ${guide.title}`}>Open note ↗</a>
                 </div>
               </article>
             ))}
           </div>
         ) : (
           <div className="empty-state" role="status">
-            <span>NO RECORD FOUND</span>
-            <p>Try another keyword or return to all field notes.</p>
-            <button
-              type="button"
-              onClick={() => {
-                setQuery("");
-                setCategory("All");
-              }}
-            >
-              Clear filters
+            <strong>No field record found.</strong>
+            <p>Try a broader keyword or return to the full codex.</p>
+            <button type="button" onClick={() => { setQuery(""); setCategory("All"); }}>
+              Reset the archive
             </button>
           </div>
         )}
       </section>
 
-      <section className="dispatch">
-        <div>
-          <span className="section-kicker">The field is changing</span>
-          <h2>Launch-week knowledge, without the noise.</h2>
+      <section className="route-section" id="route">
+        <div className="route-image">
+          <img
+            src="/ms2-shot-06.webp"
+            alt="A Mortal Shell II warrior approaching a distant enemy in the rain"
+          />
+          <span>Route / 001</span>
         </div>
-        <div className="dispatch-copy">
+        <div className="route-content">
+          <div className="route-heading">
+            <p className="eyebrow">Spoiler-light opening</p>
+            <h2>Your first<br />90 minutes.</h2>
+            <p>Learn the world before you try to conquer it.</p>
+          </div>
+          <ol className="route-list">
+            {routeSteps.map((step, index) => (
+              <li key={step.time}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <time>{step.time} MIN</time>
+                <div><strong>{step.title}</strong><p>{step.copy}</p></div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="closing-section">
+        <img
+          src="/ms2-shot-03.webp"
+          alt="An armored warrior confronting a skeletal beast in a frozen Mortal Shell II landscape"
+        />
+        <div className="closing-shade" />
+        <div className="closing-copy">
+          <p className="eyebrow">The archive lives</p>
+          <h2>Every death leaves a record.</h2>
           <p>
-            This first edition separates confirmed systems from developing
-            strategy. Major discoveries will be dated, tested, and clearly
-            marked for spoilers.
+            Launch-week discoveries are dated, tested, and marked for spoilers.
+            Rumors do not become guidance until they survive the field.
           </p>
-          <div className="source-links">
-            <a href="https://mortalshell.com/" target="_blank" rel="noreferrer">
-              Official site <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              href="https://store.steampowered.com/app/2584270/Mortal_Shell_II/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Steam page <span aria-hidden="true">↗</span>
-            </a>
+          <div>
+            <a href="https://mortalshell.com/" target="_blank" rel="noreferrer">Official game site ↗</a>
+            <a href="https://store.steampowered.com/app/2584270/Mortal_Shell_II/" target="_blank" rel="noreferrer">Steam ↗</a>
           </div>
         </div>
       </section>
 
       <footer>
-        <a className="wordmark footer-wordmark" href="#top">
-          <span className="wordmark-mark" aria-hidden="true">S</span>
-          <span><strong>Shellbound</strong><small>Mortal Shell II field guide</small></span>
+        <a className="wordmark" href="#top">
+          <span className="sigil" aria-hidden="true">S</span>
+          <span className="wordmark-copy"><strong>Shellbound</strong><small>Mortal Shell II codex</small></span>
         </a>
         <p>
-          An independent, fan-made guide. Not affiliated with Cold Symmetry or
-          Playstack. Game names and marks belong to their respective owners.
+          An independent fan-made guide. Official screenshots © Playstack and
+          Cold Symmetry. Used for editorial identification; all rights remain
+          with their respective owners.
         </p>
-        <a href="#top">Return to top ↑</a>
+        <a href="#top">Return to the surface ↑</a>
       </footer>
     </main>
   );
