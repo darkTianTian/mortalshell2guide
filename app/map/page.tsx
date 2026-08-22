@@ -3,6 +3,7 @@ import InteractiveMap from "./InteractiveMap";
 import MobileNav from "../components/MobileNav";
 import {
   MAP_UPDATED_AT,
+  MAP_POSITION_AUDIT_AT,
   mapEditorialSections,
   mapEditorialWordCount,
   mapMarkers,
@@ -88,14 +89,14 @@ export default function MapPage() {
           <p className={styles.kicker}>World record // Launch build 1.0</p>
           <h1>{mapPageMeta.heading}</h1>
           <p className={styles.heroLede}>
-            A complete, zoomable world map with curated layers for permanent Shells,
-            weapons, Sidearms, NPC routes, upgrades, keys, fragments, Gates, and major bosses.
+            A zoomable retail map with cross-checked exact positions and clearly labeled
+            interior or route anchors for Shells, gear, keys, fragments, Gates, and bosses.
           </p>
           <div className={styles.heroMeta}>
             <span>{mapMarkers.length} essential markers</span>
             <span>Boss spoiler shield</span>
             <span>Progress saved on this device</span>
-            <span>Updated August 22, 2026</span>
+            <span>Positions audited {MAP_POSITION_AUDIT_AT}</span>
           </div>
         </div>
       </section>

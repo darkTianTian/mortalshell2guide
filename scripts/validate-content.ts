@@ -47,6 +47,19 @@ for (const marker of mapMarkers) {
   for (const sourceId of marker.sourceIds) {
     assert.ok(mapSources[sourceId], `${marker.id} references missing source ${sourceId}`);
   }
+  if (marker.pinType === "Exact position") {
+    assert.ok(marker.sourceIds.includes("gamer-guides"), `${marker.id} needs a retail coordinate source`);
+  }
 }
+assert.deepEqual(
+  Object.fromEntries(
+    ["Exact position", "Interior anchor", "Route anchor"].map((pinType) => [
+      pinType,
+      mapMarkers.filter((marker) => marker.pinType === pinType).length,
+    ]),
+  ),
+  { "Exact position": 38, "Interior anchor": 31, "Route anchor": 19 },
+  "map position-standard counts changed without an audit update",
+);
 
 console.log(`Validated ${guideArticles.length} guides and ${mapMarkers.length} map markers: long-form copy, SEO metadata, sources, and internal links.`);

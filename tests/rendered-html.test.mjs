@@ -167,6 +167,12 @@ test("renders the verified interactive map with SEO metadata and discovery conte
   assert.match(html, /Find the next thing that changes your run/);
   assert.match(html, /88(?:<!-- -->)? essential markers/);
   assert.match(html, /Marrow Keep/);
+  assert.match(html, /Position standard/);
+  assert.match(html, /Exact position/);
+  assert.match(html, /Interior anchor/);
+  assert.match(html, /Route anchor/);
+  assert.match(html, /Positions audited/);
+  assert.match(html, /2026-08-22/);
   assert.doesNotMatch(html, /Map sources checked|Research log|Sources &amp; verification/);
   assert.match(html, /ms2-interactive-world-map\.webp/);
   assert.match(html, /--pin-inverse-scale:1/);
