@@ -31,6 +31,12 @@
 .search input::placeholder { color:#65675f; }
 .search button { border:0; background:transparent; color:#a7a49a; cursor:pointer; }
 
+.filterToolbar { display:flex; gap:18px; align-items:center; justify-content:space-between; margin-bottom:9px; }
+.filterPresets { display:flex; gap:7px; }
+.filterPresets button { min-height:32px; padding:6px 10px; border:1px solid rgba(255,255,255,.14); background:#0a0b09; color:#777970; font:7px var(--font-geist-mono),monospace; letter-spacing:.09em; text-transform:uppercase; cursor:pointer; }
+.filterPresets button:hover { border-color:rgba(255,174,97,.45); color:#c8c3b7; }
+.filterPresets button[aria-pressed="true"] { border-color:rgba(255,174,97,.48); color:#ffae61; background:#17130f; }
+.filterToolbar > span { color:#5f615b; font:7px var(--font-geist-mono),monospace; letter-spacing:.09em; text-transform:uppercase; }
 .filterBar { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
 .filterBar button { display:flex; gap:7px; align-items:center; min-height:36px; padding:7px 10px; border:1px solid rgba(255,255,255,.14); background:#0d0e0c; color:#6f716a; font:7px var(--font-geist-mono),monospace; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
 .filterBar button:hover { border-color:rgba(255,174,97,.45); color:#c8c3b7; }
@@ -171,6 +177,7 @@
   .workbench { padding:34px 20px 70px; }
   .mapTopbar { align-items:stretch; flex-direction:column; }
   .search { width:100%; }
+  .filterPresets button { min-height:44px; padding:9px 12px; font-size:8px; }
   .filterBar .spoilersOff,.filterBar .spoilersOn { margin-left:0; }
   .mapLayout { grid-template-columns:1fr; }
   .mapColumn { border-right:0; border-bottom:1px solid rgba(255,255,255,.14); }
@@ -197,6 +204,10 @@
   .search { padding:0 13px; }
   .search input { height:54px; font-size:14px; }
   .search button { width:44px; height:44px; font-size:18px; }
+  .filterToolbar { align-items:stretch; flex-direction:column; gap:8px; }
+  .filterPresets { display:grid; grid-template-columns:repeat(3,1fr); }
+  .filterPresets button { justify-content:center; padding-right:6px; padding-left:6px; }
+  .filterToolbar > span { align-self:flex-end; }
   .filterBar button { flex:1 0 calc(33.33% - 7px); justify-content:center; }
   .filterBar .spoilersOff,.filterBar .spoilersOn { flex-basis:100%; }
   .positionLegend { align-items:stretch; padding:10px; }

@@ -55,6 +55,7 @@ const persistFound = (found: Set<string>) => {
 
 const markerById = new Map(mapMarkers.map((item) => [item.id, item]));
 const categoryById = new Map(mapCategories.map((item) => [item.id, item]));
+const allCategoryIds = mapCategories.map((item) => item.id);
 const positionStandards: Record<MapPinType, string> = {
   "Exact position": "Cross-checked retail coordinate for the visible overworld point.",
   "Interior anchor": "Verified interior or dungeon cluster; follow the route note for the room-level pickup.",
@@ -75,7 +76,7 @@ function MapPinTypeCounter(markers: MapMarker[]) {
 export default function InteractiveMap() {
   const [query, setQuery] = useState("");
   const [activeCategories, setActiveCategories] = useState<Set<MapCategory>>(
-    () => new Set(mapCategories.map((item) => item.id)),
+    () => new Set(allCategoryIds),
   );
   const [showSpoilers, setShowSpoilers] = useState(false);
   const [selectedId, setSelectedId] = useState("marrow-keep");
@@ -184,6 +185,13 @@ export default function InteractiveMap() {
     });
   };
 
+  const applyCategoryPreset = (categories: MapCategory[]) => {
+    setActiveCategories(new Set(categories));
+    if (categories.length !== 1) return;
+    const firstMatch = mapMarkers.find((item) => item.category === categories[0]);
+    if (firstMatch) setSelectedId(firstMatch.id);
+  };
+
   const toggleFound = (id: string) => {
     setFound((current) => {
       const next = new Set(current);
@@ -277,6 +285,33 @@ export default function InteractiveMap() {
           />
           {query && <button type="button" onClick={() => setQuery("")} aria-label="Clear map search">×</button>}
         </label>
+      </div>
+
+      <div className={styles.filterToolbar}>
+        <div className={styles.filterPresets} role="group" aria-label="Quick marker filter actions">
+          <button
+            type="button"
+            onClick={() => applyCategoryPreset(allCategoryIds)}
+            aria-pressed={activeCategories.size === allCategoryIds.length}
+          >
+            Show all
+          </button>
+          <button
+            type="button"
+            onClick={() => applyCategoryPreset([])}
+            aria-pressed={activeCategories.size === 0}
+          >
+            Hide all
+          </button>
+          <button
+            type="button"
+            onClick={() => applyCategoryPreset(["shell"])}
+            aria-pressed={activeCategories.size === 1 && activeCategories.has("shell")}
+          >
+            Shells only
+          </button>
+        </div>
+        <span aria-live="polite">{activeCategories.size} / {allCategoryIds.length} categories shown</span>
       </div>
 
       <div className={styles.filterBar} aria-label="Map marker filters">
