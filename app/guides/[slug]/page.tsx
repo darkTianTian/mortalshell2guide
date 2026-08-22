@@ -86,8 +86,8 @@ export default async function GuidePage({ params }: PageProps) {
 
       <header className={styles.header}>
         <a className={styles.brand} href="/">
-          <span aria-hidden="true">S</span>
-          <div><strong>Shellbound</strong><small>Mortal Shell II codex</small></div>
+          <span aria-hidden="true">II</span>
+          <div><strong>Mortal Shell II</strong><small>Shellbound field guide</small></div>
         </a>
         <nav aria-label="Guide navigation">
           <a href="/guides">All guides</a>

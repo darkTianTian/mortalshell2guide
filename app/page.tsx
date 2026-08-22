@@ -398,11 +398,11 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Shellbound home">
-          <span className="sigil" aria-hidden="true">S</span>
+        <a className="wordmark" href="#top" aria-label="Mortal Shell II guide home">
+          <span className="sigil" aria-hidden="true">II</span>
           <span className="wordmark-copy">
-            <strong>Shellbound</strong>
-            <small>Mortal Shell II codex</small>
+            <strong>Mortal Shell II</strong>
+            <small>Shellbound field guide</small>
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -644,8 +644,8 @@ export default function Home() {
 
       <footer>
         <a className="wordmark" href="#top">
-          <span className="sigil" aria-hidden="true">S</span>
-          <span className="wordmark-copy"><strong>Shellbound</strong><small>Mortal Shell II codex</small></span>
+          <span className="sigil" aria-hidden="true">II</span>
+          <span className="wordmark-copy"><strong>Mortal Shell II</strong><small>Shellbound field guide</small></span>
         </a>
         <p>
           An independent fan-made guide. Official screenshots © Playstack and

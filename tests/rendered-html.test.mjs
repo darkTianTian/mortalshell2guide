@@ -69,6 +69,8 @@ test("server-renders the Shellbound field guide", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Shellbound — Mortal Shell II Field Guide<\/title>/i);
+  assert.match(html, /<span class="sigil" aria-hidden="true">II<\/span>/i);
+  assert.match(html, /<strong>Mortal Shell II<\/strong><small>Shellbound field guide<\/small>/i);
   assert.match(html, /Survive the/);
   assert.match(html, /Everything that can kill you/);
   assert.match(html, /Confirmed game intel/);
@@ -108,6 +110,20 @@ test("provides mobile navigation on every primary surface", async () => {
       assert.match(html, new RegExp(`href="${href}"`), `${path} mobile menu should link to ${href}`);
     }
   }
+});
+
+test("labels the visible site identity as Mortal Shell II", async () => {
+  for (const path of ["/", "/map", "/guides/beginner-guide"]) {
+    const response = await render(path);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, /<strong>Mortal Shell II<\/strong><small>Shellbound field guide<\/small>/i);
+    assert.match(html, />II<\/span>/i);
+  }
+
+  const indexResponse = await render("/guides");
+  const index = await indexResponse.text();
+  assert.match(index, /<header[^>]*><a href="\/">Mortal Shell II<\/a>/i);
 });
 
 test("publishes sitemap and robots discovery files", async () => {
