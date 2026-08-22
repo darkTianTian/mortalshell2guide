@@ -5,6 +5,8 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
   type WheelEvent as ReactWheelEvent,
 } from "react";
@@ -19,8 +21,17 @@ import styles from "./map.module.css";
 const STORAGE_KEY = "shellbound-map-found-v1";
 const MIN_SCALE = 1;
 const MAX_SCALE = 3.5;
+const DRAG_THRESHOLD = 6;
 
 type ViewState = { scale: number; x: number; y: number };
+type DragState = {
+  pointerId: number;
+  x: number;
+  y: number;
+  originX: number;
+  originY: number;
+  moved: boolean;
+};
 
 const readFound = () => {
   if (typeof window === "undefined") return new Set<string>();
@@ -53,7 +64,8 @@ export default function InteractiveMap() {
   const [found, setFound] = useState<Set<string>>(() => new Set());
   const [view, setView] = useState<ViewState>({ scale: 1, x: 0, y: 0 });
   const viewportRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<{ pointerId: number; x: number; y: number; originX: number; originY: number } | null>(null);
+  const dragRef = useRef<DragState | null>(null);
+  const suppressPinClickRef = useRef(false);
 
   const selected = markerById.get(selectedId) ?? mapMarkers[0];
   const normalizedQuery = query.trim().toLowerCase();
@@ -181,30 +193,52 @@ export default function InteractiveMap() {
 
   const startDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return;
-    event.currentTarget.setPointerCapture(event.pointerId);
+    suppressPinClickRef.current = false;
     dragRef.current = {
       pointerId: event.pointerId,
       x: event.clientX,
       y: event.clientY,
       originX: view.x,
       originY: view.y,
+      moved: false,
     };
   };
 
   const moveDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId || view.scale === 1) return;
+    const deltaX = event.clientX - drag.x;
+    const deltaY = event.clientY - drag.y;
+    if (!drag.moved && Math.hypot(deltaX, deltaY) >= DRAG_THRESHOLD) {
+      drag.moved = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
     setView(
       clampView({
         scale: view.scale,
-        x: drag.originX + event.clientX - drag.x,
-        y: drag.originY + event.clientY - drag.y,
+        x: drag.originX + deltaX,
+        y: drag.originY + deltaY,
       }),
     );
   };
 
   const stopDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (dragRef.current?.pointerId === event.pointerId) dragRef.current = null;
+    const drag = dragRef.current;
+    if (drag?.pointerId !== event.pointerId) return;
+    suppressPinClickRef.current = drag.moved;
+    dragRef.current = null;
+    if (drag.moved) {
+      event.preventDefault();
+      window.setTimeout(() => { suppressPinClickRef.current = false; }, 0);
+    }
+  };
+
+  const selectPin = (event: ReactMouseEvent<HTMLButtonElement>, id: string) => {
+    if (suppressPinClickRef.current) {
+      event.preventDefault();
+      return;
+    }
+    setSelectedId(id);
   };
 
   return (
@@ -285,15 +319,22 @@ export default function InteractiveMap() {
                     key={item.id}
                     type="button"
                     className={`${styles.pin} ${isSelected ? styles.pinSelected : ""} ${isFound ? styles.pinFound : ""}`}
-                    style={{ left: `${item.x}%`, top: `${item.y}%` }}
+                    style={{
+                      left: `${item.x}%`,
+                      top: `${item.y}%`,
+                      "--pin-inverse-scale": 1 / view.scale,
+                    } as CSSProperties}
                     data-category={item.category}
                     aria-label={`${item.title}, ${category?.label ?? item.category}${isFound ? ", found" : ""}`}
                     aria-pressed={isSelected}
-                    onPointerDown={(event) => event.stopPropagation()}
-                    onClick={() => setSelectedId(item.id)}
+                    onClick={(event) => selectPin(event, item.id)}
                   >
-                    <i aria-hidden="true">{isFound ? "✓" : category?.symbol}</i>
-                    <span>{item.title}</span>
+                    <span className={styles.pinScaler}>
+                      <span className={styles.pinGlyph}>
+                        <i aria-hidden="true">{isFound ? "✓" : category?.symbol}</i>
+                        <span className={styles.pinLabel}>{item.title}</span>
+                      </span>
+                    </span>
                   </button>
                 );
               })}

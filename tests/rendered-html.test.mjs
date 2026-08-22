@@ -169,6 +169,7 @@ test("renders the verified interactive map with SEO metadata and discovery conte
   assert.match(html, /Marrow Keep/);
   assert.doesNotMatch(html, /Map sources checked|Research log|Sources &amp; verification/);
   assert.match(html, /ms2-interactive-world-map\.webp/);
+  assert.match(html, /--pin-inverse-scale:1/);
   assert.doesNotMatch(html, /<img[^>]+alt=""/i);
 });
 
